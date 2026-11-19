@@ -1,10 +1,13 @@
 NYC Yellow Taxi take-home - prompt log
 Started 2026-11-19. One entry per instruction: what was asked or chosen, and why.
-Session 1 entries are date-only (they predate the ISO 8601 rule the brief asks
-for). Every entry from session 2 onward carries a full ISO 8601 timestamp.
+Session 1 timestamps were backfilled from the session log on 2026-11-19: 13:22
+mode choice, 13:57 scaffold start, 14:05 files written, 14:10 bronze switch,
+14:13 chart fix, 14:16 final verification. They are minute-accurate where the
+log records a step and approximate where a decision happened inside a block.
+Every entry from 16:47 onward was timestamped live.
 
 -------------------------------------------------------------------------------
-2026-11-19  MODE CHOICE: PTC
+2026-11-19T13:22:00-05:00  MODE CHOICE: PTC
 Chose PTC (Programmatic Tool Calling) over Standard, Minimal and Creator.
 Why: PTC keeps every Standard capability but batches tool calls into one
 TypeScript program, which fits this build - scaffold a dozen dbt files, read a
@@ -14,13 +17,13 @@ subagents; Creator is for DSH plugins, not data work.
 Caveat: PTC does not roll back a program that fails half way, so the build is
 verified with dbt build after each batch rather than at the end.
 
-2026-11-19  SCAFFOLD
+2026-11-19T13:57:00-05:00  SCAFFOLD
 User supplied the repo tree and the 90-minute plan. Scaffolded it as given, plus
 three things the tree lacked: a .gitignore (parquet and .duckdb must not reach a
 public repo), a downloader (data is not committed), and singular tests. The
 DuckDB path in profiles.yml is relative so a fresh clone runs unchanged.
 
-2026-11-19  CHART SET
+2026-11-19T14:05:00-05:00  CHART SET
 Four gold models, four charts, one model per chart:
   gld_trips_hourly     -> demand by hour of day
   gld_revenue_by_zone  -> top pickup zones by revenue
@@ -30,13 +33,13 @@ Rejected a daily-revenue line as a fifth chart: the hourly curve already covers
 "when", so the four charts span demand, geography, payment mix and tipping
 without overlap.
 
-2026-11-19  GRAIN AND THRESHOLDS
+2026-11-19T14:05:00-05:00  GRAIN AND THRESHOLDS
 Silver keeps one row per trip; exclusions are duration 1-180 min, distance
 0.1-100 mi, fare >= 0, passengers 1-6, non-null pickup/dropoff and zones. These
 caps are the numbers every chart is computed from, so they were fixed before the
 gold models were written and are documented in README trade-offs.
 
-2026-11-19  BRONZE MATERIALIZED, NOT A VIEW
+2026-11-19T14:10:00-05:00  BRONZE MATERIALIZED, NOT A VIEW
 The plan said bronze as a view. dbt-duckdb resolves the parquet path at query
 time, so brz_yellow_trips broke as soon as anything queried it from outside
 dbt_project (a shell, the app, a reviewer). Materialized it instead: the .duckdb
@@ -44,12 +47,12 @@ is now self-contained and queryable from any directory. Cost is ~240 MB of disk
 and a 6 s build instead of 1 s. Layer separation is unchanged - bronze still
 does no casting, filtering or renaming.
 
-2026-11-19  CHART ORDER FIX
+2026-11-19T14:13:00-05:00  CHART ORDER FIX
 Streamlit sorts string categories alphabetically, which put "10+ mi" before
 "3-5 mi" in the tip chart. sort=False keeps the SQL order. The zone chart moved
 to Altair with labelLimit=0 so "Times Sq/Theatre District" is not truncated.
 
-2026-11-19  VERIFIED
+2026-11-19T14:16:00-05:00  VERIFIED
 dbt build: 40/40 pass, 8 models + 32 tests, 6 s over 2,964,624 bronze rows
 (2,713,979 after silver filters). Streamlit AppTest: 0 exceptions, 4 charts,
 metrics 2.72 M trips / $74.27 M / 18.88%. Screenshot at screenshots/dashboard.png.
@@ -103,3 +106,9 @@ Did: prepended the brief's exact text to CLAUDE.md as "# Project Rules /
 ## Prompt Logging", with the setup-prompt wrapper kept as an HTML comment; the
 agent-notes section stays below the rule. Logged this instruction under the rule
 it installs.
+
+2026-11-19T18:25:22-05:00  BACKFILL SESSION-1 TIMESTAMPS
+User: "YES" (to backfilling the seven date-only entries).
+Did: rewrote the seven session-1 prefixes to full ISO 8601 with -05:00 offsets
+from the times in the session log, labelled the backfill in the header, and
+committed. Every entry in this file now parses as a timestamp.
