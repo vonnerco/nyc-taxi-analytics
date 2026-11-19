@@ -5,6 +5,8 @@ mode choice, 13:57 scaffold start, 14:05 files written, 14:10 bronze switch,
 14:13 chart fix, 14:16 final verification. They are minute-accurate where the
 log records a step and approximate where a decision happened inside a block.
 Every entry from 16:47 onward was timestamped live.
+Convention: a new chat starts the next SESSION heading with its date; entries
+keep ISO 8601 timestamps with the local offset.
 
 -------------------------------------------------------------------------------
 SESSION 1 - 2026-11-19  (project build, 13:22-14:16; times backfilled)
@@ -113,10 +115,15 @@ it installs.
 User: "YES" (to backfilling the seven date-only entries).
 Did: rewrote the seven session-1 prefixes to full ISO 8601 with -05:00 offsets
 from the times in the session log, labelled the backfill in the header, and
-timestamp.
+committed. Every entry in this file now parses as a timestamp.
 
 2026-11-19T18:29:25-05:00  EXPLAIN THE SESSION HEADINGS
 User: "what are sessions in the prompt.txt file".
 Did: answered that they are work-conversation markers, not Claude/DSH session ids,
 and made the file self-explanatory: added a SESSION 1 heading (project build,
 13:22-14:16) and a one-line description on the SESSION 2 heading.
+
+2026-11-19T18:33:03-05:00  ADOPT THE SESSION CONVENTION
+User: quoted the offer to write the convention into the header.
+Did: added the convention line to the header - a new chat starts the next SESSION
+heading with its date, entries keep ISO 8601 timestamps with the local offset.
