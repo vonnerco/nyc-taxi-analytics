@@ -7,6 +7,8 @@ log records a step and approximate where a decision happened inside a block.
 Every entry from 16:47 onward was timestamped live.
 
 -------------------------------------------------------------------------------
+SESSION 1 - 2026-11-19  (project build, 13:22-14:16; times backfilled)
+
 2026-11-19T13:22:00-05:00  MODE CHOICE: PTC
 Chose PTC (Programmatic Tool Calling) over Standard, Minimal and Creator.
 Why: PTC keeps every Standard capability but batches tool calls into one
@@ -58,7 +60,7 @@ dbt build: 40/40 pass, 8 models + 32 tests, 6 s over 2,964,624 bronze rows
 metrics 2.72 M trips / $74.27 M / 18.88%. Screenshot at screenshots/dashboard.png.
 
 -------------------------------------------------------------------------------
-SESSION 2 - 2026-11-19
+SESSION 2 - 2026-11-19  (fresh chat from 16:47; brief read, gaps closed, rule installed)
 
 2026-11-19T16:47:47-05:00  CONTINUE
 User: "continue from the AI Assessment session" (handoff note; project state
@@ -111,4 +113,10 @@ it installs.
 User: "YES" (to backfilling the seven date-only entries).
 Did: rewrote the seven session-1 prefixes to full ISO 8601 with -05:00 offsets
 from the times in the session log, labelled the backfill in the header, and
-committed. Every entry in this file now parses as a timestamp.
+timestamp.
+
+2026-11-19T18:29:25-05:00  EXPLAIN THE SESSION HEADINGS
+User: "what are sessions in the prompt.txt file".
+Did: answered that they are work-conversation markers, not Claude/DSH session ids,
+and made the file self-explanatory: added a SESSION 1 heading (project build,
+13:22-14:16) and a one-line description on the SESSION 2 heading.
