@@ -138,3 +138,13 @@ type. Relaxed the bound to allow null, mapped 0 to "Flex Fare", added the yaml
 accepted value. Silver 8,448,539 -> 9,076,422 (95.0% of bronze), revenue
 $249.57M, tip 17.94%; the payment table now shows Flex Fare at 6.92%. README,
 LOOM and the screenshot were updated to the new figures.
+
+2026-11-19T18:44:51-05:00  DICTIONARY VERBATIM
+User: showed the dictionary page and said "make sure this exact document information
+is verbatim".
+Did: corrected my own miscount - the dictionary lists 20 fields, not 19; the 2024
+files carry 19 because cbd_congestion_fee starts 2025-01-05. Rewrote every column
+description in sources.yml from the dictionary text, including the rate-code and
+payment-code lists, the en dashes and the VendorID codes I had wrong (2 is Curb
+Mobility, not Verifone). Documented the missing 20th field as a comment and the
+provenance in the source description. dbt build still 57/57.

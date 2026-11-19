@@ -41,6 +41,10 @@ gold     gld_trip_summary (1 row)      gld_trips_daily (91 rows)
 streamlit/app.py  (KPI strip + four views)
 ```
 
+Field descriptions in `sources.yml` are copied verbatim from the TLC dictionary
+(18 March 2025); the 2024 extracts carry 19 of its 20 fields (`cbd_congestion_fee`
+starts 5 January 2025).
+
 Bronze is a straight copy of the parquet with no casts or filters, so a reviewer
 can always diff it against the source. It is materialized because dbt-duckdb
 resolves the parquet path at query time: as a view it broke outside
