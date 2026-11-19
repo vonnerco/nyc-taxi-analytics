@@ -1,0 +1,41 @@
+version: 2
+
+sources:
+  - name: raw
+    description: >
+      Pinned TLC extracts for Q1 2024 (January to March), downloaded by
+      scripts/download_data.py into data/raw/. Never committed: data/raw is in
+      .gitignore.
+    tables:
+      - name: yellow_trips
+        description: One row per yellow-taxi trip, as published by the TLC.
+        meta:
+          # One parquet per month, read together: bronze holds the whole quarter.
+          external_location: "read_parquet('../data/raw/yellow_tripdata_2024-*.parquet')"
+        columns:
+          - name: VendorID
+            description: TPEP provider code (1 = Creative Mobile, 2 = Verifone).
+          - name: tpep_pickup_datetime
+            description: Meter engaged.
+          - name: tpep_dropoff_datetime
+            description: Meter disengaged.
+          - name: passenger_count
+            description: Driver-entered passenger count.
+          - name: trip_distance
+            description: Trip distance in miles, as reported by the meter.
+          - name: PULocationID
+            description: TLC taxi zone of pickup.
+          - name: DOLocationID
+            description: TLC taxi zone of dropoff.
+          - name: payment_type
+            description: 1 card, 2 cash, 3 no charge, 4 dispute, 5 unknown, 6 voided.
+          - name: fare_amount
+            description: Metered fare before extras.
+          - name: tip_amount
+            description: Tip; only recorded for card payments.
+          - name: total_amount
+            description: Total charged to the passenger.
+      - name: zones
+        description: TLC taxi zone lookup (LocationID to borough and zone name).
+        meta:
+          external_location: "read_parquet('../data/raw/taxi_zone_lookup.parquet')"

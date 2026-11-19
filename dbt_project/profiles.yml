@@ -1,0 +1,12 @@
+# Committed on purpose: the take-home must run from a fresh clone.
+# Run dbt from this directory so ../data/ resolves inside the repo:
+#   cd dbt_project && dbt build --profiles-dir .
+nyc_taxi:
+  target: dev
+  outputs:
+    dev:
+      type: duckdb
+      path: "../data/nyc_taxi.duckdb"
+      threads: 4
+      settings:
+        preserve_insertion_order: false

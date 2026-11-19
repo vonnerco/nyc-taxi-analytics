@@ -1,0 +1,12 @@
+[server]
+# Local demo only: never expose the dashboard on the LAN.
+address = "127.0.0.1"
+
+[client]
+toolbarMode = "minimal"
+
+[theme]
+base = "light"
+
+[browser]
+gatherUsageStats = false

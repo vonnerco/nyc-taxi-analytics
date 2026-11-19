@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: slv_trips
+    description: >
+      Clean trip grain: one row per trip after typing, bounding and de-duplication.
+      Filters are documented in README; changing any cap re-baselines every gold table.
+    columns:
+      - name: pickup_at
+        description: Meter-engaged timestamp.
+        tests:
+          - not_null
+      - name: dropoff_at
+        tests:
+          - not_null
+      - name: pickup_zone_id
+        tests:
+          - not_null
+      - name: pickup_zone
+        description: Zone name resolved from slv_zones; null if the LocationID is unknown.
+      - name: duration_min
+        description: Dropoff minus pickup in whole minutes; bounded 1-180.
+        tests:
+          - not_null
+      - name: trip_distance_mi
+        tests:
+          - not_null
+      - name: total_amount
+        tests:
+          - not_null
+      - name: payment_type
+        description: Readable label derived from the TLC payment_type code.
+        tests:
+          - accepted_values:
+              arguments:
+                values: ['Credit card', 'Cash', 'No charge', 'Dispute', 'Unknown', 'Voided trip', 'Other']
+      - name: pickup_hour
+        description: Hour of day, 0-23, derived from pickup_at.
+        tests:
+          - not_null

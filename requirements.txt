@@ -1,0 +1,6 @@
+# Versions verified together on Windows / Python 3.11 (2026-11-19).
+dbt-core>=1.12,<2.0
+dbt-duckdb>=1.11,<2.0
+duckdb>=2.0,<3.0
+pandas>=3.0,<4.0
+streamlit>=1.67,<2.0

@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: slv_zones
+    description: TLC zone lookup with an integer key, trimmed strings, one row per zone.
+    columns:
+      - name: location_id
+        description: TLC LocationID; primary key of this model.
+        tests:
+          - not_null
+          - unique
+      - name: borough
+        tests:
+          - not_null
+          - accepted_values:
+              arguments:
+                values: ['Bronx', 'Brooklyn', 'EWR', 'Manhattan', 'N/A', 'Queens', 'Staten Island', 'Unknown']
+      - name: zone
+        tests:
+          - not_null

@@ -1,0 +1,25 @@
+name: 'nyc_taxi'
+version: '1.0.0'
+config-version: 2
+
+profile: 'nyc_taxi'
+
+model-paths: ["models"]
+test-paths: ["tests"]
+target-path: "target"
+clean-targets: ["target", "dbt_packages"]
+
+vars:
+  # 0 = every row in the pinned month (default).
+  # Set row_limit to 1000000 for a sub-minute demo build:
+  #   dbt build --vars "row_limit: 1000000"
+  row_limit: 0
+
+models:
+  nyc_taxi:
+    bronze:
+      +materialized: table
+    silver:
+      +materialized: table
+    gold:
+      +materialized: table

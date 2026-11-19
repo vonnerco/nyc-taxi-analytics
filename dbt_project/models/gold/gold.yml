@@ -1,0 +1,115 @@
+version: 2
+
+models:
+  - name: gld_trip_summary
+    description: >
+      Headline KPIs. Grain: exactly one row (whole pinned quarter).
+      Feeds the KPI strip; no chart aggregates on read.
+    columns:
+      - name: trips
+        tests:
+          - not_null
+      - name: total_revenue
+        tests:
+          - not_null
+      - name: tip_pct
+        description: Fare-weighted tip percentage across all trips.
+        tests:
+          - not_null
+
+  - name: gld_trips_daily
+    description: >
+      Trip volume over time, day grain. One row per pickup date.
+      Feeds chart 1 when the grain selector is Day.
+    columns:
+      - name: pickup_date
+        description: Date of pickup.
+        tests:
+          - not_null
+          - unique
+      - name: trip_count
+        tests:
+          - not_null
+      - name: revenue
+        description: Sum of total_amount for the day.
+        tests:
+          - not_null
+
+  - name: gld_trips_weekly
+    description: >
+      Trip volume over time, week grain. One row per ISO week start (Monday).
+      Feeds chart 1 when the grain selector is Week.
+    columns:
+      - name: week_start
+        description: Monday of the ISO week.
+        tests:
+          - not_null
+          - unique
+      - name: trip_count
+        tests:
+          - not_null
+
+  - name: gld_trips_hourly
+    description: >
+      Demand curve, hour-of-day grain. One row per pickup hour (0-23), summed
+      across the quarter. Feeds chart 1 when the grain selector is Hour.
+    columns:
+      - name: pickup_hour
+        description: Hour of day, 0-23.
+        tests:
+          - not_null
+          - unique
+      - name: trip_count
+        tests:
+          - not_null
+
+  - name: gld_revenue_by_zone
+    description: >
+      Revenue concentration by pickup zone. Grain: one row per pickup zone.
+      Feeds chart 2; the chart takes the top 10, the model keeps every zone.
+    columns:
+      - name: pickup_zone
+        tests:
+          - not_null
+          - unique
+      - name: total_revenue
+        tests:
+          - not_null
+
+  - name: gld_payment_analysis
+    description: >
+      Payment mix and behaviour. Grain: one row per payment type label.
+      Feeds chart 3 (bar = trip share, table = average fare and tip rate).
+    columns:
+      - name: payment_type
+        tests:
+          - not_null
+          - unique
+      - name: trip_count
+        tests:
+          - not_null
+      - name: trip_share_pct
+        description: Share of trips in the quarter, percent of total.
+        tests:
+          - not_null
+      - name: avg_fare
+        description: Mean metered fare (before extras) for the payment type.
+        tests:
+          - not_null
+      - name: tip_pct
+        description: Fare-weighted tip percentage; cash is 0 because TLC records no cash tips.
+        tests:
+          - not_null
+
+  - name: gld_tip_behavior
+    description: >
+      Fare-weighted tip percentage by distance bucket. Grain: one row per bucket.
+      Feeds chart 4.
+    columns:
+      - name: distance_bucket
+        tests:
+          - not_null
+          - unique
+      - name: tip_pct
+        tests:
+          - not_null

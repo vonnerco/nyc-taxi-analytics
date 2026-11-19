@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: brz_yellow_trips
+    description: >
+      Raw TLC rows for the pinned month, capped only by the row_limit var.
+      No filtering, casting or renaming happens in bronze.
+    columns:
+      - name: VendorID
+        tests:
+          - not_null
+      - name: tpep_pickup_datetime
+        tests:
+          - not_null
+      - name: tpep_dropoff_datetime
+        tests:
+          - not_null
+      - name: total_amount
+        tests:
+          - not_null
