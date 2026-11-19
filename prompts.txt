@@ -95,3 +95,11 @@ local commit only - no remote, no push.
   literally true; it previously read slv_trips.
 - Payment analysis extended, not replaced: bars keep the mix, the table adds
   average fare and tip rate, which is what "behaviour" means here.
+
+2026-11-19T18:19:47-05:00  INSTALL THE BRIEF'S PROMPT-LOGGING RULE VERBATIM
+User: "add this Create a CLAUDE.md file ... Keep this log updated throughout
+all sessions."
+Did: prepended the brief's exact text to CLAUDE.md as "# Project Rules /
+## Prompt Logging", with the setup-prompt wrapper kept as an HTML comment; the
+agent-notes section stays below the rule. Logged this instruction under the rule
+it installs.

@@ -1,3 +1,13 @@
+<!-- Assessment setup prompt (2026-11-19): "Create a CLAUDE.md file in the project root with the following instruction:" -->
+
+# Project Rules
+
+## Prompt Logging
+
+Every time you receive a new instruction or prompt, append it to prompts.txt in the project root with a timestamp (ISO 8601) and a brief summary of what you did in response. Create the file if it doesn't exist. Keep this log updated throughout all sessions.
+
+---
+
 # nyc-taxi-analytics - agent notes
 
 Take-home assessment: 2-3 hours, graded on layer separation, data quality tests,
@@ -39,5 +49,5 @@ fast rebuild while iterating on one model:
 - every number on the dashboard must come from a gold model, not silver.
 - never commit data/raw/, *.duckdb, .venv - they are gitignored.
 - run dbt build after any model or test change; report the actual result.
-- prompt log: every instruction gets an ISO 8601 timestamped entry in
-  prompts.txt - what was asked and what was done. This is graded, not optional.
+- prompt log: "Project Rules > Prompt Logging" above is the contract; entries
+  carry the ISO 8601 offset (America/New_York). Graded, not optional.
