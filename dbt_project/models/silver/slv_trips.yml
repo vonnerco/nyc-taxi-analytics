@@ -33,7 +33,7 @@ models:
         tests:
           - accepted_values:
               arguments:
-                values: ['Credit card', 'Cash', 'No charge', 'Dispute', 'Unknown', 'Voided trip', 'Other']
+                values: ['Flex Fare', 'Credit card', 'Cash', 'No charge', 'Dispute', 'Unknown', 'Voided trip', 'Other']
       - name: pickup_hour
         description: Hour of day, 0-23, derived from pickup_at.
         tests:

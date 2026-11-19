@@ -82,7 +82,7 @@ cannot be served from a broken table.
 
 ## Trade-offs
 
-- **One quarter, pinned.** January-March 2024: 153 MB of parquet, 8.45 M trips
+- **One quarter, pinned.** January-March 2024: 153 MB of parquet, 9.08 M trips
   after cleaning. A quarter is the smallest span where the Week toggle is a
   real trend (13 points) rather than four boundaries; multi-year would need
   incremental models, and the take-home grades reasoning, not volume.
@@ -90,9 +90,11 @@ cannot be served from a broken table.
   `--vars "row_limit: 1000000"` for a sub-minute rebuild on a weak machine.
   A cap makes counts sample-sized, so the default favours correctness.
 - **Silver exclusions are opinionated.** Duration 1-180 min, distance
-  0.1-100 mi, fare >= 0, passengers 1-6, pickup inside the quarter. They keep
-  88.4% of bronze rows - GPS gaps, metered corrections, driver typos - and every
-  view inherits that cut.
+  0.1-100 mi, fare >= 0, passengers 1-6 with null allowed, pickup inside the
+  quarter. Null is kept on purpose: TLC's Flex Fare rows (payment_type 0) carry no
+  passenger count, and dropping them would erase a payment type the brief asks us
+  to analyse. The bounds keep 95.0% of bronze rows - GPS gaps, metered corrections,
+  driver typos - and every view inherits that cut.
 - **Three grains for one chart.** Daily, weekly and hour-of-day are separate
   gold tables, so each grain is testable and the app only picks a table. The
   cost is three scans of silver and three models to keep; the alternative is a
@@ -100,7 +102,8 @@ cannot be served from a broken table.
   blurs the grain the brief asks to define.
 - **Cash trips show no tip.** The TLC records tips on card payments only, so
   the payment table shows 22.54% for cards and 0.00% for cash, and any tip
-  conclusion is a statement about card trips, not all trips.
+  conclusion is a statement about card trips, not all trips. Flex Fare reports
+  5.46%, far below cards, so it is never pooled into the card rate.
 - **Dedupe key is heuristic.** Same vendor, timestamps, zones and total is
   duplicate-shaped; a shared trip would be dropped with it.
 - **DuckDB file, not a warehouse.** Fast to clone, no credentials, no hosting -
@@ -142,10 +145,10 @@ cannot be served from a broken table.
 
 ## Verified on this machine
 
-- `dbt build` - 57/57 pass (11 models, 46 tests), 9.6 s on 9,554,778 bronze rows.
-- Silver keeps 8,448,539 rows (88.4%); every gold row sums from that grain.
+- `dbt build` - 57/57 pass (11 models, 46 tests), 11.3 s on 9,554,778 bronze rows.
+- Silver keeps 9,076,422 rows (95.0%); every gold row sums from that grain.
 - Streamlit `AppTest` - 0 exceptions, 4 charts, 1 table, grain selector with
-  three options; metrics 8,448,539 trips / $233.97M / 18.92% tip.
+  three options; metrics 9,076,422 trips / $249.57M / 17.94% tip.
 - `screenshots/dashboard.png` - captured from the running app at 1440 px.
 
 ## Repo layout

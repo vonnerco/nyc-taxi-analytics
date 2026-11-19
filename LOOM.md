@@ -6,14 +6,14 @@ All figures below are the verified Q1 2024 numbers.
 
 ## 0:00 - What this is (20 s)
 
-> This is a four-view dashboard over 8.4 million NYC yellow taxi trips from
+> This is a four-view dashboard over 9.1 million NYC yellow taxi trips from
 > January to March 2024, built as a dbt project on DuckDB. Bronze, silver and
 > gold layers, forty-six data tests, and every number on screen comes from one
 > gold table - the app only renders.
 
 ## 0:20 - Dashboard tour (55 s)
 
-Read the KPI strip: 8,448,539 trips, $233.97M charged, 18.92% fare-weighted tip.
+Read the KPI strip: 9,076,422 trips, $249.57M charged, 17.94% fare-weighted tip.
 
 > The main chart answers "when is demand high", and the brief asked for a
 > day/week/hour grain. There are three gold models - one row per day, per ISO
@@ -29,8 +29,9 @@ Scroll to zones, tips, payment mix and the payment behaviour table.
 
 > Top zones are revenue-sorted, and the top-10 slice lives in the app so the
 > model keeps a total-per-zone grain. The tip chart is fare-weighted. Payments
-> show both mix and behaviour: card is 84% of trips with a 22.54% tip rate,
-> cash is 15% with zero, because the TLC records no cash tips.
+> show both mix and behaviour: card is 78% of trips with a 22.54% tip rate, cash
+> is 14% with zero, because the TLC records no cash tips, and Flex Fare - code 0
+> in the TLC dictionary - is 7% of trips at 5.46%.
 
 ## 1:15 - The build is the gate (40 s)
 
@@ -39,7 +40,7 @@ Terminal at repo root:
     cd dbt_project
     dbt build --profiles-dir .
 
-> Eleven models and 46 tests in about nine seconds over 9.5 million bronze
+> Eleven models and 46 tests in about eleven seconds over 9.5 million bronze
 > rows. dbt counts each item, so the run ends at 57 of 57. A failing test stops
 > the build, so the dashboard cannot be served from a broken table.
 
@@ -57,8 +58,8 @@ Open `models/silver/slv_trips.sql`.
 >
 > Silver is the only place cleaning happens: casts, the bounds - duration 1 to
 > 180 minutes, distance 0.1 to 100 miles, non-negative fares, 1 to 6 passengers
-> - the pinned quarter, de-duplication, then the zone label join. It keeps 88.4%
-> of bronze.
+> with null allowed for Flex Fare - the pinned quarter, de-duplication, then the
+> zone label join. It keeps 95.0% of bronze.
 
 ## 2:50 - Trace three numbers (50 s)
 

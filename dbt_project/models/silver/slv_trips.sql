@@ -42,7 +42,9 @@ filtered as (
       and duration_min between 1 and 180
       and trip_distance_mi between 0.1 and 100
       and fare_amount >= 0
-      and passenger_count between 1 and 6
+      -- Null is not invalid: TLC's Flex Fare records (payment_type 0) carry no
+      -- passenger count. Excluding them would silently drop a whole payment type.
+      and (passenger_count between 1 and 6 or passenger_count is null)
       -- Pinned quarter: the monthly files carry a handful of stray timestamps.
       and pickup_at >= timestamp '2024-01-01 00:00:00'
       and pickup_at <  timestamp '2024-04-01 00:00:00'
@@ -71,6 +73,7 @@ select
     d.dropoff_zone_id,
     d.payment_type_id,
     case d.payment_type_id
+        when 0 then 'Flex Fare'
         when 1 then 'Credit card'
         when 2 then 'Cash'
         when 3 then 'No charge'
