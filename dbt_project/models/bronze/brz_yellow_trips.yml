@@ -3,8 +3,9 @@ version: 2
 models:
   - name: brz_yellow_trips
     description: >
-      Raw TLC rows for the pinned month, capped only by the row_limit var.
-      No filtering, casting or renaming happens in bronze.
+      Raw TLC rows for the pinned quarter, capped only by the row_limit var.
+      No filtering, casting or renaming happens in bronze; every transformation
+      is owned by slv_trips and slv_zones.
     columns:
       - name: VendorID
         tests:

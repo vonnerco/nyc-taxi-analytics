@@ -148,3 +148,13 @@ description in sources.yml from the dictionary text, including the rate-code and
 payment-code lists, the en dashes and the VendorID codes I had wrong (2 is Curb
 Mobility, not Verifone). Documented the missing 20th field as a comment and the
 provenance in the source description. dbt build still 57/57.
+
+2026-11-19T18:53:10-05:00  BRONZE AUDIT: NO SILVER-LEVEL PROCESSING
+User: "check and confirm all files in dbt_project/models/bronze/ anticipate silver
+level processing", quoting the brief.
+Did: read the four bronze files. brz_yellow_trips.sql and brz_zones.sql are bare
+select * (plus the opt-in row_limit cap), sources.yml only documents the parquet
+and quotes the TLC dictionary, and the yml holds only not_null assertions. No
+casts, filters, renames, dedupe, CASE or joins: all of that lives in slv_trips and
+slv_zones, verified line by line. Fixed two stale "pinned month" comments that
+should say quarter. dbt build 57/57.
