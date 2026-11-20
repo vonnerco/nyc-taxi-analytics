@@ -228,3 +228,16 @@ freeze it, and the workspace-root prompts.txt is a separate, older file about th
 PTC mode choice, not part of the repo. That freeze was scoped to the previous
 session, so the two entries above resume session 3 logging under the CLAUDE.md rule;
 the freeze itself is recorded in DSH Logs.
+
+2026-11-20T12:33:00-05:00  PUBLISHED TO GITHUB
+User: "git@github.com:vonnerco/nyc-taxi-analysis.git this is my repository location".
+Did: inspected the remote before touching it - public, main, and a single GitHub
+"Initial commit" (stub README, MIT LICENSE, default .gitignore) sharing no ancestor
+with the local history. Kept that commit as local branch github-initial instead of
+merging unrelated scaffolding, added origin, and pushed main with
+--force-with-lease (76954cf...033b929). Then pointed the README brief-to-artifact row
+at the live URL, committed eb9e820, pushed it fast-forward, and set the repository
+description and topics. Verified by cloning the remote into a temp directory: HEAD
+eb9e820, 36 tracked files, 25 prompt entries, no data/. Side effect worth stating:
+the force push replaced GitHub's auto-generated MIT LICENSE, so the repo now has no
+licence.
