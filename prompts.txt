@@ -201,3 +201,30 @@ silver -> PASS=18 in 1.70 s (2 accepted_values, 3 singular, 11 not_null,
 2 unique), covering both silver models. Reported that this selection excludes
 bronze and gold tests, so the full-gate figure remains dbt build 63/63. No model
 changes.
+
+-------------------------------------------------------------------------------
+SESSION 3 - 2026-11-20  (new chat from 10:17; continuation verified, screenshot recaptured)
+
+2026-11-20T10:17:42-05:00  CONTINUE (new session)
+User: "continue" the 2026-11-19 AI Assessment log.
+Did: re-verified the documented state instead of trusting it - dbt build 70/70
+(12 models, 58 tests) through scripts/run_pipeline.ps1, AppTest 0 exceptions with
+5 charts and the same three metrics, git clean at 685ebdb with no remote. Found
+screenshots/dashboard.png stale: commit 685ebdb changed the peak annotations from a
+hardcoded blue to the theme colour, and the committed screenshot still showed blue.
+Recaptured it from the running app at 1440x2241 (Playwright chromium 1243 via
+executable_path; Streamlit scrolls inside stMain, so the viewport was grown to the
+measured content height). Corrected stale counts: README said seven gold models and
+four views (eight and five), the checklist said 11 models / 7 gold (12 / 8) and 12
+prompt-log entries (23), and LOOM.md now says ten to twenty seconds for the build so
+a cold cache cannot contradict it on camera. Commits 2688646, 31c13f4, 67c7740.
+
+2026-11-20T10:50:39-05:00  NO PUSH YET; LOGGING RESUMED
+User: declined the push ("I don't want to push yet") and asked whether every
+interaction is being written to prompts.txt.
+Did: nothing pushed; the repo stays local at 67c7740. Answered exactly: the project
+log had stopped at 2026-11-19T20:33:07 because the previous session was told to
+freeze it, and the workspace-root prompts.txt is a separate, older file about the
+PTC mode choice, not part of the repo. That freeze was scoped to the previous
+session, so the two entries above resume session 3 logging under the CLAUDE.md rule;
+the freeze itself is recorded in DSH Logs.
