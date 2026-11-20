@@ -62,6 +62,12 @@ with st.expander("How this is built"):
         "(January-March 2024) and the taxi zone lookup. The gold tables are "
         "chart-shaped; this page only renders them, it never aggregates."
     )
+    st.markdown(
+        "One gold table per view: `gld_trip_summary` (KPI strip), "
+        "`gld_trips_daily` / `gld_trips_weekly` / `gld_trips_hourly` (trip volume, "
+        "by grain), `gld_trips_by_dow` (seasonality), `gld_revenue_by_zone` (zones), "
+        "`gld_tip_behavior` (distance), `gld_payment_analysis` (mix and behaviour)."
+    )
     if USING_DEMO:
         st.markdown(
             "This hosted copy reads the committed gold-only snapshot "
@@ -115,8 +121,8 @@ if grain == "Hour of day":
         .properties(height=320)
     )
     caption = (
-        "gld_trips_hourly - one row per hour of day (0-23), summed across the "
-        "quarter. This is the demand profile: the peak sits at 17:00-18:00."
+        "One row per hour of day (0-23), summed across the quarter. This is the "
+        "demand profile: the peak sits at 18:00, with 17:00 just behind."
     )
     label = "gld_trips_hourly"
 else:
@@ -137,7 +143,7 @@ else:
         .properties(height=320)
     )
     unit = "pickup date" if grain == "Day" else "ISO week start (Monday)"
-    caption = f"{table} - one row per {unit}; the line plots that grain directly."
+    caption = f"One row per {unit}; the line plots that grain directly."
     label = table
     peaks = df.nlargest(3, "trip_count")
     peak_labels = (
@@ -165,7 +171,7 @@ with dow_col:
         "select day_name, dow_iso, trip_count from gld_trips_by_dow order by dow_iso"
     )
     if has_rows(dow, "gld_trips_by_dow"):
-        st.caption("gld_trips_by_dow - one row per ISO weekday")
+        st.caption("One row per ISO weekday")
         st.bar_chart(dow.set_index("day_name")["trip_count"], sort=False, height=320)
         export_csv(dow, "trips_by_day_of_week.csv", "Export this view as CSV")
 
@@ -187,7 +193,7 @@ with col1:
         "Trip count": ("trip_count", "Trips"),
     }[metric_label]
     st.caption(
-        f"gld_revenue_by_zone - one row per zone; top {top_n} by {metric_label.lower()}"
+        f"One row per zone; top {top_n} by {metric_label.lower()}"
     )
     zones = query(
         "select pickup_zone, trip_count, total_revenue, avg_fare from gld_revenue_by_zone "
@@ -220,7 +226,7 @@ with col1:
 
 with col2:
     st.subheader("Tip rate by trip distance")
-    st.caption("gld_tip_behavior - one row per distance bucket, fare-weighted")
+    st.caption("One row per distance bucket, fare-weighted")
     tips = query("select distance_bucket, tip_pct from gld_tip_behavior")
     if has_rows(tips, "gld_tip_behavior"):
         st.bar_chart(tips.set_index("distance_bucket")["tip_pct"], sort=False, height=320)
@@ -230,7 +236,7 @@ col3, col4 = st.columns([3, 2])
 
 with col3:
     st.subheader("Payment mix")
-    st.caption("gld_payment_analysis - one row per payment type")
+    st.caption("One row per payment type")
     payments = query(
         "select payment_type, trip_count, trip_share_pct, avg_fare, tip_pct "
         "from gld_payment_analysis order by trip_count desc"
@@ -241,7 +247,7 @@ with col3:
 
 with col4:
     st.subheader("Payment behaviour")
-    st.caption("same gold row, behaviour columns")
+    st.caption("Same gold row, behaviour columns")
     if has_rows(payments, "gld_payment_analysis"):
         display = payments.assign(
             Trips=payments.trip_count.map(lambda v: f"{v:,}"),
