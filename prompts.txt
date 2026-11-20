@@ -269,3 +269,10 @@ Did: answered that profiles govern chat verbosity and the audit-log habit, not f
 writes; verbose entries stay possible on instruction, but CLAUDE.md asks for a brief
 summary and the session-only rules (show the entry, ask before logging) would not
 survive a profile switch. Offered to state both rules in CLAUDE.md. No files changed.
+
+2026-11-20T17:06:00-05:00  LOOM SCREEN SETUP
+User: asked which screen(s) to show when recording the Loom.
+Did: recommended one screen with three windows - the running app, a terminal at the
+repo root, and the editor - switching between them per the LOOM.md beats; noted the
+checklist constraints (1440 px browser, terminal >100 columns, second monitor
+closed, no prompts.txt content on camera). No files changed.
