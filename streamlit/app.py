@@ -9,7 +9,7 @@ import streamlit as st
 
 DATA_DIR = Path(__file__).resolve().parents[1] / "data"
 # The pipeline writes data/nyc_taxi.duckdb. A gold-only snapshot ships with the
-# repo so the app also runs on a host that never built the 1 GB database.
+# repo so the app also runs on a host that never built the 1.4 GB database.
 DB_CANDIDATES = [
     DATA_DIR / "nyc_taxi.duckdb",
     DATA_DIR / "demo" / "nyc_taxi_gold.duckdb",
@@ -62,7 +62,7 @@ st.caption(
 if USING_DEMO:
     st.caption(
         "Demo snapshot: the eight gold tables only (`data/demo`), so this page runs "
-        "without the 1 GB local build. Run the pipeline locally for the full "
+        "without the 1.4 GB local build. Run the pipeline locally for the full "
         "bronze-to-gold rebuild."
     )
 

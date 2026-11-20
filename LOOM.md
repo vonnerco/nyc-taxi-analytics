@@ -23,12 +23,13 @@ Read the KPI strip: 9,076,422 trips, $249.57M charged, 17.94% fare-weighted tip.
 Click Week, then Hour of day, then back to Day.
 
 > Day shows the weekly rhythm and the holiday dips, with the top three peaks
-> annotated; Week compresses it to 13 points; hour of day shows the 5-6pm peak.
+> annotated; Week compresses it to 13 points; hour of day peaks at 18:00, with
+> 17:00 just behind.
 
 Point at the bar on the right.
 
-> The weekday bar is its own gold model, one row per ISO weekday - Thursday and
-> Friday carry the quarter, Sunday is the trough.
+> The weekday bar is its own gold model, one row per ISO weekday - Thursday is
+> the busiest day of the quarter, Monday the quietest.
 
 Scroll to zones, tips, payments.
 
@@ -65,7 +66,7 @@ Open `models/silver/slv_trips.sql`.
 > so it can be diffed against the source column for column. It is materialized,
 > not a view: dbt-duckdb resolves the parquet path at query time, so as a view
 > it broke the moment anything queried it outside dbt_project. The table costs
-> about a gigabyte and makes the .duckdb queryable from anywhere.
+> about 1.4 GB and makes the .duckdb queryable from anywhere.
 >
 > Silver is the only place cleaning happens: casts, the bounds - duration 1 to
 > 180 minutes, distance 0.1 to 100 miles, non-negative fares, 1 to 6 passengers
@@ -100,18 +101,21 @@ Open `models/gold/gld_payment_analysis.sql`.
 > models for one chart cost three scans but keep each grain explicit and
 > testable. DuckDB instead of Snowflake is deliberate: no credentials on this
 > machine, and the dbt project is one profile swap away - the SQL stays
-> portable. No orchestration or CI, because dbt build is the pipeline at this
-> size; the README says what changes at 100x volume.
+> portable. The hosted copy reads a 2 MB gold-only snapshot committed with the
+> repo, so it runs without rebuilding the warehouse. No orchestration or CI,
+> because dbt build is the pipeline at this size; the README says what changes at
+> 100x volume.
 
 ## 4:30 - Close (30 s)
 
 > README maps each brief requirement to the artifact that satisfies it, plus the
-> tests, the trade-offs and the scalability notes. The rendered model
-> documentation is published at https://vonnerco.github.io/nyc-taxi-analytics/ -
-> say the whole URL with the scheme, because a bare host is not clickable when it
-> is pasted. prompts.txt logs every instruction with an ISO timestamp. Next, if
-> this were production: incremental models, a Snowflake profile, CI on dbt build,
-> and a freshness check on the TLC drop.
+> tests, the trade-offs and the scalability notes. The repo is
+> https://github.com/vonnerco/nyc-taxi-analytics - rendered docs at
+> https://vonnerco.github.io/nyc-taxi-analytics/, and a deployed copy of this
+> dashboard linked at the top of the README. Say each URL with its scheme, since a
+> bare host is not clickable when pasted. prompts.txt logs every instruction with
+> an ISO timestamp. Next, in production: incremental models, a Snowflake profile,
+> CI on dbt build, and a freshness check on the TLC drop.
 
 ## Do not show on camera
 
@@ -128,6 +132,7 @@ Open `models/gold/gld_payment_analysis.sql`.
 3. Terminal width > 100 columns so `PASS=70` is visible.
 4. Second monitor closed; notifications off.
 5. `.streamlit/config.toml` pins the server to 127.0.0.1; do not override it.
-6. Published docs: https://vonnerco.github.io/nyc-taxi-analytics/ - always with
-   `https://`, since a bare domain does not auto-link in mail or chat. It is also
-   the repository homepage, so it is one click from the repo page.
+6. Published links: docs https://vonnerco.github.io/nyc-taxi-analytics/ and the
+   live app https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app -
+   always with `https://`, since a bare domain does not auto-link in mail or chat.
+   The repository homepage points at the live app; both are linked in the README.

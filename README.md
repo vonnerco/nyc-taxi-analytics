@@ -15,7 +15,7 @@ Rendered model documentation: https://vonnerco.github.io/nyc-taxi-analytics/
 
 The deployed copy reads the committed gold-only snapshot
 (`data/demo/nyc_taxi_gold.duckdb`, 2 MB) and says so in a caption, so the hosted
-app needs no 1 GB build. Streamlit Cloud sleeps an idle app; the first load may
+app needs no 1.4 GB build. Streamlit Cloud sleeps an idle app; the first load may
 take half a minute to wake. The quick start below builds the real pipeline locally.
 
 [![Deploy to Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=vonnerco/nyc-taxi-analytics&branch=main&mainModule=streamlit/app.py)
@@ -74,7 +74,7 @@ starts 5 January 2025).
 Bronze is a straight copy of the parquet with no casts or filters, so a reviewer
 can always diff it against the source. It is materialized because dbt-duckdb
 resolves the parquet path at query time: as a view it broke outside
-`dbt_project/`, and a self-contained `.duckdb` is worth the ~1 GB. Silver is
+`dbt_project/`, and a self-contained `.duckdb` is worth the ~1.4 GB. Silver is
 the only place cleaning happens; gold is chart-shaped so the app holds no logic.
 
 ## Gold-to-view mapping
@@ -161,7 +161,7 @@ model or description changes.
   happens once, in silver. The reason is reviewability: bronze diffs against the
   source column for column, and a type decision has exactly one home. The cost is
   that silver is not thin - it is where the data contract is defined.
-- **Bronze materialized, database ~1 GB.** A bronze view kept the raw data
+- **Bronze materialized, database ~1.4 GB.** A bronze view kept the raw data
   coupled to `dbt_project/` as the working directory; the table makes the
   `.duckdb` queryable from anywhere (the app, a shell, a reviewer). The cost is
   disk and a 9 s build instead of 2 s.
@@ -170,7 +170,7 @@ model or description changes.
 
 ## Scalability
 
-- **Today.** One DuckDB file (~1 GB), 9.5 M bronze rows, an 11 s full rebuild.
+- **Today.** One DuckDB file (~1.4 GB), 9.5 M bronze rows, an 11 s full rebuild.
   Every model is a full refresh, which is the right shape at this size.
 - **Partitioning.** The source is already one parquet per month; silver could be
   partitioned by `pickup_date` so date-filtered queries prune files instead of
