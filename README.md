@@ -115,6 +115,14 @@ cannot be served from a broken table.
   and the wrong choice the moment two people need to write concurrently. The
   role names Snowflake; this machine has no account, so the SQL keeps to
   portable constructs and the dbt project is one profile swap away.
+- **Bronze carries no casts or renames.** A common medallion variant makes
+  bronze a typed mirror: rename the messy source columns
+  (`tpep_pickup_datetime` -> `pickup_at`, `PULocationID` -> `pickup_zone_id`)
+  and cast types, while dropping no rows. This project takes the stricter
+  variant - bronze is byte-faithful to the parquet, and every rename and cast
+  happens once, in silver. The reason is reviewability: bronze diffs against the
+  source column for column, and a type decision has exactly one home. The cost is
+  that silver is not thin - it is where the data contract is defined.
 - **Bronze materialized, database ~1 GB.** A bronze view kept the raw data
   coupled to `dbt_project/` as the working directory; the table makes the
   `.duckdb` queryable from anywhere (the app, a shell, a reviewer). The cost is

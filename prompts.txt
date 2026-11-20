@@ -168,3 +168,11 @@ ingestion"); the model description now says no capping either. Rejected a separa
 sample model as unused furniture, and a downloader row cap as it would fork the
 pinned dataset. Verified bronze equals the raw parquet exactly - 9,554,778 rows on
 both sides - and dbt build 57/57.
+
+2026-11-19T19:13:01-05:00  TYPED-BRONZE CONVENTION RAISED
+User: pasted a definition of bronze as a typed mirror that renames messy columns
+and casts types without dropping rows.
+Did: pointed out the conflict with the stricter variant this repo chose (bronze is
+byte-faithful; renames and casts live in silver) and documented the choice in
+README trade-offs, including the cost - silver is not a thin layer. No model
+changed; offered the switch if the typed-mirror convention is wanted.
