@@ -158,3 +158,13 @@ and quotes the TLC dictionary, and the yml holds only not_null assertions. No
 casts, filters, renames, dedupe, CASE or joins: all of that lives in slv_trips and
 slv_zones, verified line by line. Fixed two stale "pinned month" comments that
 should say quarter. dbt build 57/57.
+
+2026-11-19T19:07:35-05:00  REMOVE THE BRONZE CAP
+User: agreed the row_limit caveat and recommended moving the cap to the downloader
+or a sample model so bronze stays transformation-free.
+Did: deleted the row_limit if-block from brz_yellow_trips.sql, the vars block from
+dbt_project.yml and the README bullet (replaced with "size is chosen at
+ingestion"); the model description now says no capping either. Rejected a separate
+sample model as unused furniture, and a downloader row cap as it would fork the
+pinned dataset. Verified bronze equals the raw parquet exactly - 9,554,778 rows on
+both sides - and dbt build 57/57.

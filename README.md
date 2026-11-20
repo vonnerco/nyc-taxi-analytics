@@ -90,9 +90,10 @@ cannot be served from a broken table.
   after cleaning. A quarter is the smallest span where the Week toggle is a
   real trend (13 points) rather than four boundaries; multi-year would need
   incremental models, and the take-home grades reasoning, not volume.
-- **`row_limit` var, default 0 = every row.** Set
-  `--vars "row_limit: 1000000"` for a sub-minute rebuild on a weak machine.
-  A cap makes counts sample-sized, so the default favours correctness.
+- **Size is chosen at ingestion, never in bronze.** `scripts/download_data.py`
+  pins three months; trim `MONTHS` to one for a smaller local build. Bronze
+  keeps no filter, cap or cast, so what it holds is exactly what the TLC
+  published.
 - **Silver exclusions are opinionated.** Duration 1-180 min, distance
   0.1-100 mi, fare >= 0, passengers 1-6 with null allowed, pickup inside the
   quarter. Null is kept on purpose: TLC's Flex Fare rows (payment_type 0) carry no
