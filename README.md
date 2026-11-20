@@ -5,6 +5,8 @@ day/week/hour grain selector. Built as a 2-3 hour take-home; the bar is a
 pipeline a reviewer can clone and run from scratch, with every number on screen
 traceable to exactly one gold table.
 
+Rendered model documentation: https://vonnerco.github.io/nyc-taxi-analytics/
+
 ## Quick start
 
 ```powershell
