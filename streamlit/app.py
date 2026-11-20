@@ -114,6 +114,17 @@ else:
     unit = "pickup date" if grain == "Day" else "ISO week start (Monday)"
     caption = f"{table} - one row per {unit}; the line plots that grain directly."
     label = table
+    peaks = df.nlargest(3, "trip_count")
+    peak_labels = (
+        alt.Chart(peaks)
+        .mark_text(align="left", dx=6, dy=-8, fontSize=11, color="#1f4e79")
+        .encode(
+            x=alt.X("bucket:T", title=None),
+            y=alt.Y("trip_count:Q"),
+            text=alt.Text("trip_count:Q", format=","),
+        )
+    )
+    chart = chart + peak_labels
 
 if has_rows(df, label):
     st.altair_chart(chart, width="stretch")
