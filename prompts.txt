@@ -261,3 +261,11 @@ recording checklist no longer claims the docs site is the repository homepage; t
 trade-off beat mentions the 2 MB gold snapshot; "1 GB" swept to 1.4 GB in README,
 CLAUDE.md and app.py. AppTest 0 exceptions; pushed d45dbd5 and confirmed Streamlit
 Cloud rebuilt from main (caption now says 1.4 GB).
+
+2026-11-20T13:49:00-05:00  PROFILE SWITCH QUESTION
+User: asked whether moving to the Concise profile would still allow verbose entries
+in prompts.txt.
+Did: answered that profiles govern chat verbosity and the audit-log habit, not file
+writes; verbose entries stay possible on instruction, but CLAUDE.md asks for a brief
+summary and the session-only rules (show the entry, ask before logging) would not
+survive a profile switch. Offered to state both rules in CLAUDE.md. No files changed.
