@@ -19,6 +19,25 @@ def query(sql: str) -> pd.DataFrame:
         return con.execute(sql).df()
 
 
+def has_rows(df: pd.DataFrame, label: str) -> bool:
+    """Warn instead of drawing an empty chart when a gold table has no rows."""
+    if df.empty:
+        st.warning(f"{label} returned no rows. Run dbt build, then reload this page.")
+        return False
+    return True
+
+
+def export_csv(df: pd.DataFrame, filename: str, label: str) -> None:
+    """Download exactly the frame the chart was drawn from."""
+    st.download_button(
+        label=label,
+        data=df.to_csv(index=False).encode("utf-8"),
+        file_name=filename,
+        mime="text/csv",
+        key=filename,
+    )
+
+
 if not DB_PATH.exists():
     st.error("No DuckDB file yet. Run: cd dbt_project; dbt build --profiles-dir .")
     st.stop()
@@ -31,6 +50,9 @@ st.caption(
 )
 
 kpi = query("select trips, total_revenue, tip_pct from gld_trip_summary")
+if not has_rows(kpi, "gld_trip_summary"):
+    st.stop()
+
 trips = int(kpi.trips[0])
 revenue = "$" + f"{kpi.total_revenue[0] / 1_000_000:,.2f}" + "M"
 tip_rate = f"{kpi.tip_pct[0]:.2f}%"
@@ -51,11 +73,11 @@ grain = st.radio(
 )
 
 if grain == "Hour of day":
-    hourly = query(
+    df = query(
         "select pickup_hour as bucket, trip_count from gld_trips_hourly order by pickup_hour"
     )
     chart = (
-        alt.Chart(hourly)
+        alt.Chart(df)
         .mark_bar()
         .encode(
             x=alt.X("bucket:O", title="Hour of day"),
@@ -71,12 +93,13 @@ if grain == "Hour of day":
         "gld_trips_hourly - one row per hour of day (0-23), summed across the "
         "quarter. This is the demand profile: the peak sits at 17:00-18:00."
     )
+    label = "gld_trips_hourly"
 else:
     table = "gld_trips_daily" if grain == "Day" else "gld_trips_weekly"
     date_col = "pickup_date" if grain == "Day" else "week_start"
-    series = query(f"select {date_col} as bucket, trip_count from {table} order by 1")
+    df = query(f"select {date_col} as bucket, trip_count from {table} order by 1")
     chart = (
-        alt.Chart(series)
+        alt.Chart(df)
         .mark_line(point=(grain == "Week"))
         .encode(
             x=alt.X("bucket:T", title=None, axis=alt.Axis(format="%b %d", tickCount=12)),
@@ -90,9 +113,12 @@ else:
     )
     unit = "pickup date" if grain == "Day" else "ISO week start (Monday)"
     caption = f"{table} - one row per {unit}; the line plots that grain directly."
+    label = table
 
-st.altair_chart(chart, width="stretch")
-st.caption(caption)
+if has_rows(df, label):
+    st.altair_chart(chart, width="stretch")
+    st.caption(caption)
+    export_csv(df, f"trip_volume_{label}.csv", "Export this view as CSV")
 
 col1, col2 = st.columns(2)
 
@@ -103,22 +129,26 @@ with col1:
         "select pickup_zone, total_revenue from gld_revenue_by_zone "
         "order by total_revenue desc limit 10"
     )
-    zone_chart = (
-        alt.Chart(zones)
-        .mark_bar()
-        .encode(
-            x=alt.X("total_revenue:Q", title="Revenue ($)"),
-            y=alt.Y("pickup_zone:N", title=None, sort="-x", axis=alt.Axis(labelLimit=0)),
+    if has_rows(zones, "gld_revenue_by_zone"):
+        zone_chart = (
+            alt.Chart(zones)
+            .mark_bar()
+            .encode(
+                x=alt.X("total_revenue:Q", title="Revenue ($)"),
+                y=alt.Y("pickup_zone:N", title=None, sort="-x", axis=alt.Axis(labelLimit=0)),
+            )
+            .properties(height=320)
         )
-        .properties(height=320)
-    )
-    st.altair_chart(zone_chart, width="stretch")
+        st.altair_chart(zone_chart, width="stretch")
+        export_csv(zones, "top_zones.csv", "Export this view as CSV")
 
 with col2:
     st.subheader("Tip rate by trip distance")
     st.caption("gld_tip_behavior - one row per distance bucket, fare-weighted")
     tips = query("select distance_bucket, tip_pct from gld_tip_behavior")
-    st.bar_chart(tips.set_index("distance_bucket")["tip_pct"], sort=False, height=320)
+    if has_rows(tips, "gld_tip_behavior"):
+        st.bar_chart(tips.set_index("distance_bucket")["tip_pct"], sort=False, height=320)
+        export_csv(tips, "tip_by_distance.csv", "Export this view as CSV")
 
 col3, col4 = st.columns([3, 2])
 
@@ -129,20 +159,23 @@ with col3:
         "select payment_type, trip_count, trip_share_pct, avg_fare, tip_pct "
         "from gld_payment_analysis order by trip_count desc"
     )
-    st.bar_chart(payments.set_index("payment_type")["trip_count"], sort=False, height=300)
+    if has_rows(payments, "gld_payment_analysis"):
+        st.bar_chart(payments.set_index("payment_type")["trip_count"], sort=False, height=300)
+        export_csv(payments, "payment_analysis.csv", "Export this view as CSV")
 
 with col4:
     st.subheader("Payment behaviour")
     st.caption("same gold row, behaviour columns")
-    display = payments.assign(
-        Trips=payments.trip_count.map(lambda v: f"{v:,}"),
-        Share=payments.trip_share_pct.map(lambda v: f"{v:.2f}%"),
-        AvgFare=payments.avg_fare.map(lambda v: "$" + f"{v:,.2f}"),
-        Tip=payments.tip_pct.map(lambda v: f"{v:.2f}%"),
-    )[["payment_type", "Trips", "Share", "AvgFare", "Tip"]].rename(
-        columns={"payment_type": "Payment type", "AvgFare": "Avg fare"}
-    )
-    st.dataframe(display, hide_index=True, width="stretch")
+    if has_rows(payments, "gld_payment_analysis"):
+        display = payments.assign(
+            Trips=payments.trip_count.map(lambda v: f"{v:,}"),
+            Share=payments.trip_share_pct.map(lambda v: f"{v:.2f}%"),
+            AvgFare=payments.avg_fare.map(lambda v: "$" + f"{v:,.2f}"),
+            Tip=payments.tip_pct.map(lambda v: f"{v:.2f}%"),
+        )[["payment_type", "Trips", "Share", "AvgFare", "Tip"]].rename(
+            columns={"payment_type": "Payment type", "AvgFare": "Avg fare"}
+        )
+        st.dataframe(display, hide_index=True, width="stretch")
 
 st.divider()
 st.caption(
