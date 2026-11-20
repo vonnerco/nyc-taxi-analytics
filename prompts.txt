@@ -251,3 +251,13 @@ gitignored on main; checked Pages instead of assuming, and the site was already
 enabled on gh-pages at / with status built; verified the live site (HTTP 200,
 1,818,461 bytes, manifest serving 12 models); linked it from the README in a
 "Rendered documentation" section plus the brief-to-artifact table (2cf6873).
+
+2026-11-20T13:30:00-05:00  LOOM ALIGNED WITH THE PUBLISHED REPO
+Did: audited every LOOM.md claim against the data; corrected the weekday beat
+(Thursday is busiest, Monday quietest - not Thursday/Friday and Sunday), the hour
+beat (peak 18:00, 17:00 second - not "5-6pm"), and the database size (1.4 GB, not
+"a gigabyte"); the close now names the repo, docs site and deployed dashboard; the
+recording checklist no longer claims the docs site is the repository homepage; the
+trade-off beat mentions the 2 MB gold snapshot; "1 GB" swept to 1.4 GB in README,
+CLAUDE.md and app.py. AppTest 0 exceptions; pushed d45dbd5 and confirmed Streamlit
+Cloud rebuilt from main (caption now says 1.4 GB).
