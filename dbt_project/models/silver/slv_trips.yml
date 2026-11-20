@@ -26,6 +26,10 @@ models:
           - not_null
       - name: pickup_zone
         description: Zone name resolved from slv_zones; null if the LocationID is unknown.
+      - name: pickup_borough
+        description: >
+          Borough of the pickup zone, resolved from slv_zones. Carried as part of
+          the cleaned trip entity for completeness; no gold model reads it.
       - name: duration_min
         description: Dropoff minus pickup in whole minutes; bounded 1-180.
         tests:
