@@ -241,3 +241,13 @@ description and topics. Verified by cloning the remote into a temp directory: HE
 eb9e820, 36 tracked files, 25 prompt entries, no data/. Side effect worth stating:
 the force push replaced GitHub's auto-generated MIT LICENSE, so the repo now has no
 licence.
+
+2026-11-20T12:45:00-05:00  DBT DOCS PUBLISHED TO GITHUB PAGES
+User: "do i have to push to the repository first"
+Did: generated the docs in the working copy with dbt docs generate (12 models, 58
+tests, catalog written); published them on a dedicated gh-pages branch holding only
+index.html, manifest.json, catalog.json and .nojekyll (75c4ee4), leaving target/
+gitignored on main; checked Pages instead of assuming, and the site was already
+enabled on gh-pages at / with status built; verified the live site (HTTP 200,
+1,818,461 bytes, manifest serving 12 models); linked it from the README in a
+"Rendered documentation" section plus the brief-to-artifact table (2cf6873).
