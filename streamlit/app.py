@@ -174,7 +174,12 @@ with col1:
             .mark_bar()
             .encode(
                 x=alt.X(f"{field}:Q", title=axis_title),
-                y=alt.Y("pickup_zone:N", title=None, sort="-x", axis=alt.Axis(labelLimit=0)),
+                y=alt.Y(
+                    "pickup_zone:N",
+                    title=None,
+                    sort="-x",
+                    axis=alt.Axis(labelLimit=0, labelOverlap=False),
+                ),
                 tooltip=[
                     alt.Tooltip("pickup_zone:N", title="Zone"),
                     alt.Tooltip("trip_count:Q", format=","),
@@ -182,7 +187,8 @@ with col1:
                     alt.Tooltip("avg_fare:Q", format=".2f"),
                 ],
             )
-            .properties(height=320)
+            # Grow with the selection so every zone keeps its label.
+            .properties(height=max(320, 24 * len(zones)))
         )
         st.altair_chart(zone_chart, width="stretch")
         export_csv(zones, "top_zones.csv", "Export this view as CSV")
