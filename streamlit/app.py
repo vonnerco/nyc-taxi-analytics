@@ -170,7 +170,21 @@ with dow_col:
     )
     if has_rows(dow, "gld_trips_by_dow"):
         st.caption("One row per ISO weekday")
-        st.bar_chart(dow.set_index("day_name")["trip_count"], sort=False, height=320)
+        dow_order = dow.sort_values("dow_iso")["day_name"].tolist()
+        dow_chart = (
+            alt.Chart(dow)
+            .mark_bar()
+            .encode(
+                x=alt.X("day_name:N", title=None, sort=dow_order),
+                y=alt.Y("trip_count:Q", title="Trips"),
+                tooltip=[
+                    alt.Tooltip("day_name:N", title="Day"),
+                    alt.Tooltip("trip_count:Q", title="Trips", format=","),
+                ],
+            )
+            .properties(height=320)
+        )
+        st.altair_chart(dow_chart, width="stretch")
         export_csv(dow, "trips_by_day_of_week.csv", "Export this view as CSV")
 
 col1, col2 = st.columns(2)
@@ -227,7 +241,21 @@ with col2:
     st.caption("One row per distance bucket, fare-weighted")
     tips = query("select distance_bucket, tip_pct from gld_tip_behavior")
     if has_rows(tips, "gld_tip_behavior"):
-        st.bar_chart(tips.set_index("distance_bucket")["tip_pct"], sort=False, height=320)
+        tips_order = tips["distance_bucket"].tolist()
+        tips_chart = (
+            alt.Chart(tips)
+            .mark_bar()
+            .encode(
+                x=alt.X("distance_bucket:N", title=None, sort=tips_order),
+                y=alt.Y("tip_pct:Q", title="Tip rate (%)"),
+                tooltip=[
+                    alt.Tooltip("distance_bucket:N", title="Distance"),
+                    alt.Tooltip("tip_pct:Q", title="Tip rate (%)", format=".2f"),
+                ],
+            )
+            .properties(height=320)
+        )
+        st.altair_chart(tips_chart, width="stretch")
         export_csv(tips, "tip_by_distance.csv", "Export this view as CSV")
 
 col3, col4 = st.columns([3, 2])
@@ -240,7 +268,24 @@ with col3:
         "from gld_payment_analysis order by trip_count desc"
     )
     if has_rows(payments, "gld_payment_analysis"):
-        st.bar_chart(payments.set_index("payment_type")["trip_count"], sort=False, height=300)
+        pay_order = payments["payment_type"].tolist()
+        pay_chart = (
+            alt.Chart(payments)
+            .mark_bar()
+            .encode(
+                x=alt.X("payment_type:N", title=None, sort=pay_order),
+                y=alt.Y("trip_count:Q", title="Trips"),
+                tooltip=[
+                    alt.Tooltip("payment_type:N", title="Payment type"),
+                    alt.Tooltip("trip_count:Q", title="Trips", format=","),
+                    alt.Tooltip(
+                        "trip_share_pct:Q", title="Share of trips (%)", format=".2f"
+                    ),
+                ],
+            )
+            .properties(height=300)
+        )
+        st.altair_chart(pay_chart, width="stretch")
         export_csv(payments, "payment_analysis.csv", "Export this view as CSV")
 
 with col4:
