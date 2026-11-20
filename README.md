@@ -75,14 +75,15 @@ the long rides that actually carry the money.
   that loses its meter timestamps is not salvageable - plus `not_null`/`unique`
   on the zone lookup's `LocationID` so a bad download fails before the join.
 - Silver: `not_null` on the keys and measures, `accepted_values` on the
-  payment label and borough so the CASE mapping cannot silently drift.
+  payment label and borough so the CASE mapping cannot silently drift, and
+  `not_null` + `unique` on the surrogate `trip_id`.
 - Gold: `not_null` + `unique` on every grain key, which is what makes each
   view safe to read as one-row-per-category.
 - Singular tests (`dbt_project/tests/`): duration bounds, plausible pickup
   range (locks the pinned quarter), non-negative fares, and a populated,
   positive summary row.
 
-`dbt build` runs 50 tests; a failing test stops the build, so the dashboard
+`dbt build` runs 52 tests; a failing test stops the build, so the dashboard
 cannot be served from a broken table.
 
 ## Trade-offs
@@ -111,7 +112,9 @@ cannot be served from a broken table.
   conclusion is a statement about card trips, not all trips. Flex Fare reports
   5.46%, far below cards, so it is never pooled into the card rate.
 - **Dedupe key is heuristic.** Same vendor, timestamps, zones and total is
-  duplicate-shaped; a shared trip would be dropped with it.
+  duplicate-shaped; a shared trip would be dropped with it. The surrogate
+  `trip_id` is an md5 of that key, so it inherits the heuristic - it identifies
+  a row after de-duplication, not a trip in the physical world.
 - **DuckDB file, not a warehouse.** Fast to clone, no credentials, no hosting -
   and the wrong choice the moment two people need to write concurrently. The
   role names Snowflake; this machine has no account, so the SQL keeps to
@@ -136,8 +139,8 @@ cannot be served from a broken table.
 - **Engine and storage.** dbt-duckdb, one local `data/nyc_taxi.duckdb`,
   rebuilt by `dbt build`, read read-only by Streamlit. Moving to BigQuery or
   Snowflake later rewrites the profile, not the models or tests.
-- **Silver grain and thresholds.** One cleaned trip row; the caps above. Every
-  cap re-baselines every count and every test.
+- **Silver grain and thresholds.** One cleaned trip row with a surrogate
+  `trip_id`; the caps above. Every cap re-baselines every count and every test.
 - **Gold grains.** One row per day, per ISO week, per hour of day, per zone, per
   payment type, per distance bucket, plus a single-row summary. Changing a grain
   breaks its view and its tests together.
@@ -149,7 +152,7 @@ cannot be served from a broken table.
 | Public git repository | this repo (committed; remote added on submission) |
 | CLAUDE.md whose first prompt installs prompt logging | `CLAUDE.md`, rule "prompt log"; log is `prompts.txt` with ISO 8601 timestamps |
 | dbt project with bronze, silver, gold | `dbt_project/models/` |
-| Data quality tests and documentation | 50 tests, yml descriptions on every model and column, singular tests |
+| Data quality tests and documentation | 52 tests, yml descriptions on every model and column, singular tests |
 | Streamlit dashboard powered by gold | `streamlit/app.py`; every number reads a gold model |
 | Trip volume over time, day/week/hour, defined grain | `gld_trips_daily` / `_weekly` / `_hourly` + grain selector |
 | Revenue by pickup zone, metric, filter or sort | `gld_revenue_by_zone`, top 10 sorted by revenue |
@@ -159,7 +162,7 @@ cannot be served from a broken table.
 
 ## Verified on this machine
 
-- `dbt build` - 61/61 pass (11 models, 50 tests), 11.3 s on 9,554,778 bronze rows.
+- `dbt build` - 63/63 pass (11 models, 52 tests), 11.3 s on 9,554,778 bronze rows.
 - Silver keeps 9,076,422 rows (95.0%); every gold row sums from that grain.
 - Streamlit `AppTest` - 0 exceptions, 4 charts, 1 table, grain selector with
   three options; metrics 9,076,422 trips / $249.57M / 17.94% tip.

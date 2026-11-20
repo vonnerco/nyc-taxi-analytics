@@ -184,3 +184,12 @@ Borough and Zone; unique on LocationID, which the 265-row lookup satisfies) - so
 bronze documents and guards the zone dimension the way brz_yellow_trips already
 does. dbt build 61/61 (11 models, 50 tests); README, LOOM and checklist counts
 updated.
+
+2026-11-19T20:13:53-05:00  SURROGATE TRIP_ID ADDED
+User: asked to confirm silver refs-only, table materialization, and a surrogate
+primary key plus de-duplication.
+Did: confirmed refs-only (grep: zero source() calls) and table materialization;
+found de-duplication present but no surrogate key. Added trip_id as md5 of the
+de-duplication key (vendor, timestamps, zones, total), with not_null + unique
+tests. Verified 9,076,422 rows and 9,076,422 distinct trip_ids, zero nulls.
+Checked 63/63 (11 models, 52 tests); README, LOOM and checklist updated.

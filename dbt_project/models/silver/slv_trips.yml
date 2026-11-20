@@ -6,6 +6,14 @@ models:
       Clean trip grain: one row per trip after typing, bounding and de-duplication.
       Filters are documented in README; changing any cap re-baselines every gold table.
     columns:
+      - name: trip_id
+        description: >
+          Surrogate key: md5 of the de-duplication key (vendor, pickup and dropoff
+          timestamps, pickup and dropoff zones, total amount). Unique by
+          construction because rows sharing the key were collapsed.
+        tests:
+          - not_null
+          - unique
       - name: pickup_at
         description: Meter-engaged timestamp.
         tests:

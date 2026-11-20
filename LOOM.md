@@ -47,8 +47,8 @@ Terminal at repo root:
     cd dbt_project
     dbt build --profiles-dir .
 
-> Eleven models and 50 tests in about eleven seconds over 9.5 million bronze
-> rows. dbt counts each item, so the run ends at 61 of 61. A failing test stops
+> Eleven models and 52 tests in about eleven seconds over 9.5 million bronze
+> rows. dbt counts each item, so the run ends at 63 of 63. A failing test stops
 > the build, so the dashboard cannot be served from a broken table.
 
 Point at `PASS=57 WARN=0 ERROR=0`.
@@ -67,7 +67,8 @@ Open `models/silver/slv_trips.sql`.
 > Silver is the only place cleaning happens: casts, the bounds - duration 1 to
 > 180 minutes, distance 0.1 to 100 miles, non-negative fares, 1 to 6 passengers
 > with null allowed for Flex Fare - the pinned quarter, de-duplication, then the
-> zone label join. It keeps 95.0% of bronze.
+> zone label join. It keeps 95.0% of bronze, and mints a surrogate `trip_id`
+> - md5 of the de-duplication key - tested `not_null` and `unique`.
 
 ## 2:50 - Trace three numbers (50 s)
 

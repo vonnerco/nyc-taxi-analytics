@@ -64,6 +64,16 @@ deduped as (
 )
 
 select
+    -- Surrogate primary key: md5 of the de-duplication key. Two rows that share
+    -- it were collapsed above, so it is unique by construction.
+    md5(concat_ws('|',
+        cast(d.vendor_id as varchar),
+        cast(d.pickup_at as varchar),
+        cast(d.dropoff_at as varchar),
+        cast(d.pickup_zone_id as varchar),
+        cast(d.dropoff_zone_id as varchar),
+        cast(d.total_amount as varchar)
+    ))                                             as trip_id,
     d.vendor_id,
     d.pickup_at,
     d.dropoff_at,
