@@ -7,7 +7,15 @@ import duckdb
 import pandas as pd
 import streamlit as st
 
-DB_PATH = Path(__file__).resolve().parents[1] / "data" / "nyc_taxi.duckdb"
+DATA_DIR = Path(__file__).resolve().parents[1] / "data"
+# The pipeline writes data/nyc_taxi.duckdb. A gold-only snapshot ships with the
+# repo so the app also runs on a host that never built the 1 GB database.
+DB_CANDIDATES = [
+    DATA_DIR / "nyc_taxi.duckdb",
+    DATA_DIR / "demo" / "nyc_taxi_gold.duckdb",
+]
+DB_PATH = next((p for p in DB_CANDIDATES if p.exists()), DB_CANDIDATES[0])
+USING_DEMO = DB_PATH.name == "nyc_taxi_gold.duckdb"
 
 st.set_page_config(page_title="NYC Yellow Taxi - Q1 2024", layout="wide")
 
@@ -39,7 +47,10 @@ def export_csv(df: pd.DataFrame, filename: str, label: str) -> None:
 
 
 if not DB_PATH.exists():
-    st.error("No DuckDB file yet. Run: cd dbt_project; dbt build --profiles-dir .")
+    st.error(
+        "No DuckDB file yet. Run: cd dbt_project; dbt build --profiles-dir . "
+        "(or commit the gold snapshot at data/demo/nyc_taxi_gold.duckdb)."
+    )
     st.stop()
 
 st.title("NYC Yellow Taxi - Q1 2024")
@@ -48,6 +59,12 @@ st.caption(
     "(January-March 2024) and the taxi zone lookup. Every number below is read "
     "from a gold model; this page only renders."
 )
+if USING_DEMO:
+    st.caption(
+        "Demo snapshot: the eight gold tables only (`data/demo`), so this page runs "
+        "without the 1 GB local build. Run the pipeline locally for the full "
+        "bronze-to-gold rebuild."
+    )
 
 kpi = query("select trips, total_revenue, tip_pct from gld_trip_summary")
 if not has_rows(kpi, "gld_trip_summary"):

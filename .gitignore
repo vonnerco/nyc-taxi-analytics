@@ -2,6 +2,8 @@
 data/raw/
 *.duckdb
 *.duckdb.wal
+# ...except the gold-only snapshot the hosted demo reads
+!data/demo/nyc_taxi_gold.duckdb
 
 # python
 .venv/

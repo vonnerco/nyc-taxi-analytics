@@ -7,6 +7,17 @@ traceable to exactly one gold table.
 
 Rendered model documentation: https://vonnerco.github.io/nyc-taxi-analytics/
 
+## Live demo
+
+[![Deploy to Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=vonnerco/nyc-taxi-analytics&branch=main&mainModule=streamlit/app.py)
+
+GitHub cannot execute Streamlit, so the dashboard needs a host. The button opens
+Streamlit Community Cloud with this repository and `streamlit/app.py` preselected;
+pick Python 3.11 and deploy. It runs as is - the repo ships a gold-only snapshot
+(`data/demo/nyc_taxi_gold.duckdb`, 2 MB) that the app falls back to when the full
+1 GB database is absent, and says so in a caption. The quick start below builds the
+real pipeline instead.
+
 ## Quick start
 
 ```powershell
@@ -26,8 +37,9 @@ Steps 4-5 are also wrapped in one PowerShell command:
 .\scripts\run_pipeline.ps1 -Select gold  # any dbt selection, same gate
 ```
 
-Data is not committed. `scripts/download_data.py` fetches the pinned quarter
-from the TLC CDN; everything else is reproducible from the repo.
+Data is not committed, except the 2 MB gold-only snapshot under `data/demo/` that
+the hosted demo reads. `scripts/download_data.py` fetches the pinned quarter from
+the TLC CDN; everything else is reproducible from the repo.
 
 ## Pipeline
 
@@ -202,6 +214,8 @@ model or description changes.
 - Silver keeps 9,076,422 rows (95.0%); every gold row sums from that grain.
 - Streamlit `AppTest` - 0 exceptions, 5 charts, 1 table, grain selector with
   three options; metrics 9,076,422 trips / $249.57M / 17.94% tip.
+- Same `AppTest` with the full database moved aside - the app falls back to
+  `data/demo/nyc_taxi_gold.duckdb` and still reports those metrics.
 - `screenshots/dashboard.png` - captured from the running app at 1440 px.
 
 ## Repo layout
@@ -215,6 +229,7 @@ nyc-taxi-analytics/
   README.md
   requirements.txt
   data/raw/            downloaded, gitignored
+  data/demo/           gold-only snapshot (2 MB) the hosted demo reads
   dbt_project/
     dbt_project.yml
     profiles.yml       relative DuckDB path, committed on purpose
