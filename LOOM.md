@@ -106,15 +106,18 @@ Open `models/gold/gld_payment_analysis.sql`.
 ## 4:30 - Close (30 s)
 
 > README maps each brief requirement to the artifact that satisfies it, plus the
-> tests, the trade-offs and the scalability notes. prompts.txt logs every
-> instruction with an ISO timestamp. Next, if this were production: incremental
-> models, a Snowflake profile, CI on dbt build, and a freshness check on the TLC
-> drop.
+> tests, the trade-offs and the scalability notes. The rendered model
+> documentation is published at https://vonnerco.github.io/nyc-taxi-analytics/ -
+> say the whole URL with the scheme, because a bare host is not clickable when it
+> is pasted. prompts.txt logs every instruction with an ISO timestamp. Next, if
+> this were production: incremental models, a Snowflake profile, CI on dbt build,
+> and a freshness check on the TLC drop.
 
 ## Do not show on camera
 
 - `prompts.txt` contents (say what it is, do not scroll it)
-- dbt docs, target/ artefacts, the .venv
+- The local dbt docs opened from `target/` (the published site is fine to name);
+  the .venv and target/ artefacts
 - Theming or Streamlit's own toolbar - the grain selector, zone controls and
   export buttons are the only controls to touch
 
@@ -125,3 +128,6 @@ Open `models/gold/gld_payment_analysis.sql`.
 3. Terminal width > 100 columns so `PASS=70` is visible.
 4. Second monitor closed; notifications off.
 5. `.streamlit/config.toml` pins the server to 127.0.0.1; do not override it.
+6. Published docs: https://vonnerco.github.io/nyc-taxi-analytics/ - always with
+   `https://`, since a bare domain does not auto-link in mail or chat. It is also
+   the repository homepage, so it is one click from the repo page.
