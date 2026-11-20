@@ -14,9 +14,10 @@ Rendered model documentation: https://vonnerco.github.io/nyc-taxi-analytics/
 **App:** [vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app)
 
 The deployed copy reads the committed gold-only snapshot
-(`data/demo/nyc_taxi_gold.duckdb`, 2 MB) and says so in a caption, so the hosted
-app needs no 1.4 GB build. Streamlit Cloud sleeps an idle app; the first load may
-take half a minute to wake. The quick start below builds the real pipeline locally.
+(`data/demo/nyc_taxi_gold.duckdb`, 2 MB) and says so in its "How this is built"
+expander, so the hosted app needs no 1.4 GB build. Streamlit Cloud sleeps an idle
+app; the first load may take half a minute to wake. The quick start below builds
+the real pipeline locally.
 
 [![Deploy to Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=vonnerco/nyc-taxi-analytics&branch=main&mainModule=streamlit/app.py)
 

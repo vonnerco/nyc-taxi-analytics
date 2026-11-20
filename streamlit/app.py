@@ -54,17 +54,25 @@ if not DB_PATH.exists():
     st.stop()
 
 st.title("NYC Yellow Taxi - Q1 2024")
-st.caption(
-    "dbt bronze -> silver -> gold on DuckDB. Source: NYC TLC trip records "
-    "(January-March 2024) and the taxi zone lookup. Every number below is read "
-    "from a gold model; this page only renders."
-)
-if USING_DEMO:
-    st.caption(
-        "Demo snapshot: the eight gold tables only (`data/demo`), so this page runs "
-        "without the 1.4 GB local build. Run the pipeline locally for the full "
-        "bronze-to-gold rebuild."
+st.caption("January-March 2024, 9,076,422 trips. Every number reads a gold model.")
+
+with st.expander("How this is built"):
+    st.markdown(
+        "dbt bronze -> silver -> gold on DuckDB. Source: NYC TLC trip records "
+        "(January-March 2024) and the taxi zone lookup. The gold tables are "
+        "chart-shaped; this page only renders them, it never aggregates."
     )
+    if USING_DEMO:
+        st.markdown(
+            "This hosted copy reads the committed gold-only snapshot "
+            "(`data/demo/nyc_taxi_gold.duckdb`), so it runs without rebuilding the "
+            "1.4 GB local database. Run the pipeline locally for the full "
+            "bronze-to-gold rebuild."
+        )
+    else:
+        st.markdown(
+            "Running against the full local database built by `dbt build`."
+        )
 
 kpi = query("select trips, total_revenue, tip_pct from gld_trip_summary")
 if not has_rows(kpi, "gld_trip_summary"):
