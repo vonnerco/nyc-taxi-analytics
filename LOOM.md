@@ -58,7 +58,7 @@ Terminal at repo root:
 
 Point at `PASS=70 WARN=0 ERROR=0`.
 
-## 2:00 - The layers (50 s)
+## 2:00 - The layers (45 s)
 
 Open `models/silver/slv_trips.sql`.
 
@@ -74,7 +74,19 @@ Open `models/silver/slv_trips.sql`.
 > label join, and a surrogate trip_id: md5 of the de-duplication key, tested
 > not_null and unique. It keeps 95.0% of bronze.
 
-## 2:50 - Trace three numbers (50 s)
+## 2:45 - The same model, as documentation (15 s)
+
+Alt+Tab to the published docs, already open on silver -> slv_trips.
+
+> Same model, now as generated documentation: the description, every column with
+> its type, and the tests sitting on the columns they guard - trip_id is unique
+> and not null, pickup_at is not null. dbt builds this page from the same yml the
+> tests run from, so the docs cannot drift away from the code, and the page is
+> published from the repo rather than written by hand.
+
+Alt+Tab back to the editor.
+
+## 3:00 - Trace three numbers (40 s)
 
 Open `models/gold/gld_tip_behavior.sql`.
 
@@ -136,3 +148,5 @@ Open `models/gold/gld_payment_analysis.sql`.
    live app https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app -
    always with `https://`, since a bare domain does not auto-link in mail or chat.
    The repository homepage points at the live app; both are linked in the README.
+7. Docs tab open before the take on the 2:45 screen: docs site -> Project ->
+   models -> silver -> `slv_trips`, Columns visible. Then that beat is one Alt+Tab.
