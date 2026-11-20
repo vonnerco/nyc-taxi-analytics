@@ -63,21 +63,19 @@ with st.expander("How this is built"):
         "chart-shaped; this page only renders them, it never aggregates."
     )
     st.markdown(
-        "One gold table per view: `gld_trip_summary` (KPI strip), "
-        "`gld_trips_daily` / `gld_trips_weekly` / `gld_trips_hourly` (trip volume, "
-        "by grain), `gld_trips_by_dow` (seasonality), `gld_revenue_by_zone` (zones), "
-        "`gld_tip_behavior` (distance), `gld_payment_analysis` (mix and behaviour)."
+        "One gold table per view: a single-row summary for the KPI strip, daily, "
+        "weekly and hour-of-day trip volume, day-of-week seasonality, revenue by "
+        "zone, tip rate by distance, and payment mix and behaviour."
     )
     if USING_DEMO:
         st.markdown(
-            "This hosted copy reads the committed gold-only snapshot "
-            "(`data/demo/nyc_taxi_gold.duckdb`), so it runs without rebuilding the "
-            "1.4 GB local database. Run the pipeline locally for the full "
-            "bronze-to-gold rebuild."
+            "This hosted copy reads the committed gold-only snapshot (2 MB, the "
+            "eight gold tables), so it runs without rebuilding the 1.4 GB local "
+            "database. Run the pipeline locally for the full bronze-to-gold rebuild."
         )
     else:
         st.markdown(
-            "Running against the full local database built by `dbt build`."
+            "Running against the full local database built by the dbt pipeline."
         )
 
 kpi = query("select trips, total_revenue, tip_pct from gld_trip_summary")
@@ -114,8 +112,8 @@ if grain == "Hour of day":
             x=alt.X("bucket:O", title="Hour of day"),
             y=alt.Y("trip_count:Q", title="Trips"),
             tooltip=[
-                alt.Tooltip("bucket:O", title="Hour"),
-                alt.Tooltip("trip_count:Q", format=","),
+                alt.Tooltip("bucket:O", title="Hour of day"),
+                alt.Tooltip("trip_count:Q", title="Trips", format=","),
             ],
         )
         .properties(height=320)
@@ -136,8 +134,8 @@ else:
             x=alt.X("bucket:T", title=None, axis=alt.Axis(format="%b %d", tickCount=12)),
             y=alt.Y("trip_count:Q", title="Trips"),
             tooltip=[
-                alt.Tooltip("bucket:T", title=date_col),
-                alt.Tooltip("trip_count:Q", format=","),
+                alt.Tooltip("bucket:T", title="Pickup date" if grain == "Day" else "Week start"),
+                alt.Tooltip("trip_count:Q", title="Trips", format=","),
             ],
         )
         .properties(height=320)
@@ -163,7 +161,7 @@ with ts_col:
     if has_rows(df, label):
         st.altair_chart(chart, width="stretch")
         st.caption(caption)
-        export_csv(df, f"trip_volume_{label}.csv", "Export this view as CSV")
+        export_csv(df, f"trip_volume_{grain.lower().replace(' ', '_')}.csv", "Export this view as CSV")
 
 with dow_col:
     st.subheader("Busiest day of week")
@@ -213,9 +211,9 @@ with col1:
                 ),
                 tooltip=[
                     alt.Tooltip("pickup_zone:N", title="Zone"),
-                    alt.Tooltip("trip_count:Q", format=","),
-                    alt.Tooltip("total_revenue:Q", format=",.2f"),
-                    alt.Tooltip("avg_fare:Q", format=".2f"),
+                    alt.Tooltip("trip_count:Q", title="Trips", format=","),
+                    alt.Tooltip("total_revenue:Q", title="Revenue ($)", format=",.2f"),
+                    alt.Tooltip("avg_fare:Q", title="Average fare ($)", format=".2f"),
                 ],
             )
             # Grow with the selection so every zone keeps its label.
