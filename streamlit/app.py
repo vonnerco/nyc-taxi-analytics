@@ -117,7 +117,7 @@ else:
     peaks = df.nlargest(3, "trip_count")
     peak_labels = (
         alt.Chart(peaks)
-        .mark_text(align="left", dx=6, dy=-8, fontSize=11, color="#1f4e79")
+        .mark_text(align="left", dx=6, dy=-8, fontSize=11)
         .encode(
             x=alt.X("bucket:T", title=None),
             y=alt.Y("trip_count:Q"),
