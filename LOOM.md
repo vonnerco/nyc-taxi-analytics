@@ -50,9 +50,9 @@ Terminal at repo root:
     cd dbt_project
     dbt build --profiles-dir .
 
-> Twelve models and 58 tests in about eleven seconds over 9.5 million bronze
-> rows. dbt counts each model and test item, so the run ends at 70 of 70. A
-> failing test stops the build, so the dashboard cannot be served from a broken
+> Twelve models and 58 tests in about ten to twenty seconds over 9.5 million
+> bronze rows. dbt counts each model and test item, so the run ends at 70 of 70.
+> A failing test stops the build, so the dashboard cannot be served from a broken
 > table.
 
 Point at `PASS=70 WARN=0 ERROR=0`.
