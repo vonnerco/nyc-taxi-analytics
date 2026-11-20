@@ -93,6 +93,14 @@ the long rides that actually carry the money.
 `dbt build` runs 58 tests; a failing test stops the build, so the dashboard
 cannot be served from a broken table.
 
+## Rendered documentation
+
+The `dbt docs` site is published at
+[vonnerco.github.io/nyc-taxi-analytics](https://vonnerco.github.io/nyc-taxi-analytics/)
+from the `gh-pages` branch - `index.html`, `manifest.json` and `catalog.json`, produced
+by `dbt docs generate`. `target/` stays gitignored on `main`; republish only when a
+model or description changes.
+
 ## Trade-offs
 
 - **One quarter, pinned.** January-March 2024: 153 MB of parquet, 9.08 M trips
@@ -178,7 +186,7 @@ cannot be served from a broken table.
 | Public git repository | [github.com/vonnerco/nyc-taxi-analytics](https://github.com/vonnerco/nyc-taxi-analytics) (public, `main`) |
 | CLAUDE.md whose first prompt installs prompt logging | `CLAUDE.md`, rule "prompt log"; log is `prompts.txt` with ISO 8601 timestamps |
 | dbt project with bronze, silver, gold | `dbt_project/models/` |
-| Data quality tests and documentation | 58 tests, yml descriptions on every model and column, singular tests |
+| Data quality tests and documentation | 58 tests, yml descriptions on every model and column, singular tests; rendered at [vonnerco.github.io/nyc-taxi-analytics](https://vonnerco.github.io/nyc-taxi-analytics/) |
 | Streamlit dashboard powered by gold | `streamlit/app.py`; every number reads a gold model |
 | Trip volume over time, day/week/hour, defined grain | `gld_trips_daily` / `_weekly` / `_hourly` + grain selector; `gld_trips_by_dow` for seasonality |
 | Revenue by pickup zone, metric, filter or sort | `gld_revenue_by_zone`, top 10 sorted by revenue |
