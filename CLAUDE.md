@@ -56,6 +56,3 @@ fast rebuild while iterating on one model:
   carry the ISO 8601 offset (America/New_York). Graded, not optional.
 - prompts.txt entries carry a detailed Did paragraph: what changed, why, and how it
   was verified - not a one-sentence summary.
-- Standing user preference, overriding the "append it" wording above: show the
-  exact entry text in chat and wait for an explicit yes before appending it. A
-  "no" covers that interaction only; the next instruction is asked again.
