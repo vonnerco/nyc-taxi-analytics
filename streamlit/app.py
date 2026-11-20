@@ -126,10 +126,23 @@ else:
     )
     chart = chart + peak_labels
 
-if has_rows(df, label):
-    st.altair_chart(chart, width="stretch")
-    st.caption(caption)
-    export_csv(df, f"trip_volume_{label}.csv", "Export this view as CSV")
+ts_col, dow_col = st.columns([2, 1])
+
+with ts_col:
+    if has_rows(df, label):
+        st.altair_chart(chart, width="stretch")
+        st.caption(caption)
+        export_csv(df, f"trip_volume_{label}.csv", "Export this view as CSV")
+
+with dow_col:
+    st.subheader("Busiest day of week")
+    dow = query(
+        "select day_name, dow_iso, trip_count from gld_trips_by_dow order by dow_iso"
+    )
+    if has_rows(dow, "gld_trips_by_dow"):
+        st.caption("gld_trips_by_dow - one row per ISO weekday")
+        st.bar_chart(dow.set_index("day_name")["trip_count"], sort=False, height=320)
+        export_csv(dow, "trips_by_day_of_week.csv", "Export this view as CSV")
 
 col1, col2 = st.columns(2)
 
