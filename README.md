@@ -5,18 +5,23 @@ day/week/hour grain selector. Built as a 2-3 hour take-home; the bar is a
 pipeline a reviewer can clone and run from scratch, with every number on screen
 traceable to exactly one gold table.
 
+Live dashboard: https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app
+
 Rendered model documentation: https://vonnerco.github.io/nyc-taxi-analytics/
 
 ## Live demo
 
+**App:** [vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app)
+
+The deployed copy reads the committed gold-only snapshot
+(`data/demo/nyc_taxi_gold.duckdb`, 2 MB) and says so in a caption, so the hosted
+app needs no 1 GB build. Streamlit Cloud sleeps an idle app; the first load may
+take half a minute to wake. The quick start below builds the real pipeline locally.
+
 [![Deploy to Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://share.streamlit.io/deploy?repository=vonnerco/nyc-taxi-analytics&branch=main&mainModule=streamlit/app.py)
 
-GitHub cannot execute Streamlit, so the dashboard needs a host. The button opens
-Streamlit Community Cloud with this repository and `streamlit/app.py` preselected;
-pick Python 3.11 and deploy. It runs as is - the repo ships a gold-only snapshot
-(`data/demo/nyc_taxi_gold.duckdb`, 2 MB) that the app falls back to when the full
-1 GB database is absent, and says so in a caption. The quick start below builds the
-real pipeline instead.
+GitHub Pages cannot execute Streamlit, so a running copy needs a host; the button
+above redeploys it to Streamlit Community Cloud (Python 3.11) in one step.
 
 ## Quick start
 
@@ -201,7 +206,7 @@ model or description changes.
 | CLAUDE.md whose first prompt installs prompt logging | `CLAUDE.md`, rule "prompt log"; log is `prompts.txt` with ISO 8601 timestamps |
 | dbt project with bronze, silver, gold | `dbt_project/models/` |
 | Data quality tests and documentation | 58 tests, yml descriptions on every model and column, singular tests; rendered at [vonnerco.github.io/nyc-taxi-analytics](https://vonnerco.github.io/nyc-taxi-analytics/) |
-| Streamlit dashboard powered by gold | `streamlit/app.py`; every number reads a gold model |
+| Streamlit dashboard powered by gold | `streamlit/app.py`; every number reads a gold model; live at [streamlit.app](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app) |
 | Trip volume over time, day/week/hour, defined grain | `gld_trips_daily` / `_weekly` / `_hourly` + grain selector; `gld_trips_by_dow` for seasonality |
 | Revenue by pickup zone, metric, filter or sort | `gld_revenue_by_zone`, top 10 sorted by revenue |
 | Payment type analysis of behaviour | `gld_payment_analysis`: share, average fare, fare-weighted tip |
