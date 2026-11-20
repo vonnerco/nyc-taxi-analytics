@@ -17,6 +17,13 @@ cd ..
 streamlit run streamlit/app.py
 ```
 
+Steps 4-5 are also wrapped in one PowerShell command:
+
+```powershell
+.\scripts\run_pipeline.ps1               # dbt build: every model and every test
+.\scripts\run_pipeline.ps1 -Select gold  # any dbt selection, same gate
+```
+
 Data is not committed. `scripts/download_data.py` fetches the pinned quarter
 from the TLC CDN; everything else is reproducible from the repo.
 
@@ -188,6 +195,7 @@ nyc-taxi-analytics/
   streamlit/app.py
   screenshots/
   scripts/download_data.py
+  scripts/run_pipeline.ps1
 ```
 
 ## Prompt log
