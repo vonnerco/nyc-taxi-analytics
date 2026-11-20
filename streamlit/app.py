@@ -134,19 +134,40 @@ if has_rows(df, label):
 col1, col2 = st.columns(2)
 
 with col1:
-    st.subheader("Top 10 pickup zones by revenue")
-    st.caption("gld_revenue_by_zone - one row per zone; top 10 sliced here")
+    st.subheader("Top pickup zones")
+    metric_label = st.radio(
+        "Zone metric",
+        ["Total revenue", "Average fare", "Trip count"],
+        horizontal=True,
+        label_visibility="collapsed",
+        key="zone_metric",
+    )
+    top_n = st.slider("Zones shown", 5, 30, 15, key="zone_top_n")
+    field, axis_title = {
+        "Total revenue": ("total_revenue", "Revenue ($)"),
+        "Average fare": ("avg_fare", "Average fare ($)"),
+        "Trip count": ("trip_count", "Trips"),
+    }[metric_label]
+    st.caption(
+        f"gld_revenue_by_zone - one row per zone; top {top_n} by {metric_label.lower()}"
+    )
     zones = query(
-        "select pickup_zone, total_revenue from gld_revenue_by_zone "
-        "order by total_revenue desc limit 10"
+        "select pickup_zone, trip_count, total_revenue, avg_fare from gld_revenue_by_zone "
+        f"order by {field} desc limit {top_n}"
     )
     if has_rows(zones, "gld_revenue_by_zone"):
         zone_chart = (
             alt.Chart(zones)
             .mark_bar()
             .encode(
-                x=alt.X("total_revenue:Q", title="Revenue ($)"),
+                x=alt.X(f"{field}:Q", title=axis_title),
                 y=alt.Y("pickup_zone:N", title=None, sort="-x", axis=alt.Axis(labelLimit=0)),
+                tooltip=[
+                    alt.Tooltip("pickup_zone:N", title="Zone"),
+                    alt.Tooltip("trip_count:Q", format=","),
+                    alt.Tooltip("total_revenue:Q", format=",.2f"),
+                    alt.Tooltip("avg_fare:Q", format=".2f"),
+                ],
             )
             .properties(height=320)
         )
