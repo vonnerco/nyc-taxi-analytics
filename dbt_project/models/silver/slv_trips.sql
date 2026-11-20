@@ -1,5 +1,28 @@
--- One cleaned trip per row: typed, bounded, de-duplicated, zone-enriched.
--- Every exclusion here is deliberate; see README "Trade-offs".
+-- slv_trips: one cleaned yellow-taxi trip per row - typed, bounded,
+-- de-duplicated, zone-enriched. Every gold model reads from this table.
+--
+-- The questions a reader asks first, answered here rather than inline:
+--   Why a table, not a view?  dbt-duckdb resolves the parquet path at query
+--     time, so a view broke whenever dbt_project/ was not the working directory.
+--     The table makes data/nyc_taxi.duckdb readable from the app or a shell.
+--   Why these bounds?  1-180 minutes, 0.1-100 miles, fare >= 0 and 1-6
+--     passengers drop GPS gaps, metered corrections and typos while keeping
+--     95.0% of bronze. Null passenger counts are kept on purpose: the TLC's
+--     Flex Fare rows (payment_type 0) carry none, and excluding them would
+--     silently erase a whole payment type.
+--   Why pin the quarter?  The monthly files carry a few stray timestamps
+--     outside 2024-01-01..2024-04-01; pinning makes every downstream count
+--     reproducible.
+--   Why this de-duplication key?  Vendor, both timestamps, both zones and total
+--     is duplicate-shaped in this data. A key that is too narrow would collapse
+--     two real trips - the known cost, documented in README "Trade-offs".
+--   Why an md5 surrogate key?  trip_id gives the gold tests a unique handle.
+--     It is md5 of the de-duplication key, so it inherits that heuristic: it
+--     identifies a row after cleaning, not a trip in the physical world.
+--   Where are column meanings?  slv_trips.yml, rendered in the dbt docs site -
+--     not repeated here, where they would drift.
+--   What inherits these filters?  Every gold model, so any change here
+--     re-baselines every count and every test.
 {{ config(materialized='table') }}
 
 with source as (
