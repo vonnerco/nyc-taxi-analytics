@@ -1,6 +1,6 @@
 # NYC Yellow Taxi Analytics - Q1 2024
 
-dbt over DuckDB, seven gold models, one Streamlit dashboard with a
+dbt over DuckDB, eight gold models, one Streamlit dashboard with a
 day/week/hour grain selector. Built as a 2-3 hour take-home; the bar is a
 pipeline a reviewer can clone and run from scratch, with every number on screen
 traceable to exactly one gold table.
@@ -45,7 +45,7 @@ gold     gld_trip_summary (1 row)      gld_trips_daily (91 rows)
          gld_payment_analysis          gld_tip_behavior
       |  read-only DuckDB, cached queries
       v
-streamlit/app.py  (KPI strip + four views)
+streamlit/app.py  (KPI strip + five views)
 ```
 
 Field descriptions in `sources.yml` are copied verbatim from the TLC dictionary
