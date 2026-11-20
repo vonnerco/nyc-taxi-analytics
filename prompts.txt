@@ -193,3 +193,11 @@ found de-duplication present but no surrogate key. Added trip_id as md5 of the
 de-duplication key (vendor, timestamps, zones, total), with not_null + unique
 tests. Verified 9,076,422 rows and 9,076,422 distinct trip_ids, zero nulls.
 Checked 63/63 (11 models, 52 tests); README, LOOM and checklist updated.
+
+2026-11-19T20:33:07-05:00  SILVER TESTS CONFIRMED BY USER
+User: "i ran dbt test on the models/silver/ and confirmed".
+Did: re-ran the same selection myself to see its exact scope: dbt test --select
+silver -> PASS=18 in 1.70 s (2 accepted_values, 3 singular, 11 not_null,
+2 unique), covering both silver models. Reported that this selection excludes
+bronze and gold tests, so the full-gate figure remains dbt build 63/63. No model
+changes.
