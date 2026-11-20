@@ -41,8 +41,8 @@ silver   slv_trips (table)        slv_zones (table)
       v
 gold     gld_trip_summary (1 row)      gld_trips_daily (91 rows)
          gld_trips_weekly (13 rows)    gld_trips_hourly (24 rows)
-         gld_revenue_by_zone           gld_payment_analysis
-         gld_tip_behavior
+         gld_trips_by_dow (7 rows)     gld_revenue_by_zone
+         gld_payment_analysis          gld_tip_behavior
       |  read-only DuckDB, cached queries
       v
 streamlit/app.py  (KPI strip + four views)
@@ -63,8 +63,8 @@ the only place cleaning happens; gold is chart-shaped so the app holds no logic.
 | View | Question | Gold model(s) | Grain | Columns |
 |---|---|---|---|---|
 | KPI strip | How big is the quarter? | `gld_trip_summary` | exactly one row | `trips`, `total_revenue`, `tip_pct` |
-| Trip volume | When is demand high? | `gld_trips_daily` / `gld_trips_weekly` / `gld_trips_hourly` | one row per day / ISO week start / hour of day | `trip_count` (+ `revenue` for day/week) |
-| Top pickup zones | Where is revenue concentrated? | `gld_revenue_by_zone` | one row per zone | `pickup_zone`, `total_revenue` |
+| Trip volume | When is demand high? | `gld_trips_daily` / `gld_trips_weekly` / `gld_trips_hourly` / `gld_trips_by_dow` | one row per day / ISO week start / hour of day / weekday | `trip_count` (+ `revenue` for day/week) |
+| Top pickup zones | Where is revenue concentrated? | `gld_revenue_by_zone` | one row per zone | `pickup_zone`, `trip_count`, `total_revenue`, `avg_fare` |
 | Payment mix | How do people pay, and how does behaviour differ? | `gld_payment_analysis` | one row per payment type | `trip_count`, `trip_share_pct`, `avg_fare`, `tip_pct` |
 | Tip by distance | Does distance change tipping? | `gld_tip_behavior` | one row per distance bucket | `distance_bucket`, `tip_pct` |
 
@@ -90,7 +90,7 @@ the long rides that actually carry the money.
   range (locks the pinned quarter), non-negative fares, and a populated,
   positive summary row.
 
-`dbt build` runs 52 tests; a failing test stops the build, so the dashboard
+`dbt build` runs 58 tests; a failing test stops the build, so the dashboard
 cannot be served from a broken table.
 
 ## Trade-offs
@@ -141,6 +141,25 @@ cannot be served from a broken table.
 - **No orchestration, no CI.** `dbt build` is the pipeline. Adding Airflow to a
   three-file source would be theatre.
 
+## Scalability
+
+- **Today.** One DuckDB file (~1 GB), 9.5 M bronze rows, an 11 s full rebuild.
+  Every model is a full refresh, which is the right shape at this size.
+- **Partitioning.** The source is already one parquet per month; silver could be
+  partitioned by `pickup_date` so date-filtered queries prune files instead of
+  scanning the quarter.
+- **Incremental models.** `slv_trips` would move to `materialized='incremental'`
+  with `trip_id` as the unique key and a lookback window on `pickup_at`, so a
+  nightly run reprocesses only late-arriving trips. Each gold model becomes
+  incremental on its grain key.
+- **At 100x volume (~950 M trips).** The single-file warehouse stops fitting
+  comfortably: move to Snowflake or BigQuery, keep the SQL (the models use
+  portable constructs), make gold incremental, and have Streamlit read a cached
+  aggregate layer rather than the warehouse.
+- **Cost control.** Partition on pickup date, read only the columns the models
+  use (12 of the dictionary's 20), and keep top-N slicing in the app so gold
+  stays at one row per zone.
+
 ## Decisions taken early (expensive to reverse)
 
 - **Engine and storage.** dbt-duckdb, one local `data/nyc_taxi.duckdb`,
@@ -159,9 +178,9 @@ cannot be served from a broken table.
 | Public git repository | this repo (committed; remote added on submission) |
 | CLAUDE.md whose first prompt installs prompt logging | `CLAUDE.md`, rule "prompt log"; log is `prompts.txt` with ISO 8601 timestamps |
 | dbt project with bronze, silver, gold | `dbt_project/models/` |
-| Data quality tests and documentation | 52 tests, yml descriptions on every model and column, singular tests |
+| Data quality tests and documentation | 58 tests, yml descriptions on every model and column, singular tests |
 | Streamlit dashboard powered by gold | `streamlit/app.py`; every number reads a gold model |
-| Trip volume over time, day/week/hour, defined grain | `gld_trips_daily` / `_weekly` / `_hourly` + grain selector |
+| Trip volume over time, day/week/hour, defined grain | `gld_trips_daily` / `_weekly` / `_hourly` + grain selector; `gld_trips_by_dow` for seasonality |
 | Revenue by pickup zone, metric, filter or sort | `gld_revenue_by_zone`, top 10 sorted by revenue |
 | Payment type analysis of behaviour | `gld_payment_analysis`: share, average fare, fare-weighted tip |
 | One additional visualisation | `gld_tip_behavior` (tip rate by distance) |
@@ -169,9 +188,9 @@ cannot be served from a broken table.
 
 ## Verified on this machine
 
-- `dbt build` - 63/63 pass (11 models, 52 tests), 11.3 s on 9,554,778 bronze rows.
+- `dbt build` - 70/70 pass (12 models, 58 tests), 11.3 s on 9,554,778 bronze rows.
 - Silver keeps 9,076,422 rows (95.0%); every gold row sums from that grain.
-- Streamlit `AppTest` - 0 exceptions, 4 charts, 1 table, grain selector with
+- Streamlit `AppTest` - 0 exceptions, 5 charts, 1 table, grain selector with
   three options; metrics 9,076,422 trips / $249.57M / 17.94% tip.
 - `screenshots/dashboard.png` - captured from the running app at 1440 px.
 
@@ -190,7 +209,7 @@ nyc-taxi-analytics/
     profiles.yml       relative DuckDB path, committed on purpose
     models/bronze/     sources.yml, brz_yellow_trips, brz_zones
     models/silver/     slv_trips, slv_zones (+ yml tests)
-    models/gold/       seven chart-shaped tables + gold.yml
+    models/gold/       eight chart-shaped tables + gold.yml
     tests/             four singular tests
   streamlit/app.py
   screenshots/
