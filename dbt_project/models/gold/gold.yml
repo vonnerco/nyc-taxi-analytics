@@ -75,6 +75,13 @@ models:
       - name: total_revenue
         tests:
           - not_null
+      - name: trip_count
+        tests:
+          - not_null
+      - name: avg_fare
+        description: Mean metered fare (before extras) for trips picked up in the zone.
+        tests:
+          - not_null
 
   - name: gld_payment_analysis
     description: >
