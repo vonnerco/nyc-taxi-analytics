@@ -175,7 +175,7 @@ cannot be served from a broken table.
 
 | Brief asks for | Where |
 |---|---|
-| Public git repository | [github.com/vonnerco/nyc-taxi-analysis](https://github.com/vonnerco/nyc-taxi-analysis) (public, `main`) |
+| Public git repository | [github.com/vonnerco/nyc-taxi-analytics](https://github.com/vonnerco/nyc-taxi-analytics) (public, `main`) |
 | CLAUDE.md whose first prompt installs prompt logging | `CLAUDE.md`, rule "prompt log"; log is `prompts.txt` with ISO 8601 timestamps |
 | dbt project with bronze, silver, gold | `dbt_project/models/` |
 | Data quality tests and documentation | 58 tests, yml descriptions on every model and column, singular tests |
@@ -198,6 +198,7 @@ cannot be served from a broken table.
 
 ```
 nyc-taxi-analytics/
+  LICENSE              MIT
   CLAUDE.md            agent notes for this repo
   prompts.txt          prompt and decision log (graded)
   LOOM.md              walkthrough script
