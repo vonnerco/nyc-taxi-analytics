@@ -72,7 +72,8 @@ the long rides that actually carry the money.
 ## Data quality tests
 
 - Bronze: `not_null` on vendor, pickup, dropoff and total amount - a raw row
-  that loses its meter timestamps is not salvageable.
+  that loses its meter timestamps is not salvageable - plus `not_null`/`unique`
+  on the zone lookup's `LocationID` so a bad download fails before the join.
 - Silver: `not_null` on the keys and measures, `accepted_values` on the
   payment label and borough so the CASE mapping cannot silently drift.
 - Gold: `not_null` + `unique` on every grain key, which is what makes each
@@ -81,7 +82,7 @@ the long rides that actually carry the money.
   range (locks the pinned quarter), non-negative fares, and a populated,
   positive summary row.
 
-`dbt build` runs 46 tests; a failing test stops the build, so the dashboard
+`dbt build` runs 50 tests; a failing test stops the build, so the dashboard
 cannot be served from a broken table.
 
 ## Trade-offs
@@ -148,7 +149,7 @@ cannot be served from a broken table.
 | Public git repository | this repo (committed; remote added on submission) |
 | CLAUDE.md whose first prompt installs prompt logging | `CLAUDE.md`, rule "prompt log"; log is `prompts.txt` with ISO 8601 timestamps |
 | dbt project with bronze, silver, gold | `dbt_project/models/` |
-| Data quality tests and documentation | 46 tests, yml descriptions on every model and column, singular tests |
+| Data quality tests and documentation | 50 tests, yml descriptions on every model and column, singular tests |
 | Streamlit dashboard powered by gold | `streamlit/app.py`; every number reads a gold model |
 | Trip volume over time, day/week/hour, defined grain | `gld_trips_daily` / `_weekly` / `_hourly` + grain selector |
 | Revenue by pickup zone, metric, filter or sort | `gld_revenue_by_zone`, top 10 sorted by revenue |
@@ -158,7 +159,7 @@ cannot be served from a broken table.
 
 ## Verified on this machine
 
-- `dbt build` - 57/57 pass (11 models, 46 tests), 11.3 s on 9,554,778 bronze rows.
+- `dbt build` - 61/61 pass (11 models, 50 tests), 11.3 s on 9,554,778 bronze rows.
 - Silver keeps 9,076,422 rows (95.0%); every gold row sums from that grain.
 - Streamlit `AppTest` - 0 exceptions, 4 charts, 1 table, grain selector with
   three options; metrics 9,076,422 trips / $249.57M / 17.94% tip.

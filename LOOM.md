@@ -4,6 +4,13 @@ Target 5:00. 1440 px browser at 100%, terminal font 16+.
 Pre-warm Streamlit once before recording (load the page, then start the take).
 All figures below are the verified Q1 2024 numbers.
 
+One-sentence Loom summary, reusable later:
+
+> In the Bronze layer, sources.yml maps our raw NYC trip records and zone lookup
+> table, while brz_yellow_trips and brz_zones enforce clean snake_case naming and
+> explicit data types 1-to-1 with the source before any filtering or business
+> logic happens in Silver.
+
 ## 0:00 - What this is (20 s)
 
 > This is a four-view dashboard over 9.1 million NYC yellow taxi trips from
@@ -40,8 +47,8 @@ Terminal at repo root:
     cd dbt_project
     dbt build --profiles-dir .
 
-> Eleven models and 46 tests in about eleven seconds over 9.5 million bronze
-> rows. dbt counts each item, so the run ends at 57 of 57. A failing test stops
+> Eleven models and 50 tests in about eleven seconds over 9.5 million bronze
+> rows. dbt counts each item, so the run ends at 61 of 61. A failing test stops
 > the build, so the dashboard cannot be served from a broken table.
 
 Point at `PASS=57 WARN=0 ERROR=0`.
@@ -54,7 +61,8 @@ Open `models/silver/slv_trips.sql`.
 > be diffed against the source. It is materialized, not a view: dbt-duckdb
 > resolves the parquet path at query time, so as a view it broke the moment
 > anything queried it outside dbt_project. The table costs about a gigabyte and
-> makes the .duckdb queryable from anywhere.
+> makes the .duckdb queryable from anywhere. Bronze is a faithful copy, so every
+> number on the dashboard can be traced back to what we received.
 >
 > Silver is the only place cleaning happens: casts, the bounds - duration 1 to
 > 180 minutes, distance 0.1 to 100 miles, non-negative fares, 1 to 6 passengers

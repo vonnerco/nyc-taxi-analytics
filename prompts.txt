@@ -176,3 +176,11 @@ Did: pointed out the conflict with the stricter variant this repo chose (bronze 
 byte-faithful; renames and casts live in silver) and documented the choice in
 README trade-offs, including the cost - silver is not a thin layer. No model
 changed; offered the switch if the typed-mirror convention is wanted.
+
+2026-11-19T19:33:07-05:00  ADD brz_zones.yml
+User: "add brz_zones.yml".
+Did: added the model yml - description plus four tests (not_null on LocationID,
+Borough and Zone; unique on LocationID, which the 265-row lookup satisfies) - so
+bronze documents and guards the zone dimension the way brz_yellow_trips already
+does. dbt build 61/61 (11 models, 50 tests); README, LOOM and checklist counts
+updated.

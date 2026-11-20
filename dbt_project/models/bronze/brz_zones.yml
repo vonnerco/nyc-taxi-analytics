@@ -1,0 +1,24 @@
+version: 2
+
+models:
+  - name: brz_zones
+    description: >
+      Raw TLC taxi zone lookup, exactly as published: LocationID to borough, zone
+      name and service zone. No casts, trims or de-duplication here - slv_zones
+      owns the typing and the dedupe.
+    columns:
+      - name: LocationID
+        description: TLC LocationID; the key trips use for pickup and dropoff zones.
+        tests:
+          - not_null
+          - unique
+      - name: Borough
+        description: Borough name as published, untrimmed.
+        tests:
+          - not_null
+      - name: Zone
+        description: Zone name as published, untrimmed.
+        tests:
+          - not_null
+      - name: service_zone
+        description: TLC service zone label as published (e.g. Yellow Zone).
