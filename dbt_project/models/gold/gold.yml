@@ -49,6 +49,24 @@ models:
         tests:
           - not_null
 
+  - name: gld_trips_by_dow
+    description: >
+      Volume by day of week. Grain: one row per ISO weekday (1 = Monday).
+      Feeds the seasonality bar beside chart 1.
+    columns:
+      - name: dow_iso
+        description: ISO weekday, 1 = Monday through 7 = Sunday; the sort key.
+        tests:
+          - not_null
+          - unique
+      - name: day_name
+        description: Weekday name derived from the pickup date.
+        tests:
+          - not_null
+      - name: trip_count
+        tests:
+          - not_null
+
   - name: gld_trips_hourly
     description: >
       Demand curve, hour-of-day grain. One row per pickup hour (0-23), summed
