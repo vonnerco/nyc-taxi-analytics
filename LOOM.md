@@ -82,8 +82,8 @@ View the bar on the right.
 
 **Data source:** `gld_payment_analysis`.
 
-### Downloads - all charts
-> For you own local data copy you can click "Export this view as CSV" button in any dashboard view.
+### Downloads - any chart
+> For your own local copy of the data, click **Export this view as CSV** in any chart.
 > Every view exports the frame it drew, straight from the gold layer.
 
 ## 1:30 - The build is the gate (40 s)
