@@ -99,8 +99,8 @@ Terminal at repo root:
 
 Highlight dbt last line of code `PASS=70 WARN=0 ERROR=0`.
 
-> A failing test stops the build, so the dashboard cannot be served from a broken
-> table.
+> The build is the quality gate. All fifty-eight tests run inside it, and a failing
+> test stops the build, so the dashboard cannot be served from a broken table.
 
 ## 2:10 - The layers (40 s)
 
