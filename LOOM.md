@@ -10,19 +10,18 @@ Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> edi
 
 ## 0:00 - Thanks, and what you will see (25 s)
 
-> Thanks for taking the time to watch. This is nine million NYC yellow taxi trips,
-> January to March 2024, on a dbt project over
-> DuckDB, with fifty-eight data tests.
+> Thanks for taking the time to watch. This is 9 million NYC yellow taxi trips dashboard,
+> from January to March 2024. I created this using dbt &
+> DuckDB. I've ran fifty-eight tests to ensure data quality.
 >
-> I'll start with the dashboard and what it shows, then run the build that produces
-> it, then open the models those numbers come from.
+> I'll start with the streamlit dashboard and what it shows, then i'll run the build that produces
+> the dashboard, then i'll open the bronze, silver & gold models the numbers come from.
 >
-> Every number you see comes from one gold table; the app only renders.
+> Every number you see comes from one gold table.
 
 ## 0:25 - Dashboard tour (65 s)
 
-Read the strip: 9,076,422 trips, $249.57M charged, 17.94% fare-weighted tip.
-
+> In Q1 2024 there were 9,076,422 trips, $249.57M charged & 17.94% fare-weighted tip.
 > The main chart answers "when is demand high". Three gold models back that
 > selector - one row per day, per ISO week, per hour of day - and the selector
 > swaps which table the chart reads. No aggregation happens in the app, so each
