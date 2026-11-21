@@ -38,7 +38,7 @@ Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> edi
 > swaps which table the chart reads. No aggregation happens in the app, so each
 > grain is testable on its own.
 
-### Trips volume over time Chart
+### Chart 1 - Trip volume over time
 Click Week, then Hour of day, then back to Day.
 
 > Day shows the weekly rhythm and the holiday dips, three of the busiest days annotated;
@@ -46,20 +46,20 @@ Click Week, then Hour of day, then back to Day.
 > just behind.
 
 
-### Busiest days of week Chart
+### Chart 2 - Busiest day of week
 View the bar on the right.
 
 > The weekday bar is its own model, one row per ISO weekday: Thursday is the
 > busiest day of the quarter, Monday is the quietest.
 
-### Pickup zones, Tip Rates & Payments Charts
+### Charts 3-6 - Top pickup zones / Tip rate by trip distance / Payment mix / Payment behaviour
 > Zones: the metric selector re-ranks by revenue, average fare or trip count, and
 > the slider covers five to thirty. The top-N slice lives in the app, so the model
 > keeps one row per zone. Tips are fare-weighted. Payments show mix and behaviour
 > together: card is 78% of trips at a 22.54% tip rate, cash 14% at zero because the
 > TLC records no cash tips, and Flex Fare - code 0 in the dictionary - 7% at 5.46%.
 
-### Downloads
+### Downloads - all charts
 > For you own local data copy you can click "Export this view as CSV" button in any dashboard view.
 > Every view exports the frame it drew, straight from the gold layer.
 
