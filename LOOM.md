@@ -69,9 +69,9 @@ View the bar on the right.
 **Data source:** `gld_tip_behavior`.
 
 ### Chart 5 - Payment mix
-> Payments show mix and behaviour together. The card is 78% of trips at a 22.54%
-> tip rate, cash 14% at zero because the TLC records no cash tips, and Flex Fare -
-> code 0 in the dictionary - 7% at 5.46%.
+> Payments show both mix and behaviour. Card accounts for 78% of trips at a
+> 22.54% tip rate. Cash is 14% with a 0% tip rate because the TLC records no cash
+> tips. Flex Fare - code 0 in the dictionary - is 7% at 5.46%.
 
 **Data source:** `gld_payment_analysis`.
 
