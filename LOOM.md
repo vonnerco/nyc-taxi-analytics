@@ -27,12 +27,15 @@ Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> edi
 > swaps which table the chart reads. No aggregation happens in the app, so each
 > grain is testable on its own.
 
-Click Week, then Hour of day, then back to Day.
+### Trips volume over time
+Demo Buttons Work: Click Week, then Hour of day, then back to Day.
 
 > Day shows the weekly rhythm and the holiday dips, three of the busiest days annotated;
 > Week compresses it to thirteen points; hour of day peaks at 18:00, with 17:00
 > just behind.
 
+
+### Busiest day of week
 Point at the bar on the right.
 
 > The weekday bar is its own model, one row per ISO weekday: Thursday is the
