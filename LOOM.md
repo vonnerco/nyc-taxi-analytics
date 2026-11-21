@@ -167,8 +167,8 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 > whether that command was allowed to finish. The chart was never the
 > **deliverable** - the pipeline behind it is, with exactly one place where
 > **every decision** lives and is checked on the way out. Repo, **generated docs**
-> and a live copy are all in the README - thanks for watching. One command,
-> **fifty-eight tests**, one home for every decision.
+> and a live copy are all in the README. One command, **fifty-eight tests**, one
+> home for every decision. Thanks for watching.
 
 ## Do not show on camera
 
