@@ -148,4 +148,5 @@ Open `models/gold/gld_payment_analysis.sql`.
    always with `https://`, since a bare domain does not auto-link in mail or chat.
    The repository homepage points at the live app; both are linked in the README.
 7. Docs tab open before the take on the 2:45 screen: docs site -> Project ->
-   models -> silver -> `slv_trips`, Columns visible. Then that beat is one Alt+Tab.
+   models -> silver -> `slv_trips`, Columns visible, `trip_id` row expanded. Then
+   that beat is one Alt+Tab.
