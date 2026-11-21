@@ -52,7 +52,7 @@ models:
   - name: gld_trips_by_dow
     description: >
       Volume by day of week. Grain: one row per ISO weekday (1 = Monday).
-      Feeds the seasonality bar beside chart 1.
+      Feeds chart 2.
     columns:
       - name: dow_iso
         description: ISO weekday, 1 = Monday through 7 = Sunday; the sort key.
@@ -84,7 +84,7 @@ models:
   - name: gld_revenue_by_zone
     description: >
       Revenue concentration by pickup zone. Grain: one row per pickup zone.
-      Feeds chart 2; the chart takes the top 10, the model keeps every zone.
+      Feeds chart 3; the chart takes the top N, the model keeps every zone.
     columns:
       - name: pickup_zone
         tests:
@@ -104,7 +104,7 @@ models:
   - name: gld_payment_analysis
     description: >
       Payment mix and behaviour. Grain: one row per payment type label.
-      Feeds chart 3 (bar = trip share, table = average fare and tip rate).
+      Feeds chart 5 (payment mix) and chart 6 (payment behaviour).
     columns:
       - name: payment_type
         tests:
@@ -136,5 +136,46 @@ models:
           - not_null
           - unique
       - name: tip_pct
+        tests:
+          - not_null
+  - name: gld_dashboard_facts
+    description: >
+      Shared fact cube for the interactive dashboard. Grain: one row per pickup
+      date x hour x ISO weekday x pickup zone x payment type x distance bucket.
+      The app filters this gold table and rolls it up to each chart grain so the
+      KPI strip and all charts respond to the same selections.
+    columns:
+      - name: pickup_date
+        tests:
+          - not_null
+      - name: pickup_hour
+        description: Hour of day, 0-23.
+        tests:
+          - not_null
+      - name: dow_iso
+        description: ISO weekday, 1 = Monday through 7 = Sunday.
+        tests:
+          - not_null
+      - name: pickup_zone
+        tests:
+          - not_null
+      - name: payment_type
+        tests:
+          - not_null
+      - name: distance_bucket
+        tests:
+          - not_null
+      - name: trip_count
+        tests:
+          - not_null
+      - name: total_revenue
+        tests:
+          - not_null
+      - name: fare_amount
+        description: Sum of metered fares; denominator for fare-weighted tip rates.
+        tests:
+          - not_null
+      - name: tip_amount
+        description: Sum of recorded tips; numerator for fare-weighted tip rates.
         tests:
           - not_null

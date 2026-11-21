@@ -41,14 +41,15 @@ fast rebuild while iterating on one model:
 - bronze: select * from the source only. No casts, filters or renames. It is
   materialized (not a view) so the DuckDB file is queryable from any directory.
 - silver: all typing, filtering, de-duplication, labels and derivations.
-- gold: exactly one grain per view, and no columns the view does not read.
-  Trip volume uses three grains (daily, weekly, hour of day); the app picks a
-  table, it never aggregates.
+- gold: the chart-specific models keep exactly one grain per view. Trip volume
+  uses three grains (daily, weekly, hour of day). The interactive app reads the
+  shared `gld_dashboard_facts` gold cube, filters it, and rolls it up to each
+  chart grain so all filters and charts stay in sync.
 - tests: yml tests for not_null / unique / accepted_values; singular tests in
   dbt_project/tests for assertions that span rows.
 - every number on the dashboard must come from a gold model, not silver.
 - never commit data/raw/, *.duckdb, .venv - they are gitignored. One exception:
-  data/demo/nyc_taxi_gold.duckdb (2 MB, the eight gold tables only) is committed
+  data/demo/nyc_taxi_gold.duckdb (22 MB, the nine gold tables only) is committed
   so the Streamlit Cloud demo runs without the 1.4 GB local build; regenerate it
   whenever the gold grain changes.
 - run dbt build after any model or test change; report the actual result.

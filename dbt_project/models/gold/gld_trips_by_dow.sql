@@ -1,4 +1,4 @@
--- Chart 1c: weekly seasonality. Grain: one row per ISO weekday (1 = Monday).
+-- Chart 2: weekly seasonality. Grain: one row per ISO weekday (1 = Monday).
 -- Kept as its own gold model so the app never aggregates; the bar reads it whole.
 {{ config(materialized='table') }}
 

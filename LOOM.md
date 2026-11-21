@@ -12,7 +12,7 @@ Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> edi
 
 > Thanks for taking the time to watch. This is 9 million NYC yellow taxi trips dashboard,
 > from January to March 2024. I created this using dbt,
-> DuckDB & streamlit. I've ran fifty-eight tests to ensure data quality.
+> DuckDB & streamlit. I've ran sixty-nine tests to ensure data quality.
 >
 > I'll start with the dashboard and what it shows, then i'll run the build that produces
 > the it, then i'll open the bronze, silver & gold models that the numbers come from.
@@ -21,7 +21,7 @@ Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> edi
 
 ## 0:25 - Dashboard tour (65 s)
 
-| # | Gold model | Streamlit dashboard element |
+| # | View-definition model | Streamlit dashboard element |
 |---|---|---|
 | KPI | `gld_trip_summary` | KPI strip: `Trips`, `Total charged`, `Tip rate (fare-weighted)` |
 | 1 | `gld_trips_daily` | `Trip volume over time` - Day line |
@@ -33,11 +33,14 @@ Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> edi
 | 5 | `gld_payment_analysis` | `Payment mix` bars |
 | 6 | `gld_payment_analysis` | `Payment behaviour` table |
 
+> Every interactive view reads one shared gold cube, `gld_dashboard_facts`. Its
+> date, payment, zone, distance, weekday and hour filters update the KPI strip and
+> every chart together. The row-level models named below are the tested grain
+> definitions behind each view.
+>
 > In Q1 2024 there were 9,076,422 trips, $249.57M charged & 17.94% fare-weighted tip.
-> The main chart answers **when is demand high**. Three gold models back that
-> selector - one row per day, per ISO week, per hour of day - and the selector
-> swaps which table the chart reads. No aggregation happens in the app, so each
-> grain is testable on its own.
+> The main chart answers **when is demand high**. Day, week and hour of day are
+> three grains in the cube; the selector rolls the cube up to the selected one.
 
 ### Chart 1 - Trip volume over time
 Click Week, then Hour of day, then back to Day.
@@ -46,7 +49,7 @@ Click Week, then Hour of day, then back to Day.
 > Week compresses it to thirteen points; hour of day peaks at 18:00, with 17:00
 > just behind.
 
-**Data source:** `gld_trips_daily` (Day), `gld_trips_weekly` (Week), `gld_trips_hourly` (Hour of day).
+**Data source:** `gld_dashboard_facts`; view definition: `gld_trips_daily` (Day), `gld_trips_weekly` (Week), `gld_trips_hourly` (Hour of day).
 
 ### Chart 2 - Busiest day of week
 View the bar on the right.
@@ -54,33 +57,33 @@ View the bar on the right.
 > The weekday bar is its own model, one row per ISO weekday: Thursday is the
 > busiest day of the quarter, Monday is the quietest.
 
-**Data source:** `gld_trips_by_dow`.
+**Data source:** `gld_dashboard_facts`; view definition: `gld_trips_by_dow`.
 
 ### Chart 3 - Top pickup zones
 > Zones: the metric selector re-ranks by revenue, average fare or trip count, and
 > the slider covers five to thirty. The top-N slice lives in the app, so the model
 > keeps one row per zone.
 
-**Data source:** `gld_revenue_by_zone`.
+**Data source:** `gld_dashboard_facts`; view definition: `gld_revenue_by_zone`.
 
 ### Chart 4 - Tip rate by trip distance
 > Tips are fare-weighted.
 
-**Data source:** `gld_tip_behavior`.
+**Data source:** `gld_dashboard_facts`; view definition: `gld_tip_behavior`.
 
 ### Chart 5 - Payment mix
 > Payments show the mix of payment types. Card accounts for 78% of trips, cash
 > 14%, and Flex Fare - payment-type code 0, a separate category from cash or card
 > - accounts for 7%.
 
-**Data source:** `gld_payment_analysis`.
+**Data source:** `gld_dashboard_facts`; view definition: `gld_payment_analysis`.
 
 ### Chart 6 - Payment behaviour
 > The table shows behaviour for that same gold row. Card has a 22.54% tip rate.
 > Cash records 0% because the New York City Taxi and Limousine Commission (TLC)
 > does not capture cash tips. Flex Fare is 5.46%.
 
-**Data source:** `gld_payment_analysis`.
+**Data source:** `gld_dashboard_facts`; view definition: `gld_payment_analysis`.
 
 ### Downloads - any chart
 > For your own local copy of the data, click **Export this view as CSV** in any chart.
@@ -94,12 +97,12 @@ Terminal at repo root:
     dbt build --profiles-dir .
 
 > Everything you just saw was produced by this one command - no hand-made tables.
-> It runs twelve models and fifty-eight tests in about twenty seconds over 9
-> million bronze rows. dbt counts each model and test, so the run ends at 70 of
-> 70. The build is the quality gate: a failing test stops it, so the dashboard
+> It runs thirteen models and sixty-nine tests in about twenty seconds over 9
+> million bronze rows. dbt counts each model and test, so the run ends at 82 of
+> 82. The build is the quality gate: a failing test stops it, so the dashboard
 > cannot be served from a broken table.
 
-Highlight dbt last line of code `PASS=70 WARN=0 ERROR=0`.
+Highlight dbt last line of code `PASS=82 WARN=0 ERROR=0`.
 
 ## 2:10 - The layers (40 s)
 
@@ -157,17 +160,17 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 > exclusions are opinionated and every view inherits them. Three grain models for
 > one chart cost three scans but keep each grain explicit and testable. DuckDB
 > instead of Snowflake is deliberate - no credentials on this machine, one profile
-> swap away, and the SQL stays portable. The hosted copy reads a 2 MB gold-only
+> swap away, and the SQL stays portable. The hosted copy reads a 22 MB gold-only
 > snapshot, so it runs without rebuilding the warehouse. No orchestration or CI,
 > because dbt build is the pipeline at this size.
 
 ## 4:25 - Close (30 s)
 
-> Every number you saw came from one command, and **fifty-eight tests** decided
+> Every number you saw came from one command, and **sixty-nine tests** decided
 > whether that command was allowed to finish. The chart was never the
 > **deliverable** - the pipeline behind it is, with exactly one place where
 > **every decision** lives and is checked on the way out. Repo, **generated docs**
-> and a live copy are all in the README. One command, **fifty-eight tests**, one
+> and a live copy are all in the README. One command, **sixty-nine tests**, one
 > home for every decision.
 >
 > Thanks for watching.
@@ -184,7 +187,7 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 1. `.venv` active (or call `.venv\Scripts\streamlit.exe` directly).
 2. `streamlit run streamlit/app.py` running and loaded once before the take.
-3. Terminal width > 100 columns so `PASS=70` is visible.
+3. Terminal width > 100 columns so `PASS=82` is visible.
 4. Second monitor closed; notifications off.
 5. `.streamlit/config.toml` pins the server to 127.0.0.1; do not override it.
 6. Published links: docs https://vonnerco.github.io/nyc-taxi-analytics/ and the

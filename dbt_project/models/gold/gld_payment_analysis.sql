@@ -1,4 +1,4 @@
--- Chart 3: payment mix and behaviour. One row per payment type label.
+-- Charts 5-6: payment mix and behaviour. One row per payment type label.
 -- tip_pct is fare-weighted; cash trips record no tip, so their 0.00 is a TLC
 -- property, not a rider statement.
 {{ config(materialized='table') }}

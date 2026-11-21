@@ -289,3 +289,30 @@ HTTP 200, live app HTTP 200, remote main matches local at ae8839b. Found the loc
 Streamlit server down and started it on 127.0.0.1:8501 (loopback only) so the
 recording can begin. LOOM.md ends at 4:55 against Loom's 5:00 cut. Open items are
 the recording itself and the submission email, both human steps.
+-------------------------------------------------------------------------------
+SESSION 4 - 2026-11-20  (repo access, Loom polish, interactive dashboard)
+
+2026-11-20T22:48:00-05:00  REPO ACCESS AND LOOM CHART MAP
+User: asked whether the GitHub repo was reachable, then had a series of edits made
+to LOOM.md - chart-to-model mapping, chart numbering and names, per-chart data
+sources, payment/Flex Fare wording, build-gate explanation, clearer silver steps,
+downloads wording and close emphasis.
+Did: verified SSH auth as vonnerco and pushed each change. Added the chart map,
+split the tour into charts 1-6, named each model source, explained the bronze
+copy and silver cleaning steps in plain language, clarified TLC/Flex Fare, moved
+"Thanks for watching" to its own final line, and kept the Streamlit build-details
+table in sync.
+
+2026-11-20T22:54:00-05:00  INTERACTIVE DASHBOARD, EVERYTHING IN SYNC
+User: asked for shared filters, chart cross-filtering and selection sync so
+everything responds together.
+Did: added gold model gld_dashboard_facts at date x hour x weekday x zone x
+payment x distance grain, plus ten not_null tests and a composite-grain
+uniqueness test. Rewrote streamlit/app.py to query that gold cube through six
+shared filters; Altair point selections and dataframe row selection now update
+the same filter state, so the KPI strip, every chart, the payment table and CSV
+exports all reflect the same slice. Added reset-all, active-filter summary,
+cache-safe parameterised DuckDB queries and demo fallback. Rebuilt 82/82 (13
+models, 69 tests), regenerated the 22 MB demo snapshot and dashboard screenshot,
+updated README/CLAUDE/LOOM counts and source mappings, and verified with AppTest
+plus Playwright clicks on bars, a line point and a payment-table row.

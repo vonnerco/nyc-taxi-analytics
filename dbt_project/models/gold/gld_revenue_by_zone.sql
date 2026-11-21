@@ -1,4 +1,4 @@
--- Chart 2: where the money is picked up. Grain: one row per pickup zone.
+-- Chart 3: where the money is picked up. Grain: one row per pickup zone.
 -- Top-N slicing belongs to the chart, not the model, so the grain stays
 -- total-per-zone while the chart can rank by revenue, average fare or trips.
 {{ config(materialized='table') }}

@@ -1,9 +1,9 @@
 # NYC Yellow Taxi Analytics - Q1 2024
 
-dbt over DuckDB, eight gold models, one Streamlit dashboard with a
-day/week/hour grain selector. Built as a 2-3 hour take-home; the bar is a
-pipeline a reviewer can clone and run from scratch, with every number on screen
-traceable to exactly one gold table.
+dbt over DuckDB, nine gold models, one interactive Streamlit dashboard with
+day/week/hour grain selection and cross-filtering. Built as a 2-3 hour take-home;
+the bar is a pipeline a reviewer can clone and run from scratch, with every number
+on screen traceable to gold.
 
 Live dashboard: https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app
 
@@ -14,7 +14,7 @@ Rendered model documentation: https://vonnerco.github.io/nyc-taxi-analytics/
 **App:** [vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app)
 
 The deployed copy reads the committed gold-only snapshot
-(`data/demo/nyc_taxi_gold.duckdb`, 2 MB) and says so in its "How this is built"
+(`data/demo/nyc_taxi_gold.duckdb`, 22 MB) and says so in its "How this is built"
 expander, so the hosted app needs no 1.4 GB build. Streamlit Cloud sleeps an idle
 app; the first load may take half a minute to wake. The quick start below builds
 the real pipeline locally.
@@ -43,7 +43,7 @@ Steps 4-5 are also wrapped in one PowerShell command:
 .\scripts\run_pipeline.ps1 -Select gold  # any dbt selection, same gate
 ```
 
-Data is not committed, except the 2 MB gold-only snapshot under `data/demo/` that
+Data is not committed, except the 22 MB gold-only snapshot under `data/demo/` that
 the hosted demo reads. `scripts/download_data.py` fetches the pinned quarter from
 the TLC CDN; everything else is reproducible from the repo.
 
@@ -63,9 +63,10 @@ gold     gld_trip_summary (1 row)      gld_trips_daily (91 rows)
          gld_trips_weekly (13 rows)    gld_trips_hourly (24 rows)
          gld_trips_by_dow (7 rows)     gld_revenue_by_zone
          gld_payment_analysis          gld_tip_behavior
-      |  read-only DuckDB, cached queries
+         gld_dashboard_facts (shared interactive cube)
+      |  read-only DuckDB, filtered queries
       v
-streamlit/app.py  (KPI strip + five views)
+streamlit/app.py  (KPI strip + five charts + payment table)
 ```
 
 Field descriptions in `sources.yml` are copied verbatim from the TLC dictionary
@@ -76,7 +77,8 @@ Bronze is a straight copy of the parquet with no casts or filters, so a reviewer
 can always diff it against the source. It is materialized because dbt-duckdb
 resolves the parquet path at query time: as a view it broke outside
 `dbt_project/`, and a self-contained `.duckdb` is worth the ~1.4 GB. Silver is
-the only place cleaning happens; gold is chart-shaped so the app holds no logic.
+the only place cleaning happens. Gold carries the chart-shaped models plus a
+shared fact cube; the app filters that gold cube and rolls it to each chart grain.
 
 ## Gold-to-view mapping
 
@@ -87,10 +89,14 @@ the only place cleaning happens; gold is chart-shaped so the app holds no logic.
 | Top pickup zones | Where is revenue concentrated? | `gld_revenue_by_zone` | one row per zone | `pickup_zone`, `trip_count`, `total_revenue`, `avg_fare` |
 | Payment mix | How do people pay, and how does behaviour differ? | `gld_payment_analysis` | one row per payment type | `trip_count`, `trip_share_pct`, `avg_fare`, `tip_pct` |
 | Tip by distance | Does distance change tipping? | `gld_tip_behavior` | one row per distance bucket | `distance_bucket`, `tip_pct` |
+| Interactive filters | Which trips feed every view? | `gld_dashboard_facts` | date x hour x weekday x zone x payment x distance | `trip_count`, `total_revenue`, `fare_amount`, `tip_amount` |
 
-The Day / Week / Hour-of-day selector swaps the gold table the chart reads; no
-aggregation happens in the app. Top-10 slicing lives in `app.py` so the zone
-model keeps its total-per-zone grain.
+The per-view models define and test each chart's grain. The interactive app
+reads `gld_dashboard_facts`, a gold cube at one row per date x hour x weekday x
+pickup zone x payment type x distance bucket, and rolls it up to the selected
+grain. The date, payment, zone, distance, weekday and hour filters apply to the
+KPI strip, every chart and every CSV export. Top-N slicing still lives in
+`app.py` so the zone definition keeps its total-per-zone grain.
 
 `tip_pct` is fare-weighted (`sum(tip) / sum(fare)`), not the mean of per-trip
 percentages: averaging percentages would let a thousand 50-cent tips outweigh
@@ -104,13 +110,14 @@ the long rides that actually carry the money.
 - Silver: `not_null` on the keys and measures, `accepted_values` on the
   payment label and borough so the CASE mapping cannot silently drift, and
   `not_null` + `unique` on the surrogate `trip_id`.
-- Gold: `not_null` + `unique` on every grain key, which is what makes each
-  view safe to read as one-row-per-category.
+- Gold: `not_null` + `unique` on every chart-model grain key. The interactive
+  cube has `not_null` tests on every dimension and measure plus a singular
+  composite-grain uniqueness test.
 - Singular tests (`dbt_project/tests/`): duration bounds, plausible pickup
   range (locks the pinned quarter), non-negative fares, and a populated,
   positive summary row.
 
-`dbt build` runs 58 tests; a failing test stops the build, so the dashboard
+`dbt build` runs 69 tests; a failing test stops the build, so the dashboard
 cannot be served from a broken table.
 
 ## Rendered documentation
@@ -137,11 +144,12 @@ model or description changes.
   passenger count, and dropping them would erase a payment type the brief asks us
   to analyse. The bounds keep 95.0% of bronze rows - GPS gaps, metered corrections,
   driver typos - and every view inherits that cut.
-- **Three grains for one chart.** Daily, weekly and hour-of-day are separate
-  gold tables, so each grain is testable and the app only picks a table. The
-  cost is three scans of silver and three models to keep; the alternative is a
-  day x hour model plus app-side resampling, which moves logic into the app and
-  blurs the grain the brief asks to define.
+- **One shared cube for interactivity.** The daily, weekly and hour-of-day
+  models stay separate so each view has an explicit tested grain. A fourth gold
+  table, `gld_dashboard_facts`, pre-aggregates date x hour x weekday x zone x
+  payment x distance so every chart can respond to the same filters without
+  touching silver. The cost is 1.19 M cube rows and app-side rollups; the gain
+  is true cross-filtering rather than six disconnected static charts.
 - **Cash trips show no tip.** The TLC records tips on card payments only, so
   the payment table shows 22.54% for cards and 0.00% for cash, and any tip
   conclusion is a statement about card trips, not all trips. Flex Fare reports
@@ -196,8 +204,9 @@ model or description changes.
 - **Silver grain and thresholds.** One cleaned trip row with a surrogate
   `trip_id`; the caps above. Every cap re-baselines every count and every test.
 - **Gold grains.** One row per day, per ISO week, per hour of day, per zone, per
-  payment type, per distance bucket, plus a single-row summary. Changing a grain
-  breaks its view and its tests together.
+  payment type, per distance bucket, plus a single-row summary. The shared
+  `gld_dashboard_facts` cube adds the interactive filter grain. Changing any
+  grain breaks its view and its tests together.
 
 ## How this meets the brief
 
@@ -206,20 +215,21 @@ model or description changes.
 | Public git repository | [github.com/vonnerco/nyc-taxi-analytics](https://github.com/vonnerco/nyc-taxi-analytics) (public, `main`) |
 | CLAUDE.md whose first prompt installs prompt logging | `CLAUDE.md`, rule "prompt log"; log is `prompts.txt` with ISO 8601 timestamps |
 | dbt project with bronze, silver, gold | `dbt_project/models/` |
-| Data quality tests and documentation | 58 tests, yml descriptions on every model and column, singular tests; rendered at [vonnerco.github.io/nyc-taxi-analytics](https://vonnerco.github.io/nyc-taxi-analytics/) |
-| Streamlit dashboard powered by gold | `streamlit/app.py`; every number reads a gold model; live at [streamlit.app](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app) |
+| Data quality tests and documentation | 69 tests, yml descriptions on every model and column, singular tests; rendered at [vonnerco.github.io/nyc-taxi-analytics](https://vonnerco.github.io/nyc-taxi-analytics/) |
+| Streamlit dashboard powered by gold | `streamlit/app.py`; every number reads a gold model, with interactive cross-filtering over `gld_dashboard_facts`; live at [streamlit.app](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app) |
 | Trip volume over time, day/week/hour, defined grain | `gld_trips_daily` / `_weekly` / `_hourly` + grain selector; `gld_trips_by_dow` for seasonality |
-| Revenue by pickup zone, metric, filter or sort | `gld_revenue_by_zone`, top 10 sorted by revenue |
+| Revenue by pickup zone, metric, filter or sort | `gld_revenue_by_zone`; top-N slider and revenue/average-fare/trip-count selector |
 | Payment type analysis of behaviour | `gld_payment_analysis`: share, average fare, fare-weighted tip |
 | One additional visualisation | `gld_tip_behavior` (tip rate by distance) |
 | Loom walkthrough | `LOOM.md` (script; video recorded from the running app) |
 
 ## Verified on this machine
 
-- `dbt build` - 70/70 pass (12 models, 58 tests), 11.3 s on 9,554,778 bronze rows.
+- `dbt build` - 82/82 pass (13 models, 69 tests), 17.2 s on 9,554,778 bronze rows.
 - Silver keeps 9,076,422 rows (95.0%); every gold row sums from that grain.
 - Streamlit `AppTest` - 0 exceptions, 5 charts, 1 table, grain selector with
-  three options; metrics 9,076,422 trips / $249.57M / 17.94% tip.
+  three options, six shared filters and chart-to-filter cross-filtering; metrics
+  9,076,422 trips / $249.57M / 17.94% tip.
 - Same `AppTest` with the full database moved aside - the app falls back to
   `data/demo/nyc_taxi_gold.duckdb` and still reports those metrics.
 - `screenshots/dashboard.png` - captured from the running app at 1440 px.
@@ -235,14 +245,14 @@ nyc-taxi-analytics/
   README.md
   requirements.txt
   data/raw/            downloaded, gitignored
-  data/demo/           gold-only snapshot (2 MB) the hosted demo reads
+  data/demo/           gold-only snapshot (22 MB) the hosted demo reads
   dbt_project/
     dbt_project.yml
     profiles.yml       relative DuckDB path, committed on purpose
     models/bronze/     sources.yml, brz_yellow_trips, brz_zones
     models/silver/     slv_trips, slv_zones (+ yml tests)
-    models/gold/       eight chart-shaped tables + gold.yml
-    tests/             four singular tests
+    models/gold/       eight chart-shaped tables, shared cube + gold.yml
+    tests/             five singular tests
   streamlit/app.py
   screenshots/
   scripts/download_data.py
