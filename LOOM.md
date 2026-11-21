@@ -60,10 +60,10 @@ Terminal at repo root:
     dbt build --profiles-dir .
 
 > Everything you just saw was produced by this one command - no hand-made tables.
-> Twelve models and fifty-eight tests in about twenty seconds over 9.5 million
+> Twelve models and fifty-eight tests in about twenty seconds over 9 million
 > bronze rows. dbt counts each model and test, so the run ends at 70 of 70.
 
-Point at `PASS=70 WARN=0 ERROR=0`.
+Highlight dbt last line of code `PASS=70 WARN=0 ERROR=0`.
 
 > A failing test stops the build, so the dashboard cannot be served from a broken
 > table.
@@ -74,23 +74,22 @@ Open `models/silver/slv_trips.sql`.
 
 > Bronze is a straight copy of the parquet - no casts, no filters, no renames - so
 > it diffs against the source column for column. Silver is the only place cleaning
-> happens: the types, the bounds - 1 to 180 minutes, 0.1 to 100 miles, non-negative
-> fares, 1 to 6 passengers with null allowed for Flex Fare - the pinned quarter,
+> happens: the types, the bounds - 1 to 180 minutes, .1 to 100 miles, non-negative
+> fares, 1 to 6 passengers with null allowed for Flex Fares - the pinned quarter,
 > de-duplication, the zone lookup, and a surrogate trip_id, md5 of the dedupe key,
-> tested not null and unique. It keeps 95.0% of bronze.
+> tested not null and unique. It keeps 95.0% of bronze data.
 
 ## 2:50 - The same model, as documentation (15 s)
 
-Alt+Tab to the published docs, already open on silver -> slv_trips, with the
-trip_id row expanded (the chevron in MORE? opens its description and its tests).
+View documents slv_trips with trip_id row expanded to see its description and its tests.
 
 > Same model, now as generated documentation. The description says what the grain
 > is; expanding trip_id shows the column description and the generic tests it
-> carries - not null and unique. dbt builds this page from the same yml the tests
-> run from, so the documentation cannot drift away from the code.
+> carries - **not null** & **unique**. dbt builds this page from the same yml the tests
+> run from, so the documentation can **never** drift away from the code.
 
-Note: the Constraints column stays empty because this project defines no database
-constraints; the tests live in the Data Tests column and in the expanded row. Do
+**Important Note**: the Constraints column stays empty because this project defines no database constraints
+the tests live in the Data Tests column and in the expanded row. Do
 not call them constraints on camera.
 
 Alt+Tab back to the editor.
