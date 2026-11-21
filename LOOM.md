@@ -8,9 +8,10 @@ All figures below are the verified Q1 2024 numbers.
 
 Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> editor.
 
-## 0:00 - What this is (20 s)
+## 0:00 - Thanks, and what you will see (25 s)
 
-> Nine million NYC yellow taxi trips, January to March 2024, on a dbt project over
+> Thanks for taking the time to watch. This is nine million NYC yellow taxi trips,
+> January to March 2024, on a dbt project over
 > DuckDB, with fifty-eight data tests.
 >
 > I'll start with the dashboard and what it shows, then run the build that produces
@@ -18,7 +19,7 @@ Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> edi
 >
 > Every number you see comes from one gold table; the app only renders.
 
-## 0:20 - Dashboard tour (65 s)
+## 0:25 - Dashboard tour (65 s)
 
 Read the strip: 9,076,422 trips, $249.57M charged, 17.94% fare-weighted tip.
 
@@ -50,7 +51,7 @@ Click one "Export this view as CSV" button.
 
 > Every view exports the frame it drew, straight from gold.
 
-## 1:25 - The build is the gate (40 s)
+## 1:30 - The build is the gate (40 s)
 
 Terminal at repo root:
 
@@ -66,7 +67,7 @@ Point at `PASS=70 WARN=0 ERROR=0`.
 > A failing test stops the build, so the dashboard cannot be served from a broken
 > table.
 
-## 2:05 - The layers (40 s)
+## 2:10 - The layers (40 s)
 
 Open `models/silver/slv_trips.sql`.
 
@@ -77,7 +78,7 @@ Open `models/silver/slv_trips.sql`.
 > de-duplication, the zone lookup, and a surrogate trip_id, md5 of the dedupe key,
 > tested not null and unique. It keeps 95.0% of bronze.
 
-## 2:45 - The same model, as documentation (15 s)
+## 2:50 - The same model, as documentation (15 s)
 
 Alt+Tab to the published docs, already open on silver -> slv_trips, with the
 trip_id row expanded (the chevron in MORE? opens its description and its tests).
@@ -93,7 +94,7 @@ not call them constraints on camera.
 
 Alt+Tab back to the editor.
 
-## 3:00 - Trace three numbers (40 s)
+## 3:05 - Trace three numbers (40 s)
 
 Open `models/gold/gld_tip_behavior.sql`.
 
@@ -112,7 +113,7 @@ Open `models/gold/gld_payment_analysis.sql`.
 > Share, average fare and tip rate on one row per payment type, so the bar and the
 > table read the same record.
 
-## 3:40 - Trade-offs (45 s)
+## 3:45 - Trade-offs (40 s)
 
 > One quarter, pinned: the brief allows one to three months, and a quarter is the
 > smallest span where the week grain is a trend rather than five points. Silver's
@@ -129,7 +130,8 @@ Open `models/gold/gld_payment_analysis.sql`.
 > whether that command was allowed to finish. The chart was never the deliverable -
 > the pipeline behind it is, with exactly one place where each decision lives and
 > is checked on the way out. Repo, generated docs and a live copy are all in the
-> README. One command, fifty-eight tests, one home for every decision.
+> README - thanks for watching. One command, fifty-eight tests, one home for
+> every decision.
 
 ## Do not show on camera
 
@@ -150,6 +152,6 @@ Open `models/gold/gld_payment_analysis.sql`.
    live app https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app -
    always with `https://`, since a bare domain does not auto-link in mail or chat.
    The repository homepage points at the live app; both are linked in the README.
-7. Docs tab open before the take on the 2:45 screen: docs site -> Project ->
+7. Docs tab open before the take on the 2:50 screen: docs site -> Project ->
    models -> silver -> `slv_trips`, Columns visible, `trip_id` row expanded. Then
    that beat is one Alt+Tab.
