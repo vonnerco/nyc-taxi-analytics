@@ -108,10 +108,12 @@ In local Zed editor open `models/silver/slv_trips.sql`.
 > Bronze preserves the raw parquet data as-is: no casts, filters, renames or
 > deduplication. It is loaded into DuckDB, but the data itself is unchanged, so it
 > diffs against the source column for column. Silver is the only place cleaning
-> happens: the types, the bounds - 1 to 180 minutes, .1 to 100 miles, non-negative
-> fares, 1 to 6 passengers with null allowed for Flex Fares - the pinned quarter,
-> de-duplication, the zone lookup, and a surrogate trip_id, md5 of the dedupe key,
-> tested not null and unique. It keeps 95.0% of bronze data.
+> happens. It converts the raw columns to proper types. It keeps trips from 1 to
+> 180 minutes and 0.1 to 100 miles, drops negative fares, and keeps 1 to 6
+> passengers - or null for Flex Fare. It limits the data to Q1 2024, removes
+> duplicate trips, joins the zone lookup for names, and creates a trip_id by
+> hashing the fields used to detect duplicates. dbt tests that ID for nulls and
+> uniqueness. About 95% of bronze rows survive.
 
 ## 2:50 - The same model, as documentation (15 s)
 
