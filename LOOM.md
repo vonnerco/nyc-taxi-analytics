@@ -22,7 +22,7 @@ Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> edi
 ## 0:25 - Dashboard tour (65 s)
 
 > In Q1 2024 there were 9,076,422 trips, $249.57M charged & 17.94% fare-weighted tip.
-> The main chart answers "when is demand high". Three gold models back that
+> The main chart answers **when is demand high**. Three gold models back that
 > selector - one row per day, per ISO week, per hour of day - and the selector
 > swaps which table the chart reads. No aggregation happens in the app, so each
 > grain is testable on its own.
@@ -49,9 +49,8 @@ View the bar on the right.
 > TLC records no cash tips, and Flex Fare - code 0 in the dictionary - 7% at 5.46%.
 
 ### Downloads
-For you own local data copy you can click "Export this view as CSV" button in any dashboard view.
-
-> Every view exports the frame it drew, straight from gold.
+> For you own local data copy you can click "Export this view as CSV" button in any dashboard view.
+> Every view exports the frame it drew, straight from the gold layer.
 
 ## 1:30 - The build is the gate (40 s)
 
