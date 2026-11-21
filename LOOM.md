@@ -55,8 +55,8 @@ Terminal at repo root:
     dbt build --profiles-dir .
 
 > Everything you just saw was produced by this one command - no hand-made tables.
-> Twelve models and fifty-eight tests in about ten to twenty seconds over 9.5
-> million bronze rows. dbt counts each model and test, so the run ends at 70 of 70.
+> Twelve models and fifty-eight tests in about twenty seconds over 9.5 million
+> bronze rows. dbt counts each model and test, so the run ends at 70 of 70.
 
 Point at `PASS=70 WARN=0 ERROR=0`.
 
