@@ -69,16 +69,16 @@ View the bar on the right.
 **Data source:** `gld_tip_behavior`.
 
 ### Chart 5 - Payment mix
-> Payments show both mix and behaviour. Card accounts for 78% of trips at a
-> 22.54% tip rate. Cash is 14% with a 0% tip rate because the New York City Taxi
-> and Limousine Commission (TLC) records no cash tips. Flex Fare is payment-type
-> code 0 - a separate payment category, not cash or card - and accounts for 7% of
-> trips at a 5.46% tip rate.
+> Payments show the mix of payment types. Card accounts for 78% of trips, cash
+> 14%, and Flex Fare - payment-type code 0, a separate category from cash or card
+> - accounts for 7%.
 
 **Data source:** `gld_payment_analysis`.
 
 ### Chart 6 - Payment behaviour
-> The table shows the behaviour half of that same gold row.
+> The table shows behaviour for that same gold row. Card has a 22.54% tip rate.
+> Cash records 0% because the New York City Taxi and Limousine Commission (TLC)
+> does not capture cash tips. Flex Fare is 5.46%.
 
 **Data source:** `gld_payment_analysis`.
 
