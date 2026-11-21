@@ -67,6 +67,19 @@ with st.expander("How this is built"):
         "weekly and hour-of-day trip volume, day-of-week seasonality, revenue by "
         "zone, tip rate by distance, and payment mix and behaviour."
     )
+    st.markdown(
+        "| # | Streamlit dashboard element | Gold model |\n"
+        "|---|---|---|\n"
+        "| KPI | KPI strip | `gld_trip_summary` |\n"
+        "| 1 | Trip volume over time - Day | `gld_trips_daily` |\n"
+        "| 1 | Trip volume over time - Week | `gld_trips_weekly` |\n"
+        "| 1 | Trip volume over time - Hour of day | `gld_trips_hourly` |\n"
+        "| 2 | Busiest day of week | `gld_trips_by_dow` |\n"
+        "| 3 | Top pickup zones | `gld_revenue_by_zone` |\n"
+        "| 4 | Tip rate by trip distance | `gld_tip_behavior` |\n"
+        "| 5 | Payment mix | `gld_payment_analysis` |\n"
+        "| 6 | Payment behaviour | `gld_payment_analysis` |"
+    )
     if USING_DEMO:
         st.markdown(
             "This hosted copy reads the committed gold-only snapshot (2 MB, the "
