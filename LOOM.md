@@ -10,14 +10,13 @@ Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> edi
 
 ## 0:00 - What this is (20 s)
 
-> Nine million NYC yellow taxi trips dashboard, January to March 2024, built as a
-> dbt project on DuckDB - bronze, silver, gold - with fifty-eight data tests.
+> Nine million NYC yellow taxi trips, January to March 2024, on a dbt project over
+> DuckDB, with fifty-eight data tests.
 >
-> Three things: the dashboard, the build that produces it, and the models behind
-> the numbers.
+> I'll start with the dashboard and what it shows, then run the build that produces
+> it, then open the models those numbers come from.
 >
-> Every number you are about to see is read from exactly one gold table. The app
-> renders; it never calculates.
+> Every number you see comes from one gold table; the app only renders.
 
 ## 0:20 - Dashboard tour (65 s)
 
