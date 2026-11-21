@@ -62,11 +62,7 @@ with st.expander("How this is built"):
         "(January-March 2024) and the taxi zone lookup. The gold tables are "
         "chart-shaped; this page only renders them, it never aggregates."
     )
-    st.markdown(
-        "One gold table per view: a single-row summary for the KPI strip, daily, "
-        "weekly and hour-of-day trip volume, day-of-week seasonality, revenue by "
-        "zone, tip rate by distance, and payment mix and behaviour."
-    )
+
     st.markdown(
         "| # | Streamlit dashboard element | Gold model |\n"
         "|---|---|---|\n"
