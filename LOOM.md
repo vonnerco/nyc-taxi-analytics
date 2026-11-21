@@ -10,7 +10,7 @@ Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> edi
 
 ## 0:00 - What this is (20 s)
 
-> Nine million NYC yellow taxi trips, January to March 2024, built as a dbt
+> Nine million NYC yellow taxi trips dashboard, January to March 2024, built as a dbt
 > project on DuckDB - bronze, silver, gold - with fifty-eight data tests. Every
 > number you are about to see is read from exactly one gold table. The app
 > renders; it never calculates.
