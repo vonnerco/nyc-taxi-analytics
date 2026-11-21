@@ -21,6 +21,17 @@ Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> edi
 
 ## 0:25 - Dashboard tour (65 s)
 
+| Gold model | Streamlit dashboard chart |
+|---|---|
+| `gld_trip_summary` | KPI strip: `Trips`, `Total charged`, `Tip rate (fare-weighted)` |
+| `gld_trips_daily` | `Trip volume over time` - Day line |
+| `gld_trips_weekly` | `Trip volume over time` - Week line |
+| `gld_trips_hourly` | `Trip volume over time` - Hour of day bars |
+| `gld_trips_by_dow` | `Busiest day of week` bars |
+| `gld_revenue_by_zone` | `Top pickup zones` bars |
+| `gld_tip_behavior` | `Tip rate by trip distance` bars |
+| `gld_payment_analysis` | `Payment mix` bars and `Payment behaviour` table |
+
 > In Q1 2024 there were 9,076,422 trips, $249.57M charged & 17.94% fare-weighted tip.
 > The main chart answers **when is demand high**. Three gold models back that
 > selector - one row per day, per ISO week, per hour of day - and the selector
