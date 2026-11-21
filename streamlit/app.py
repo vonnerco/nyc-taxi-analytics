@@ -143,7 +143,16 @@ else:
     unit = "pickup date" if grain == "Day" else "ISO week start (Monday)"
     caption = f"One row per {unit}; the line plots that grain directly."
     label = table
-    peaks = df.nlargest(3, "trip_count")
+    # Label the three busiest buckets, but skip any that sits within two days of
+    # an already chosen peak: adjacent dates put their labels on top of each other
+    # and read as one number.
+    chosen = []
+    for _, row in df.sort_values("trip_count", ascending=False).iterrows():
+        if all(abs((row["bucket"] - c["bucket"]).days) > 2 for c in chosen):
+            chosen.append(row)
+        if len(chosen) == 3:
+            break
+    peaks = pd.DataFrame(chosen)
     peak_labels = (
         alt.Chart(peaks)
         .mark_text(align="left", dx=6, dy=-8, fontSize=11)
