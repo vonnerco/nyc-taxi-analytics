@@ -163,12 +163,12 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 ## 4:25 - Close (30 s)
 
-> Every number you saw came from one command, and fifty-eight tests decided
-> whether that command was allowed to finish. The chart was never the deliverable -
-> the pipeline behind it is, with exactly one place where each decision lives and
-> is checked on the way out. Repo, generated docs and a live copy are all in the
-> README - thanks for watching. One command, fifty-eight tests, one home for
-> every decision.
+> Every number you saw came from one command, and **fifty-eight tests** decided
+> whether that command was allowed to finish. The chart was never the
+> **deliverable** - the pipeline behind it is, with exactly one place where
+> **every decision** lives and is checked on the way out. Repo, **generated docs**
+> and a live copy are all in the README - thanks for watching. One command,
+> **fifty-eight tests**, one home for every decision.
 
 ## Do not show on camera
 
