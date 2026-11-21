@@ -105,8 +105,9 @@ Highlight dbt last line of code `PASS=70 WARN=0 ERROR=0`.
 
 In local Zed editor open `models/silver/slv_trips.sql`.
 
-> Bronze is a straight copy of the parquet - no casts, no filters, no renames - so
-> it diffs against the source column for column. Silver is the only place cleaning
+> Bronze preserves the raw parquet data as-is: no casts, filters, renames or
+> deduplication. It is loaded into DuckDB, but the data itself is unchanged, so it
+> diffs against the source column for column. Silver is the only place cleaning
 > happens: the types, the bounds - 1 to 180 minutes, .1 to 100 miles, non-negative
 > fares, 1 to 6 passengers with null allowed for Flex Fares - the pinned quarter,
 > de-duplication, the zone lookup, and a surrogate trip_id, md5 of the dedupe key,
