@@ -94,13 +94,12 @@ Terminal at repo root:
     dbt build --profiles-dir .
 
 > Everything you just saw was produced by this one command - no hand-made tables.
-> Twelve models and fifty-eight tests in about twenty seconds over 9 million
-> bronze rows. dbt counts each model and test, so the run ends at 70 of 70.
+> It runs twelve models and fifty-eight tests in about twenty seconds over 9
+> million bronze rows. dbt counts each model and test, so the run ends at 70 of
+> 70. The build is the quality gate: a failing test stops it, so the dashboard
+> cannot be served from a broken table.
 
 Highlight dbt last line of code `PASS=70 WARN=0 ERROR=0`.
-
-> The build is the quality gate. All fifty-eight tests run inside it, and a failing
-> test stops the build, so the dashboard cannot be served from a broken table.
 
 ## 2:10 - The layers (40 s)
 
