@@ -276,3 +276,16 @@ Did: recommended one screen with three windows - the running app, a terminal at 
 repo root, and the editor - switching between them per the LOOM.md beats; noted the
 checklist constraints (1440 px browser, terminal >100 columns, second monitor
 closed, no prompts.txt content on camera). No files changed.
+
+2026-11-20T19:02:00-05:00  FINAL LOOM READINESS PASS (closing entry)
+User: asked for a final pass against "Technical AI Assessment — Data.pdf" before
+recording the Loom, then to log this closing entry.
+Did: read the 3-page PDF and checked it line by line - public repo, CLAUDE.md
+rule, bronze/silver/gold, tests and documentation, gold-powered Streamlit, the
+three required visuals plus the candidate-choice one, and the submission steps.
+Ran the checks rather than assuming: dbt build PASS=70 (12 models, 58 tests),
+AppTest Day/Week/Hour 0 exceptions with 9,076,422 / $249.57M / 17.94%, docs site
+HTTP 200, live app HTTP 200, remote main matches local at ae8839b. Found the local
+Streamlit server down and started it on 127.0.0.1:8501 (loopback only) so the
+recording can begin. LOOM.md ends at 4:55 against Loom's 5:00 cut. Open items are
+the recording itself and the submission email, both human steps.
