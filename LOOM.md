@@ -26,7 +26,7 @@ Read the strip: 9,076,422 trips, $249.57M charged, 17.94% fare-weighted tip.
 
 Click Week, then Hour of day, then back to Day.
 
-> Day shows the weekly rhythm and the holiday dips, top three peaks annotated;
+> Day shows the weekly rhythm and the holiday dips, three of the busiest days annotated;
 > Week compresses it to thirteen points; hour of day peaks at 18:00, with 17:00
 > just behind.
 

@@ -148,7 +148,7 @@ else:
     # and read as one number.
     chosen = []
     for _, row in df.sort_values("trip_count", ascending=False).iterrows():
-        if all(abs((row["bucket"] - c["bucket"]).days) > 2 for c in chosen):
+        if all(abs((row["bucket"] - c["bucket"]).days) > 9 for c in chosen):
             chosen.append(row)
         if len(chosen) == 3:
             break
