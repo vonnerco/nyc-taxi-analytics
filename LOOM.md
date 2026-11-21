@@ -76,17 +76,17 @@ Open `models/silver/slv_trips.sql`.
 
 ## 2:45 - The same model, as documentation (15 s)
 
-Alt+Tab to the published docs, already open on silver -> slv_trips, Columns
-visible. Point at the Description, then at the U and N badges beside `trip_id`.
+Alt+Tab to the published docs, already open on silver -> slv_trips, with the
+trip_id row expanded (the chevron in MORE? opens its description and its tests).
 
-> Same model, now as generated documentation: the description, then every column
-> with its type - and the test badges to the right: trip_id is unique and not
-> null, pickup_at is not null. dbt builds this page from the same yml the tests
-> run from, so it cannot drift from the code.
+> Same model, now as generated documentation. The description says what the grain
+> is; expanding trip_id shows the column description and the generic tests it
+> carries - not null and unique. dbt builds this page from the same yml the tests
+> run from, so the documentation cannot drift away from the code.
 
 Note: the Constraints column stays empty because this project defines no database
-constraints; the U (unique) and N (not null) marks live in the tests column, which
-is where they come from. Do not call them constraints on camera.
+constraints; the tests live in the Data Tests column and in the expanded row. Do
+not call them constraints on camera.
 
 Alt+Tab back to the editor.
 
