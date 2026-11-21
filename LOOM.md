@@ -27,7 +27,7 @@ Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> edi
 > swaps which table the chart reads. No aggregation happens in the app, so each
 > grain is testable on its own.
 
-### Trips volume over time
+### Trips volume over time Chart
 Click Week, then Hour of day, then back to Day.
 
 > Day shows the weekly rhythm and the holiday dips, three of the busiest days annotated;
@@ -35,13 +35,13 @@ Click Week, then Hour of day, then back to Day.
 > just behind.
 
 
-### Busiest days of week
+### Busiest days of week Chart
 View the bar on the right.
 
 > The weekday bar is its own model, one row per ISO weekday: Thursday is the
 > busiest day of the quarter, Monday is the quietest.
 
-### Pickup zones, Tip Rates & Payments
+### Pickup zones, Tip Rates & Payments Charts
 > Zones: the metric selector re-ranks by revenue, average fare or trip count, and
 > the slider covers five to thirty. The top-N slice lives in the app, so the model
 > keeps one row per zone. Tips are fare-weighted. Payments show mix and behaviour
@@ -70,7 +70,7 @@ Highlight dbt last line of code `PASS=70 WARN=0 ERROR=0`.
 
 ## 2:10 - The layers (40 s)
 
-Open `models/silver/slv_trips.sql`.
+In local Zed editor open `models/silver/slv_trips.sql`.
 
 > Bronze is a straight copy of the parquet - no casts, no filters, no renames - so
 > it diffs against the source column for column. Silver is the only place cleaning
@@ -81,7 +81,7 @@ Open `models/silver/slv_trips.sql`.
 
 ## 2:50 - The same model, as documentation (15 s)
 
-View documents slv_trips with trip_id row expanded to see its description and its tests.
+In dbt docs browser open the same documents slv_trips with trip_id row expanded to view its description and its tests.
 
 > Same model, now as generated documentation. The description says what the grain
 > is; expanding trip_id shows the column description and the generic tests it
@@ -92,11 +92,12 @@ View documents slv_trips with trip_id row expanded to see its description and it
 the tests live in the Data Tests column and in the expanded row. Do
 not call them constraints on camera.
 
-Alt+Tab back to the editor.
+After viewing dbt docs browser re-open Zed editor.
+--open gold model files--
 
 ## 3:05 - Trace three numbers (40 s)
 
-Open `models/gold/gld_tip_behavior.sql`.
+Open `models/gold/gld_tip_behavior.sql`. powers **chart 6**
 
 > One row per distance bucket. tip_pct is sum of tips over sum of fares, not an
 > average of per-trip percentages - otherwise a thousand 50-cent tips outweigh the
