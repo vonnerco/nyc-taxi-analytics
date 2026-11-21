@@ -77,12 +77,16 @@ Open `models/silver/slv_trips.sql`.
 ## 2:45 - The same model, as documentation (15 s)
 
 Alt+Tab to the published docs, already open on silver -> slv_trips, Columns
-visible. Point at the Description, then at the Constraints column.
+visible. Point at the Description, then at the U and N badges beside `trip_id`.
 
 > Same model, now as generated documentation: the description, then every column
-> with its type and its constraints - trip_id is unique and not null, pickup_at is
-> not null. dbt builds this page from the same yml the tests run from, so it cannot
-> drift from the code.
+> with its type - and the test badges to the right: trip_id is unique and not
+> null, pickup_at is not null. dbt builds this page from the same yml the tests
+> run from, so it cannot drift from the code.
+
+Note: the Constraints column stays empty because this project defines no database
+constraints; the U (unique) and N (not null) marks live in the tests column, which
+is where they come from. Do not call them constraints on camera.
 
 Alt+Tab back to the editor.
 
