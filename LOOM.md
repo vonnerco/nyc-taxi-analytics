@@ -133,19 +133,19 @@ After viewing dbt docs browser re-open Zed editor.
 
 ## 3:05 - Trace three numbers (40 s)
 
-Open `models/gold/gld_tip_behavior.sql`. powers **chart 6**
+Open `models/gold/gld_tip_behavior.sql`. Streamlit **Chart 4: Tip rate by trip distance**.
 
 > One row per distance bucket. tip_pct is sum of tips over sum of fares, not an
 > average of per-trip percentages - otherwise a thousand 50-cent tips outweigh the
 > long rides that carry the money. Cash trips record no tip, so this is a statement
 > about card trips.
 
-Open `models/gold/gld_revenue_by_zone.sql`.
+Open `models/gold/gld_revenue_by_zone.sql`. Streamlit **Chart 3: Top pickup zones**.
 
 > One row per zone: trips, revenue, average fare. The ranking and the top-N slice
 > are the chart's job, not the model's.
 
-Open `models/gold/gld_payment_analysis.sql`.
+Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix / Payment behaviour**.
 
 > Share, average fare and tip rate on one row per payment type, so the bar and the
 > table read the same record.
