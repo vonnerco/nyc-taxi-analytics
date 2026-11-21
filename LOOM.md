@@ -76,11 +76,13 @@ Open `models/silver/slv_trips.sql`.
 
 ## 2:45 - The same model, as documentation (15 s)
 
-Alt+Tab to the published docs, already open on silver -> slv_trips.
+Alt+Tab to the published docs, already open on silver -> slv_trips, Columns
+visible. Point at the Description, then at the Constraints column.
 
-> Same model as generated documentation: the description, the column types, and
-> the tests sitting on the columns they guard. dbt builds this page from the same
-> yml the tests run from, so the docs cannot drift away from the code.
+> Same model, now as generated documentation: the description, then every column
+> with its type and its constraints - trip_id is unique and not null, pickup_at is
+> not null. dbt builds this page from the same yml the tests run from, so it cannot
+> drift from the code.
 
 Alt+Tab back to the editor.
 
