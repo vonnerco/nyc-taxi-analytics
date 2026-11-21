@@ -46,6 +46,7 @@ Click Week, then Hour of day, then back to Day.
 > Week compresses it to thirteen points; hour of day peaks at 18:00, with 17:00
 > just behind.
 
+**Data source:** `gld_trips_daily` (Day), `gld_trips_weekly` (Week), `gld_trips_hourly` (Hour of day).
 
 ### Chart 2 - Busiest day of week
 View the bar on the right.
@@ -53,21 +54,31 @@ View the bar on the right.
 > The weekday bar is its own model, one row per ISO weekday: Thursday is the
 > busiest day of the quarter, Monday is the quietest.
 
+**Data source:** `gld_trips_by_dow`.
+
 ### Chart 3 - Top pickup zones
 > Zones: the metric selector re-ranks by revenue, average fare or trip count, and
 > the slider covers five to thirty. The top-N slice lives in the app, so the model
 > keeps one row per zone.
 
+**Data source:** `gld_revenue_by_zone`.
+
 ### Chart 4 - Tip rate by trip distance
 > Tips are fare-weighted.
+
+**Data source:** `gld_tip_behavior`.
 
 ### Chart 5 - Payment mix
 > Payments show mix and behaviour together: card is 78% of trips at a 22.54% tip
 > rate, cash 14% at zero because the TLC records no cash tips, and Flex Fare - code
 > 0 in the dictionary - 7% at 5.46%.
 
+**Data source:** `gld_payment_analysis`.
+
 ### Chart 6 - Payment behaviour
 > The table shows the behaviour half of that same gold row.
+
+**Data source:** `gld_payment_analysis`.
 
 ### Downloads - all charts
 > For you own local data copy you can click "Export this view as CSV" button in any dashboard view.
