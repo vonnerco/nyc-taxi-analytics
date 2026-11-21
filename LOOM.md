@@ -11,11 +11,11 @@ Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> edi
 ## 0:00 - Thanks, and what you will see (25 s)
 
 > Thanks for taking the time to watch. This is 9 million NYC yellow taxi trips dashboard,
-> from January to March 2024. I created this using dbt &
-> DuckDB. I've ran fifty-eight tests to ensure data quality.
+> from January to March 2024. I created this using dbt,
+> DuckDB & streamlit. I've ran fifty-eight tests to ensure data quality.
 >
-> I'll start with the streamlit dashboard and what it shows, then i'll run the build that produces
-> the dashboard, then i'll open the bronze, silver & gold models the numbers come from.
+> I'll start with the dashboard and what it shows, then i'll run the build that produces
+> the it, then i'll open the bronze, silver & gold models that the numbers come from.
 >
 > Every number you see comes from one gold table.
 
@@ -28,28 +28,28 @@ Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> edi
 > grain is testable on its own.
 
 ### Trips volume over time
-Demo Buttons Work: Click Week, then Hour of day, then back to Day.
+Click Week, then Hour of day, then back to Day.
 
 > Day shows the weekly rhythm and the holiday dips, three of the busiest days annotated;
 > Week compresses it to thirteen points; hour of day peaks at 18:00, with 17:00
 > just behind.
 
 
-### Busiest day of week
-Point at the bar on the right.
+### Busiest days of week
+View the bar on the right.
 
 > The weekday bar is its own model, one row per ISO weekday: Thursday is the
-> busiest day of the quarter, Monday the quietest.
+> busiest day of the quarter, Monday is the quietest.
 
-Scroll to zones, tips, payments.
-
+### Pickup zones, Tip Rates & Payments
 > Zones: the metric selector re-ranks by revenue, average fare or trip count, and
 > the slider covers five to thirty. The top-N slice lives in the app, so the model
 > keeps one row per zone. Tips are fare-weighted. Payments show mix and behaviour
 > together: card is 78% of trips at a 22.54% tip rate, cash 14% at zero because the
 > TLC records no cash tips, and Flex Fare - code 0 in the dictionary - 7% at 5.46%.
 
-Click one "Export this view as CSV" button.
+### Downloads
+For you own local data copy you can click "Export this view as CSV" button in any dashboard view.
 
 > Every view exports the frame it drew, straight from gold.
 
