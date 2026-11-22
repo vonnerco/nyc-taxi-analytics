@@ -17,7 +17,7 @@ Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> edi
 > I'll start with the dashboard, then i'll run the build that produces
 > it, then i'll open the **bronze**, **silver** & **gold** models that the numbers come from.
 >
-> Every number you see comes from one gold table.
+> Every number you see comes from one **gold** table.
 
 ## 0:25 - Dashboard tour (65 s)
 

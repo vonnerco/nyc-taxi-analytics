@@ -348,3 +348,9 @@ open the **bronze**, **silver** & **gold** models that the numbers come from." U
 the same ** ** emphasis the script already applies to **not null**, **unique** and the
 chart names, so it renders bold in Zed's preview and stays readable read aloud.
 Verified with git diff before committing and pushed to origin main.
+2026-11-22T17:17:00-05:00  LOOM OPENING, BOLD THE CLOSING LINE
+User: asked to make the last gold word bold, then push.
+Did: edited LOOM.md line 20 to "Every number you see comes from one **gold** table." - the final line of
+the 0:00 block, matching the emphasis already applied to the three layer names one
+line above. No other text changed. Verified with git diff before committing and
+pushed to origin main.
