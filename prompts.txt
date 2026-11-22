@@ -341,3 +341,10 @@ Did: edited LOOM.md line 18, turning "produces the it" into "produces it"; the
 sentence now reads "then i'll run the build that produces it, then i'll open the bronze,
 silver & gold models that the numbers come from." No other line changed. Verified
 with git diff before committing and pushed to origin main.
+2026-11-22T17:13:00-05:00  LOOM OPENING, BOLD THE LAYERS
+User: asked to make bronze, silver and gold bold, then push.
+Did: edited LOOM.md line 18 so the layers are emphasised in the script: "then i'll
+open the **bronze**, **silver** & **gold** models that the numbers come from." Used
+the same ** ** emphasis the script already applies to **not null**, **unique** and the
+chart names, so it renders bold in Zed's preview and stays readable read aloud.
+Verified with git diff before committing and pushed to origin main.
