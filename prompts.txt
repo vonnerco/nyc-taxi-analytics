@@ -335,3 +335,9 @@ Did: edited LOOM.md line 17 only, so the sentence now reads "I'll start with the
 dashboard, then i'll run the build that produces the it, then i'll open the bronze,
 silver & gold models that the numbers come from." Nothing else in the script moved.
 Verified with git diff before committing and pushed to origin main.
+2026-11-22T17:09:00-05:00  LOOM OPENING, FIX THE BUILD CLAUSE
+User: asked to remove the stray article from the build clause in the Loom opening, then push.
+Did: edited LOOM.md line 18, turning "produces the it" into "produces it"; the
+sentence now reads "then i'll run the build that produces it, then i'll open the bronze,
+silver & gold models that the numbers come from." No other line changed. Verified
+with git diff before committing and pushed to origin main.
