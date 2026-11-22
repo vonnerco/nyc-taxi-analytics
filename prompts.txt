@@ -316,3 +316,16 @@ cache-safe parameterised DuckDB queries and demo fallback. Rebuilt 82/82 (13
 models, 69 tests), regenerated the 22 MB demo snapshot and dashboard screenshot,
 updated README/CLAUDE/LOOM counts and source mappings, and verified with AppTest
 plus Playwright clicks on bars, a line point and a payment-table row.
+
+SESSION 5 - 2026-11-22  (Loom audio and opening trim)
+
+2026-11-22T17:01:00-05:00  LOOM OPENING TRIM
+User: asked to edit the Loom opening paragraph - drop "Thanks for taking the time
+to watch.", drop the "from" before "January to March 2024", use "This was created"
+instead of "I created", and write 69 rather than sixty-nine - then push.
+Did: edited only the 0:00 blockquote in LOOM.md (lines 13-15), leaving the rest of
+the script untouched; the section still reads "This is 9 million NYC yellow taxi
+trips dashboard, January to March 2024. This was created using dbt, DuckDB &
+streamlit. I've ran 69 tests to ensure data quality." Verified the diff with
+git diff before committing, then re-counted the paragraph: 29 spoken words, about
+13 s at the measured 138 wpm. Pushed to origin main.
