@@ -329,3 +329,9 @@ trips dashboard, January to March 2024. This was created using dbt, DuckDB &
 streamlit. I've ran 69 tests to ensure data quality." Verified the diff with
 git diff before committing, then re-counted the paragraph: 29 spoken words, about
 13 s at the measured 138 wpm. Pushed to origin main.
+2026-11-22T17:05:00-05:00  LOOM OPENING, DROP THE TOUR PREVIEW
+User: asked to remove "and what it shows" from the Loom opening's second paragraph, then push.
+Did: edited LOOM.md line 17 only, so the sentence now reads "I'll start with the
+dashboard, then i'll run the build that produces the it, then i'll open the bronze,
+silver & gold models that the numbers come from." Nothing else in the script moved.
+Verified with git diff before committing and pushed to origin main.
