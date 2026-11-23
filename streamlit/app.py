@@ -257,21 +257,25 @@ def active_filter_labels(filters: dict, min_date, max_date) -> list[str]:
             f"Dates: {filters['start']} to {filters['end']}"
         )
     if filters["payments"]:
-        labels.append("Payment: " + ", ".join(filters["payments"]))
+        labels.append("Payment: **" + ", ".join(filters["payments"]) + "**")
     if filters["zones"]:
         shown = ", ".join(filters["zones"][:2])
         if len(filters["zones"]) > 2:
             shown += f" +{len(filters['zones']) - 2}"
-        labels.append("Zone: " + shown)
+        labels.append("Zone: **" + shown + "**")
     if filters["distances"]:
-        labels.append("Distance: " + ", ".join(filters["distances"]))
+        labels.append("Distance: **" + ", ".join(filters["distances"]) + "**")
     if filters["dows"]:
         labels.append(
-            "Day: " + ", ".join(DOW_LABELS.get(int(v), str(v)) for v in filters["dows"])
+            "Day: **"
+            + ", ".join(DOW_LABELS.get(int(v), str(v)) for v in filters["dows"])
+            + "**"
         )
     if filters["hours"]:
         labels.append(
-            "Hour: " + ", ".join(f"{int(v):02d}:00" for v in filters["hours"])
+            "Hour: **"
+            + ", ".join(f"{int(v):02d}:00" for v in filters["hours"])
+            + "**"
         )
     return labels
 
@@ -498,11 +502,11 @@ active_labels = active_filter_labels(filters, metadata["min_date"], metadata["ma
 window = f"{start_date:%Y-%m-%d} to {end_date:%Y-%m-%d}"
 scope = [label for label in active_labels if not label.startswith("Dates:")]
 if scope:
-    view_text = f"Viewing: {window} · " + " · ".join(scope)
+    view_text = f"Viewing: **{window}** · " + " · ".join(scope)
 else:
-    view_text = f"Viewing: all trips, {window}"
+    view_text = f"Viewing: all trips, **{window}**"
 labels_col, reset_col = st.columns([5, 1])
-labels_col.markdown(f"**{view_text}**")
+labels_col.markdown(view_text)
 if active_labels:
     if reset_col.button("Reset filters", key="reset_filters_row"):
         st.session_state[RESET_FLAG] = True
