@@ -14,6 +14,12 @@ All figures below are the verified Q1 2024 numbers.
 
 Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> editor.
 
+Tooltip view on this machine: http://127.0.0.1:8000/LOOM.md - each narration block
+then shows a bold hover hint naming the screen to switch to. It needs the local
+file server running (`python serve.py "<repo>" 8000` from
+`%LOCALAPPDATA%\local-file-server`); the address only works on the machine that
+runs it, so it is not a link for readers of this file.
+
 </details>
 
 <details>
