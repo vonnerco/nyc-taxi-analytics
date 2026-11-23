@@ -787,6 +787,11 @@ with col2:
             selection_mode="pick",
             key="chart_tips",
         )
+        if not (tips["tip_pct"].fillna(0) > 0).any():
+            st.caption(
+                "Every bar is zero because cash trips record no tip: the TLC "
+                "does not capture cash tips."
+            )
         export_csv(tips, "tip_by_distance.csv", "Export this view as CSV")
         sync_filter(
             "chart_tips",
