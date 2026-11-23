@@ -194,10 +194,10 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 **Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Dashboard tab")
 
-> Every interactive view reads one shared gold cube, `gld_dashboard_facts`. Its
-> date, payment, zone, distance, weekday and hour filters update the KPI strip and
-> every chart together. The row-level models named below are the tested grain
-> definitions behind each view.
+> Every interactive view reads one shared gold table, `gld_dashboard_facts`, cut
+> as a cube: its date, payment, zone, distance, weekday and hour filters update the
+> KPI strip and every chart together. The row-level models named below are the
+> tested grain definitions behind each view.
 >
 > In Q1 2024 there were 9,076,422 trips, $249.57M charged & 17.94% fare-weighted tip.
 > The main chart answers **when is demand high**. Day, week and hour of day are
