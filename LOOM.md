@@ -199,7 +199,7 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 ---
 
-**Show:** [Chart 1](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Chart 1: Trip volume over time")
+**Show:** [Chart 1](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Trip volume over time")
 
 > Day shows the weekly rhythm and the holiday dips, three of the busiest days annotated;
 > Week compresses it to thirteen points; hour of day peaks at 18:00, with 17:00
@@ -207,14 +207,14 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 ---
 
-**Show:** [Chart 2](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Chart 2: Busiest day of week")
+**Show:** [Chart 2](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Busiest day of week")
 
 > The weekday bar is its own model, one row per ISO weekday: Thursday is the
 > busiest day of the quarter, Monday is the quietest.
 
 ---
 
-**Show:** [Chart 3](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Chart 3: Top pickup zones")
+**Show:** [Chart 3](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Top pickup zones")
 
 > Zones: the metric selector re-ranks by revenue, average fare or trip count, and
 > the slider covers five to thirty. The top-N slice lives in the app, so the model
@@ -222,13 +222,13 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 ---
 
-**Show:** [Chart 4](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Chart 4: Tip rate by trip distance")
+**Show:** [Chart 4](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tip rate by trip distance")
 
 > Tips are fare-weighted.
 
 ---
 
-**Show:** [Chart 5](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Chart 5: Payment mix")
+**Show:** [Chart 5](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Payment mix")
 
 > Payments show the mix of payment types. Card accounts for 78% of trips, cash
 > 14%, and Flex Fare - payment-type code 0, a separate category from cash or card
@@ -236,7 +236,7 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 ---
 
-**Show:** [Chart 6](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Chart 6: Payment behaviour")
+**Show:** [Chart 6](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Payment behaviour")
 
 > The table shows behaviour for that same gold row. Card has a 22.54% tip rate.
 > Cash records 0% because the New York City Taxi and Limousine Commission (TLC)
