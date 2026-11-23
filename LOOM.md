@@ -179,7 +179,7 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 ## Narration script
 
-**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Dashboard tab")
+**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Main Dashboard")
 
 > You are viewing a 9 million NYC yellow taxi trips dashboard,
 > from January to March 2024. I created this using dbt,
@@ -192,7 +192,7 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 ---
 
-**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Dashboard tab")
+**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Main Dashboard")
 
 > Every interactive view reads one shared gold table, `gld_dashboard_facts`, cut
 > as a cube: its date, payment, zone, distance, weekday and hour filters update the
@@ -306,7 +306,7 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 ---
 
-**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Dashboard tab")
+**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Main Dashboard")
 
 > One quarter, pinned: the brief allows one to three months, and a quarter is the
 > smallest span where the week grain is a trend rather than five points. Silver's
@@ -319,7 +319,7 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 ---
 
-**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Dashboard tab")
+**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Main Dashboard")
 
 > Every number you saw came from one command, and **sixty-nine tests** decided
 > whether that command was allowed to finish. The chart was never the
