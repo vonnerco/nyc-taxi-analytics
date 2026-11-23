@@ -498,11 +498,11 @@ active_labels = active_filter_labels(filters, metadata["min_date"], metadata["ma
 window = f"{start_date:%Y-%m-%d} to {end_date:%Y-%m-%d}"
 scope = [label for label in active_labels if not label.startswith("Dates:")]
 if scope:
-    view_text = f"**Viewing:** {window} · " + " · ".join(scope)
+    view_text = f"Viewing: {window} · " + " · ".join(scope)
 else:
-    view_text = f"**Viewing:** all trips, {window}"
+    view_text = f"Viewing: all trips, {window}"
 labels_col, reset_col = st.columns([5, 1])
-labels_col.markdown(view_text)
+labels_col.markdown(f"**{view_text}**")
 if active_labels:
     if reset_col.button("Reset filters", key="reset_filters_row"):
         st.session_state[RESET_FLAG] = True
