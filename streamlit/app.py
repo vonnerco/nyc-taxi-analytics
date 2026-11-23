@@ -429,32 +429,32 @@ right.metric("Tip rate (fare-weighted)", f"{tip_value:.2f}%")
 
 st.divider()
 
-st.subheader("Trip volume over time")
-grain = st.radio(
-    "Aggregation grain",
-    ["Day", "Week", "Hour of day"],
-    horizontal=True,
-    label_visibility="collapsed",
-    key="trip_grain",
-)
-grain_slug = grain.lower().replace(" ", "_")
-
-if grain == "Hour of day":
-    trip_df = query(
-        "select pickup_hour as bucket, sum(trip_count) as trip_count "
-        f"from gld_dashboard_facts{where} group by 1 order by 1",
-        params,
-    )
-else:
-    bucket = "pickup_date" if grain == "Day" else "date_trunc('week', pickup_date)"
-    trip_df = query(
-        f"select {bucket} as bucket, sum(trip_count) as trip_count "
-        f"from gld_dashboard_facts{where} group by 1 order by 1",
-        params,
-    )
-
 ts_col, dow_col = st.columns([2, 1])
 with ts_col:
+    st.subheader("Trip volume over time")
+    grain = st.radio(
+        "Aggregation grain",
+        ["Day", "Week", "Hour of day"],
+        horizontal=True,
+        label_visibility="collapsed",
+        key="trip_grain",
+    )
+    grain_slug = grain.lower().replace(" ", "_")
+
+    if grain == "Hour of day":
+        trip_df = query(
+            "select pickup_hour as bucket, sum(trip_count) as trip_count "
+            f"from gld_dashboard_facts{where} group by 1 order by 1",
+            params,
+        )
+    else:
+        bucket = "pickup_date" if grain == "Day" else "date_trunc('week', pickup_date)"
+        trip_df = query(
+            f"select {bucket} as bucket, sum(trip_count) as trip_count "
+            f"from gld_dashboard_facts{where} group by 1 order by 1",
+            params,
+        )
+
     if has_rows(trip_df, "Trip volume over time"):
         trip_selection = alt.selection_point(
             name="pick", fields=["bucket"], toggle=True
@@ -583,7 +583,6 @@ with dow_col:
             .add_params(dow_selection)
             .properties(height=320)
         )
-        st.caption("One row per ISO weekday. Click a bar to filter the dashboard.")
         dow_event = st.altair_chart(
             dow_chart,
             width="stretch",
@@ -591,6 +590,7 @@ with dow_col:
             selection_mode="pick",
             key="chart_dow",
         )
+        st.caption("One row per ISO weekday. Click a bar to filter the dashboard.")
         export_csv(dow_df, "trips_by_day_of_week.csv", "Export this view as CSV")
         sync_filter(
             "chart_dow",
