@@ -225,10 +225,9 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 **Show:** [Chart 3](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Top pickup zones")
 
 > Zones: the metric selector re-sorts the bars by **Total revenue**, **Average
-> fare** or **Trip count**, and the bar length becomes that same measure. The
-> slider chooses how many zones are shown - five to thirty, starting at fifteen.
-> Clicking a bar filters the whole dashboard to that zone; the tooltip carries all
-> three measures for the zone.
+> fare** or **Trip count**. The slider chooses how many zones are shown - five to
+> thirty, starting at fifteen. Clicking a bar filters the whole dashboard to that
+> zone; the tooltip carries all three measures for the zone.
 
 ---
 
