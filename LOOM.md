@@ -200,9 +200,9 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 > tested grain definitions behind each view.
 >
 > In Q1 2024 there were 9,076,422 trips, $249.57M charged & 17.94% fare-weighted tip.
-> The main chart answers **when is demand high**. Day, week and hour of day are
-> three grain filters on the cube; the selector rolls the cube up to the selected
-> one.
+> The main chart answers **when is demand high**. The Day filter, the Week filter
+> and the Hour of day filter are three grains of the same cube; choosing one rolls
+> the cube up to that grain.
 
 ---
 
