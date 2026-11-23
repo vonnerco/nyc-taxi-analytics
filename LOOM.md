@@ -173,6 +173,8 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 ## Narration script
 
+**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Dashboard tab")
+
 > This is a 9 million NYC yellow taxi trips dashboard,
 > January to March 2024. This was created using dbt,
 > DuckDB & streamlit. I've ran 69 tests to ensure data quality.
@@ -183,6 +185,8 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 > Every number you see comes from one **gold** table.
 
 ---
+
+**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Dashboard tab")
 
 > Every interactive view reads one shared gold cube, `gld_dashboard_facts`. Its
 > date, payment, zone, distance, weekday and hour filters update the KPI strip and
@@ -195,16 +199,22 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 ---
 
+**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Dashboard tab, Chart 1")
+
 > Day shows the weekly rhythm and the holiday dips, three of the busiest days annotated;
 > Week compresses it to thirteen points; hour of day peaks at 18:00, with 17:00
 > just behind.
 
 ---
 
+**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Dashboard tab, Chart 2")
+
 > The weekday bar is its own model, one row per ISO weekday: Thursday is the
 > busiest day of the quarter, Monday is the quietest.
 
 ---
+
+**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Dashboard tab, Chart 3")
 
 > Zones: the metric selector re-ranks by revenue, average fare or trip count, and
 > the slider covers five to thirty. The top-N slice lives in the app, so the model
@@ -212,9 +222,13 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 ---
 
+**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Dashboard tab, Chart 4")
+
 > Tips are fare-weighted.
 
 ---
+
+**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Dashboard tab, Chart 5")
 
 > Payments show the mix of payment types. Card accounts for 78% of trips, cash
 > 14%, and Flex Fare - payment-type code 0, a separate category from cash or card
@@ -222,16 +236,22 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 ---
 
+**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Dashboard tab, Chart 6")
+
 > The table shows behaviour for that same gold row. Card has a 22.54% tip rate.
 > Cash records 0% because the New York City Taxi and Limousine Commission (TLC)
 > does not capture cash tips. Flex Fare is 5.46%.
 
 ---
 
+**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Dashboard tab, any chart")
+
 > For your own local copy of the data, click **Export this view as CSV** in any chart.
 > Every view exports the frame it drew, straight from the gold layer.
 
 ---
+
+**Show:** [Terminal](http://127.0.0.1:7681 "Show the Terminal tab, run the build")
 
 > Everything you just saw was produced by this one command - no hand-made tables.
 > It runs thirteen models and sixty-nine tests in about twenty seconds over 9
@@ -240,6 +260,8 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 > cannot be served from a broken table.
 
 ---
+
+**Show:** [Silver](http://127.0.0.1:8000/dbt_project/models/silver/slv_trips.sql "Show the Silver tab: slv_trips.sql")
 
 > Bronze preserves the raw parquet data as-is: no casts, filters, renames or
 > deduplication. It is loaded into DuckDB, but the data itself is unchanged, so it
@@ -253,12 +275,16 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 ---
 
+**Show:** [Docs](https://vonnerco.github.io/nyc-taxi-analytics/ "Show the dbt docs tab, slv_trips with trip_id expanded")
+
 > Same model, now as generated documentation. The description says what the grain
 > is; expanding trip_id shows the column description and the generic tests it
 > carries - **not null** & **unique**. dbt builds this page from the same yml the tests
 > run from, so the documentation can **never** drift away from the code.
 
 ---
+
+**Show:** [Gold](http://127.0.0.1:8000/dbt_project/models/gold/gld_tip_behavior.sql "Show the Gold tabs, then the Dashboard chart")
 
 > One row per distance bucket. tip_pct is sum of tips over sum of fares, not an
 > average of per-trip percentages - otherwise a thousand 50-cent tips outweigh the
@@ -273,6 +299,8 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 ---
 
+**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Dashboard tab")
+
 > One quarter, pinned: the brief allows one to three months, and a quarter is the
 > smallest span where the week grain is a trend rather than five points. Silver's
 > exclusions are opinionated and every view inherits them. Three grain models for
@@ -283,6 +311,8 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 > because dbt build is the pipeline at this size.
 
 ---
+
+**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Dashboard tab")
 
 > Every number you saw came from one command, and **sixty-nine tests** decided
 > whether that command was allowed to finish. The chart was never the
