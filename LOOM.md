@@ -16,6 +16,23 @@ Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> edi
 ## Screen notes (not narrated)
 
 <details>
+<summary>Beat timings</summary>
+
+| Time | Beat | Length |
+|---|---|---|
+| 0:00 | Thanks, and what you will see | 25 s |
+| 0:25 | Dashboard tour | 65 s |
+| 0:25 | Charts 1-6 and downloads | inside the tour |
+| 1:30 | The build is the gate | 40 s |
+| 2:10 | The layers | 40 s |
+| 2:50 | The same model, as documentation | 15 s |
+| 3:05 | Trace three numbers | 40 s |
+| 3:45 | Trade-offs | 40 s |
+| 4:25 | Close | 30 s |
+
+</details>
+
+<details>
 <summary>0:25 - chart-to-model map</summary>
 
 | # | View-definition model | Streamlit dashboard element |
@@ -153,8 +170,6 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 ## Narration script
 
-**0:00 - Thanks, and what you will see (25 s)**
-
 > This is a 9 million NYC yellow taxi trips dashboard,
 > January to March 2024. This was created using dbt,
 > DuckDB & streamlit. I've ran 69 tests to ensure data quality.
@@ -164,7 +179,7 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 >
 > Every number you see comes from one **gold** table.
 
-**0:25 - Dashboard tour (65 s)**
+---
 
 > Every interactive view reads one shared gold cube, `gld_dashboard_facts`. Its
 > date, payment, zone, distance, weekday and hour filters update the KPI strip and
@@ -175,45 +190,45 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 > The main chart answers **when is demand high**. Day, week and hour of day are
 > three grains in the cube; the selector rolls the cube up to the selected one.
 
-**Chart 1 - Trip volume over time**
+---
 
 > Day shows the weekly rhythm and the holiday dips, three of the busiest days annotated;
 > Week compresses it to thirteen points; hour of day peaks at 18:00, with 17:00
 > just behind.
 
-**Chart 2 - Busiest day of week**
+---
 
 > The weekday bar is its own model, one row per ISO weekday: Thursday is the
 > busiest day of the quarter, Monday is the quietest.
 
-**Chart 3 - Top pickup zones**
+---
 
 > Zones: the metric selector re-ranks by revenue, average fare or trip count, and
 > the slider covers five to thirty. The top-N slice lives in the app, so the model
 > keeps one row per zone.
 
-**Chart 4 - Tip rate by trip distance**
+---
 
 > Tips are fare-weighted.
 
-**Chart 5 - Payment mix**
+---
 
 > Payments show the mix of payment types. Card accounts for 78% of trips, cash
 > 14%, and Flex Fare - payment-type code 0, a separate category from cash or card
 > - accounts for 7%.
 
-**Chart 6 - Payment behaviour**
+---
 
 > The table shows behaviour for that same gold row. Card has a 22.54% tip rate.
 > Cash records 0% because the New York City Taxi and Limousine Commission (TLC)
 > does not capture cash tips. Flex Fare is 5.46%.
 
-**Downloads - any chart**
+---
 
 > For your own local copy of the data, click **Export this view as CSV** in any chart.
 > Every view exports the frame it drew, straight from the gold layer.
 
-**1:30 - The build is the gate (40 s)**
+---
 
 > Everything you just saw was produced by this one command - no hand-made tables.
 > It runs thirteen models and sixty-nine tests in about twenty seconds over 9
@@ -221,7 +236,7 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 > 82. The build is the quality gate: a failing test stops it, so the dashboard
 > cannot be served from a broken table.
 
-**2:10 - The layers (40 s)**
+---
 
 > Bronze preserves the raw parquet data as-is: no casts, filters, renames or
 > deduplication. It is loaded into DuckDB, but the data itself is unchanged, so it
@@ -233,27 +248,27 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 > hashing the fields used to detect duplicates. dbt tests that ID for nulls and
 > uniqueness. About 95% of bronze rows survive.
 
-**2:50 - The same model, as documentation (15 s)**
+---
 
 > Same model, now as generated documentation. The description says what the grain
 > is; expanding trip_id shows the column description and the generic tests it
 > carries - **not null** & **unique**. dbt builds this page from the same yml the tests
 > run from, so the documentation can **never** drift away from the code.
 
-**3:05 - Trace three numbers (40 s)**
+---
 
 > One row per distance bucket. tip_pct is sum of tips over sum of fares, not an
 > average of per-trip percentages - otherwise a thousand 50-cent tips outweigh the
 > long rides that carry the money. Cash trips record no tip, so this is a statement
 > about card trips.
-
+>
 > One row per zone: trips, revenue, average fare. The ranking and the top-N slice
 > are the chart's job, not the model's.
-
+>
 > Share, average fare and tip rate on one row per payment type, so the bar and the
 > table read the same record.
 
-**3:45 - Trade-offs (40 s)**
+---
 
 > One quarter, pinned: the brief allows one to three months, and a quarter is the
 > smallest span where the week grain is a trend rather than five points. Silver's
@@ -264,7 +279,7 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 > snapshot, so it runs without rebuilding the warehouse. No orchestration or CI,
 > because dbt build is the pipeline at this size.
 
-**4:25 - Close (30 s)**
+---
 
 > Every number you saw came from one command, and **sixty-nine tests** decided
 > whether that command was allowed to finish. The chart was never the
