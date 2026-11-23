@@ -1,7 +1,7 @@
 """NYC Yellow Taxi dashboard: Q1 2024, interactive gold-cube views."""
 
 from collections.abc import Mapping
-from datetime import timedelta
+from datetime import date, timedelta
 from pathlib import Path
 
 import altair as alt
@@ -57,6 +57,57 @@ def has_rows(df: pd.DataFrame, label: str) -> bool:
         st.warning(f"{label} returned no rows for the current filters.")
         return False
     return True
+
+
+VIEW_SEPARATOR = "|"
+
+
+def view_from_params(params) -> dict:
+    """Decode the filter state kept in the URL, so a view can be bookmarked."""
+    view = {}
+    raw_dates = str(params.get("dates", ""))
+    if ":" in raw_dates:
+        start, end = raw_dates.split(":", 1)
+        try:
+            view["flt_dates"] = (date.fromisoformat(start), date.fromisoformat(end))
+        except ValueError:
+            pass
+    for key, param in (
+        ("flt_payments", "payments"),
+        ("flt_zones", "zones"),
+        ("flt_distances", "distances"),
+        ("flt_dows", "dows"),
+        ("flt_hours", "hours"),
+    ):
+        raw = str(params.get(param, ""))
+        items = [item for item in raw.split(VIEW_SEPARATOR) if item]
+        if not items:
+            continue
+        if key in ("flt_dows", "flt_hours"):
+            try:
+                items = [int(item) for item in items]
+            except ValueError:
+                continue
+        view[key] = items
+    return view
+
+
+def params_from_filters(filters: dict, min_date, max_date) -> dict:
+    """Encode the current filter state for the address bar."""
+    params = {}
+    if filters["start"] != min_date or filters["end"] != max_date:
+        params["dates"] = f"{filters['start']}:{filters['end']}"
+    for param, key in (
+        ("payments", "payments"),
+        ("zones", "zones"),
+        ("distances", "distances"),
+        ("dows", "dows"),
+        ("hours", "hours"),
+    ):
+        values = filters[key]
+        if values:
+            params[param] = VIEW_SEPARATOR.join(str(value) for value in values)
+    return params
 
 
 def export_csv(df: pd.DataFrame, filename: str, label: str) -> None:
@@ -313,6 +364,11 @@ if st.session_state.pop(RESET_FLAG, False):
             or key.startswith(CHART_KEY_PREFIX)
         ):
             del st.session_state[key]
+    st.query_params.clear()
+
+for key, value in view_from_params(st.query_params).items():
+    if key not in st.session_state:
+        st.session_state[key] = value
 
 pending = st.session_state.pop(PENDING_FILTERS, None)
 if pending:
@@ -382,7 +438,9 @@ with st.expander("Filters", expanded=True):
         )
     st.caption(
         "Click any bar, point or row to cross-filter every chart. Click it again "
-        "to clear that selection, or reset all filters."
+        "to clear that selection, or reset all filters. The address bar always "
+        "holds the current view, so a filtered dashboard can be bookmarked or "
+        "shared as a link."
     )
     if st.button("Reset all filters"):
         st.session_state[RESET_FLAG] = True
@@ -410,6 +468,13 @@ filters = {
     "hours": tuple(hour_value),
 }
 where, params = build_where(filters)
+desired_params = params_from_filters(filters, metadata["min_date"], metadata["max_date"])
+if {k: str(v) for k, v in st.query_params.items()} != {
+    k: str(v) for k, v in desired_params.items()
+}:
+    st.query_params.clear()
+    for key, value in desired_params.items():
+        st.query_params[key] = value
 active_labels = active_filter_labels(filters, metadata["min_date"], metadata["max_date"])
 window = f"{start_date:%Y-%m-%d} to {end_date:%Y-%m-%d}"
 scope = [label for label in active_labels if not label.startswith("Dates:")]
