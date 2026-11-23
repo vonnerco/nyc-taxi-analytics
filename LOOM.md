@@ -10,7 +10,7 @@ Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> edi
 
 ## 0:00 - Thanks, and what you will see (25 s)
 
-> This is 9 million NYC yellow taxi trips dashboard,
+> This is a 9 million NYC yellow taxi trips dashboard,
 > January to March 2024. This was created using dbt,
 > DuckDB & streamlit. I've ran 69 tests to ensure data quality.
 >
