@@ -210,7 +210,7 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 > Day shows the weekly rhythm and the holiday dips; Week compresses it to thirteen
 > points; hour of day breaks the view into a 24 hour period, with 1800 hrs being
-> the peak of the day.
+> the peak of the day and over 657 thousand trips taken.
 
 ---
 
