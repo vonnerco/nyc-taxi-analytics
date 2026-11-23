@@ -404,14 +404,18 @@ filters = {
 }
 where, params = build_where(filters)
 active_labels = active_filter_labels(filters, metadata["min_date"], metadata["max_date"])
+window = f"{start_date:%Y-%m-%d} to {end_date:%Y-%m-%d}"
+scope = [label for label in active_labels if not label.startswith("Dates:")]
+if scope:
+    view_text = f"**Viewing:** {window} · " + " · ".join(scope)
+else:
+    view_text = f"**Viewing:** all trips, {window}"
+labels_col, reset_col = st.columns([5, 1])
+labels_col.markdown(view_text)
 if active_labels:
-    labels_col, reset_col = st.columns([5, 1])
-    labels_col.markdown("**Active filters:** " + " · ".join(active_labels))
     if reset_col.button("Reset filters", key="reset_filters_row"):
         st.session_state[RESET_FLAG] = True
         st.rerun()
-else:
-    st.caption("Showing all trips in the pinned Q1 2024 window.")
 
 kpi = query(
     "select "
