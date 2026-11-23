@@ -30,6 +30,7 @@ FILTER_KEYS = (
 PENDING_FILTERS = "_pending_filter_updates"
 RESET_FLAG = "_reset_filters"
 CHART_KEY_PREFIX = "chart_"
+CHART_RESET = "_chart_filter_reset"
 
 DOW_LABELS = {
     1: "Monday",
@@ -60,6 +61,16 @@ def has_rows(df: pd.DataFrame, label: str) -> bool:
 
 
 VIEW_SEPARATOR = "|"
+
+
+def reset_chart_filter(targets: dict, chart_keys: tuple = ()) -> None:
+    """Clear one chart's filter without touching the rest of the dashboard.
+
+    Runs at the top of the next script run, before the filter widgets exist,
+    because their session keys cannot be written once instantiated.
+    """
+    st.session_state[CHART_RESET] = {"targets": targets, "charts": tuple(chart_keys)}
+    st.rerun()
 
 
 def view_from_params(params) -> dict:
@@ -370,6 +381,14 @@ for key, value in view_from_params(st.query_params).items():
     if key not in st.session_state:
         st.session_state[key] = value
 
+chart_reset = st.session_state.pop(CHART_RESET, None)
+if chart_reset:
+    for key, value in chart_reset["targets"].items():
+        st.session_state[key] = value
+    for chart_key in chart_reset["charts"]:
+        st.session_state.pop(chart_key, None)
+        st.session_state.pop(f"_last_selection_{chart_key}", None)
+
 pending = st.session_state.pop(PENDING_FILTERS, None)
 if pending:
     category_pick = any(
@@ -535,6 +554,18 @@ with ts_col:
             params,
         )
 
+    if st.session_state.get("flt_hours") or st.session_state.get(
+        "flt_dates"
+    ) != (metadata["min_date"], metadata["max_date"]):
+        if st.button("Clear this chart's filter", key="reset_trip"):
+            reset_chart_filter(
+                {
+                    "flt_hours": [],
+                    "flt_dates": (metadata["min_date"], metadata["max_date"]),
+                },
+                ("chart_trip_day", "chart_trip_week", "chart_trip_hour_of_day"),
+            )
+
     if has_rows(trip_df, "Trip volume over time"):
         trip_selection = alt.selection_point(
             name="pick", fields=["bucket"], toggle=True
@@ -641,6 +672,10 @@ with dow_col:
         f"from gld_dashboard_facts{where} group by 1, 2 order by 1",
         params,
     )
+    if st.session_state.get("flt_dows"):
+        if st.button("Clear this chart's filter", key="reset_dow"):
+            reset_chart_filter({"flt_dows": []}, ("chart_dow",))
+
     if has_rows(dow_df, "Busiest day of week"):
         dow_selection = alt.selection_point(
             name="pick", fields=["dow_iso"], toggle=True
@@ -705,6 +740,10 @@ with col1:
         params + (top_n,),
     )
     st.caption(f"One row per zone; top {top_n} by {metric_label.lower()}")
+    if st.session_state.get("flt_zones"):
+        if st.button("Clear this chart's filter", key="reset_zones"):
+            reset_chart_filter({"flt_zones": []}, ("chart_zones",))
+
     if has_rows(zones, "Top pickup zones"):
         zone_selection = alt.selection_point(
             name="pick", fields=["pickup_zone"], toggle=True
@@ -758,6 +797,10 @@ with col2:
         "when '5-10 mi' then 4 else 5 end",
         params,
     )
+    if st.session_state.get("flt_distances"):
+        if st.button("Clear this chart's filter", key="reset_tips"):
+            reset_chart_filter({"flt_distances": []}, ("chart_tips",))
+
     if has_rows(tips, "Tip rate by trip distance"):
         tips_selection = alt.selection_point(
             name="pick", fields=["distance_bucket"], toggle=True
@@ -815,6 +858,10 @@ with col3:
         "order by trip_count desc",
         params,
     )
+    if st.session_state.get("flt_payments"):
+        if st.button("Clear this chart's filter", key="reset_payments"):
+            reset_chart_filter({"flt_payments": []}, ("chart_payments",))
+
     if has_rows(payments, "Payment mix"):
         payment_selection = alt.selection_point(
             name="pick", fields=["payment_type"], toggle=True
@@ -860,6 +907,10 @@ with col3:
 with col4:
     st.subheader("Payment behaviour")
     st.caption("Same gold row, behaviour columns; select a row to filter")
+    if st.session_state.get("flt_payments"):
+        if st.button("Clear this chart's filter", key="reset_behaviour"):
+            reset_chart_filter({"flt_payments": []}, ("chart_payment_behaviour",))
+
     if has_rows(payments, "Payment behaviour"):
         display = payments.assign(
             Trips=payments.trip_count.map(lambda v: f"{v:,}"),
