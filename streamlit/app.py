@@ -316,6 +316,13 @@ if st.session_state.pop(RESET_FLAG, False):
 
 pending = st.session_state.pop(PENDING_FILTERS, None)
 if pending:
+    category_pick = any(
+        key != "flt_dates" and value for key, value in pending.items()
+    )
+    if category_pick:
+        # A bar pick shows every day it was drawn from, so start it from the
+        # full window instead of whatever single day the date chart left behind.
+        pending["flt_dates"] = (metadata["min_date"], metadata["max_date"])
     for key, value in pending.items():
         st.session_state[key] = value
 
