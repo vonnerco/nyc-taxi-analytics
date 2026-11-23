@@ -208,9 +208,10 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 **Show:** [Chart 1](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Trip volume over time - Day filter")
 
-> Day shows the weekly rhythm and the holiday dips; Week compresses it to thirteen
-> points; hour of day breaks the view into a 24 hour period, with 1800 hrs being
-> the peak of the day and over 657 thousand trips taken.
+> The Day filter shows the weekly rhythm and the holiday dips; the Week filter
+> compresses it to thirteen points; the Hour of day filter breaks the view into a
+> 24 hour period, with 1800 hrs being the peak of the day and over 657 thousand
+> trips taken.
 
 ---
 
