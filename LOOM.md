@@ -181,7 +181,7 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 **Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Dashboard tab")
 
-> This is a 9 million NYC yellow taxi trips dashboard,
+> You are watching - this is a 9 million NYC yellow taxi trips dashboard,
 > January to March 2024. This was created using dbt,
 > DuckDB & streamlit. I've ran 69 tests to ensure data quality.
 >
