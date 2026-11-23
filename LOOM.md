@@ -13,30 +13,10 @@ Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> edi
 
 </details>
 
-## 0:00 - Thanks, and what you will see (25 s)
-
-> This is a 9 million NYC yellow taxi trips dashboard,
-> January to March 2024. This was created using dbt,
-> DuckDB & streamlit. I've ran 69 tests to ensure data quality.
->
-> I'll start with the dashboard, then i'll run the build that produces
-> it, then i'll open the **bronze**, **silver** & **gold** models that the numbers come from.
->
-> Every number you see comes from one **gold** table.
-
-## 0:25 - Dashboard tour (65 s)
-
-> Every interactive view reads one shared gold cube, `gld_dashboard_facts`. Its
-> date, payment, zone, distance, weekday and hour filters update the KPI strip and
-> every chart together. The row-level models named below are the tested grain
-> definitions behind each view.
->
-> In Q1 2024 there were 9,076,422 trips, $249.57M charged & 17.94% fare-weighted tip.
-> The main chart answers **when is demand high**. Day, week and hour of day are
-> three grains in the cube; the selector rolls the cube up to the selected one.
+## Screen notes (not narrated)
 
 <details>
-<summary>Chart-to-model map (not narrated)</summary>
+<summary>0:25 - chart-to-model map</summary>
 
 | # | View-definition model | Streamlit dashboard element |
 |---|---|---|
@@ -52,14 +32,8 @@ Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> edi
 
 </details>
 
-### Chart 1 - Trip volume over time
-
-> Day shows the weekly rhythm and the holiday dips, three of the busiest days annotated;
-> Week compresses it to thirteen points; hour of day peaks at 18:00, with 17:00
-> just behind.
-
 <details>
-<summary>Cue (not narrated)</summary>
+<summary>0:25 Chart 1 - Trip volume over time, cue and data source</summary>
 
 Click Week, then Hour of day, then back to Day.
 
@@ -67,13 +41,8 @@ Click Week, then Hour of day, then back to Day.
 
 </details>
 
-### Chart 2 - Busiest day of week
-
-> The weekday bar is its own model, one row per ISO weekday: Thursday is the
-> busiest day of the quarter, Monday is the quietest.
-
 <details>
-<summary>Cue (not narrated)</summary>
+<summary>0:25 Chart 2 - Busiest day of week, cue and data source</summary>
 
 View the bar on the right.
 
@@ -81,71 +50,36 @@ View the bar on the right.
 
 </details>
 
-### Chart 3 - Top pickup zones
-
-> Zones: the metric selector re-ranks by revenue, average fare or trip count, and
-> the slider covers five to thirty. The top-N slice lives in the app, so the model
-> keeps one row per zone.
-
 <details>
-<summary>Data source (not narrated)</summary>
+<summary>0:25 Chart 3 - Top pickup zones, data source</summary>
 
 **Data source:** `gld_dashboard_facts`; view definition: `gld_revenue_by_zone`.
 
 </details>
 
-### Chart 4 - Tip rate by trip distance
-
-> Tips are fare-weighted.
-
 <details>
-<summary>Data source (not narrated)</summary>
+<summary>0:25 Chart 4 - Tip rate by trip distance, data source</summary>
 
 **Data source:** `gld_dashboard_facts`; view definition: `gld_tip_behavior`.
 
 </details>
 
-### Chart 5 - Payment mix
-
-> Payments show the mix of payment types. Card accounts for 78% of trips, cash
-> 14%, and Flex Fare - payment-type code 0, a separate category from cash or card
-> - accounts for 7%.
-
 <details>
-<summary>Data source (not narrated)</summary>
+<summary>0:25 Chart 5 - Payment mix, data source</summary>
 
 **Data source:** `gld_dashboard_facts`; view definition: `gld_payment_analysis`.
 
 </details>
 
-### Chart 6 - Payment behaviour
-
-> The table shows behaviour for that same gold row. Card has a 22.54% tip rate.
-> Cash records 0% because the New York City Taxi and Limousine Commission (TLC)
-> does not capture cash tips. Flex Fare is 5.46%.
-
 <details>
-<summary>Data source (not narrated)</summary>
+<summary>0:25 Chart 6 - Payment behaviour, data source</summary>
 
 **Data source:** `gld_dashboard_facts`; view definition: `gld_payment_analysis`.
 
 </details>
 
-### Downloads - any chart
-
-> For your own local copy of the data, click **Export this view as CSV** in any chart.
-> Every view exports the frame it drew, straight from the gold layer.
-
-## 1:30 - The build is the gate (40 s)
-
-> Everything you just saw was produced by this one command - no hand-made tables.
-> It runs thirteen models and sixty-nine tests in about twenty seconds over 9
-> million bronze rows. dbt counts each model and test, so the run ends at 82 of
-> 82. The build is the quality gate: a failing test stops it, so the dashboard
-> cannot be served from a broken table.
-
 <details>
-<summary>Terminal cue and highlight (not narrated)</summary>
+<summary>1:30 - terminal commands and highlight</summary>
 
 Terminal at repo root:
 
@@ -156,34 +90,15 @@ Highlight dbt last line of code `PASS=82 WARN=0 ERROR=0`.
 
 </details>
 
-## 2:10 - The layers (40 s)
-
-> Bronze preserves the raw parquet data as-is: no casts, filters, renames or
-> deduplication. It is loaded into DuckDB, but the data itself is unchanged, so it
-> diffs against the source column for column. Silver is the only place cleaning
-> happens. It converts the raw columns to proper types. It keeps trips from 1 to
-> 180 minutes and 0.1 to 100 miles, drops negative fares, and keeps 1 to 6
-> passengers - or null for Flex Fare. It limits the data to Q1 2024, removes
-> duplicate trips, joins the zone lookup for names, and creates a trip_id by
-> hashing the fields used to detect duplicates. dbt tests that ID for nulls and
-> uniqueness. About 95% of bronze rows survive.
-
 <details>
-<summary>Cue (not narrated)</summary>
+<summary>2:10 - open `models/silver/slv_trips.sql` in Zed</summary>
 
 In local Zed editor open `models/silver/slv_trips.sql`.
 
 </details>
 
-## 2:50 - The same model, as documentation (15 s)
-
-> Same model, now as generated documentation. The description says what the grain
-> is; expanding trip_id shows the column description and the generic tests it
-> carries - **not null** & **unique**. dbt builds this page from the same yml the tests
-> run from, so the documentation can **never** drift away from the code.
-
 <details>
-<summary>Cue: dbt docs, `slv_trips`, `trip_id` row expanded (not narrated)</summary>
+<summary>2:50 - dbt docs cue, `slv_trips`, `trip_id` expanded</summary>
 
 In dbt docs browser open the same documents slv_trips with trip_id row expanded to view its description and its tests.
 
@@ -196,63 +111,16 @@ After viewing dbt docs browser re-open Zed editor.
 
 </details>
 
-## 3:05 - Trace three numbers (40 s)
-
-> One row per distance bucket. tip_pct is sum of tips over sum of fares, not an
-> average of per-trip percentages - otherwise a thousand 50-cent tips outweigh the
-> long rides that carry the money. Cash trips record no tip, so this is a statement
-> about card trips.
-
 <details>
-<summary>Cue: `models/gold/gld_tip_behavior.sql` + Streamlit Chart 4 (not narrated)</summary>
+<summary>3:05 - open the three gold models</summary>
 
 Open `models/gold/gld_tip_behavior.sql`. Streamlit **Chart 4: Tip rate by trip distance**.
 
-</details>
-
-> One row per zone: trips, revenue, average fare. The ranking and the top-N slice
-> are the chart's job, not the model's.
-
-<details>
-<summary>Cue: `models/gold/gld_revenue_by_zone.sql` + Streamlit Chart 3 (not narrated)</summary>
-
 Open `models/gold/gld_revenue_by_zone.sql`. Streamlit **Chart 3: Top pickup zones**.
-
-</details>
-
-> Share, average fare and tip rate on one row per payment type, so the bar and the
-> table read the same record.
-
-<details>
-<summary>Cue: `models/gold/gld_payment_analysis.sql` + Streamlit Charts 5-6 (not narrated)</summary>
 
 Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix / Payment behaviour**.
 
 </details>
-
-## 3:45 - Trade-offs (40 s)
-
-> One quarter, pinned: the brief allows one to three months, and a quarter is the
-> smallest span where the week grain is a trend rather than five points. Silver's
-> exclusions are opinionated and every view inherits them. Three grain models for
-> one chart cost three scans but keep each grain explicit and testable. DuckDB
-> instead of Snowflake is deliberate - no credentials on this machine, one profile
-> swap away, and the SQL stays portable. The hosted copy reads a 22 MB gold-only
-> snapshot, so it runs without rebuilding the warehouse. No orchestration or CI,
-> because dbt build is the pipeline at this size.
-
-## 4:25 - Close (30 s)
-
-> Every number you saw came from one command, and **sixty-nine tests** decided
-> whether that command was allowed to finish. The chart was never the
-> **deliverable** - the pipeline behind it is, with exactly one place where
-> **every decision** lives and is checked on the way out. Repo, **generated docs**
-> and a live copy are all in the README. One command, **sixty-nine tests**, one
-> home for every decision.
->
-> Thanks for watching.
-
-## Appendix
 
 <details>
 <summary>Do not show on camera</summary>
@@ -282,3 +150,127 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
    that beat is one Alt+Tab.
 
 </details>
+
+## Narration script
+
+**0:00 - Thanks, and what you will see (25 s)**
+
+> This is a 9 million NYC yellow taxi trips dashboard,
+> January to March 2024. This was created using dbt,
+> DuckDB & streamlit. I've ran 69 tests to ensure data quality.
+>
+> I'll start with the dashboard, then i'll run the build that produces
+> it, then i'll open the **bronze**, **silver** & **gold** models that the numbers come from.
+>
+> Every number you see comes from one **gold** table.
+
+**0:25 - Dashboard tour (65 s)**
+
+> Every interactive view reads one shared gold cube, `gld_dashboard_facts`. Its
+> date, payment, zone, distance, weekday and hour filters update the KPI strip and
+> every chart together. The row-level models named below are the tested grain
+> definitions behind each view.
+>
+> In Q1 2024 there were 9,076,422 trips, $249.57M charged & 17.94% fare-weighted tip.
+> The main chart answers **when is demand high**. Day, week and hour of day are
+> three grains in the cube; the selector rolls the cube up to the selected one.
+
+**Chart 1 - Trip volume over time**
+
+> Day shows the weekly rhythm and the holiday dips, three of the busiest days annotated;
+> Week compresses it to thirteen points; hour of day peaks at 18:00, with 17:00
+> just behind.
+
+**Chart 2 - Busiest day of week**
+
+> The weekday bar is its own model, one row per ISO weekday: Thursday is the
+> busiest day of the quarter, Monday is the quietest.
+
+**Chart 3 - Top pickup zones**
+
+> Zones: the metric selector re-ranks by revenue, average fare or trip count, and
+> the slider covers five to thirty. The top-N slice lives in the app, so the model
+> keeps one row per zone.
+
+**Chart 4 - Tip rate by trip distance**
+
+> Tips are fare-weighted.
+
+**Chart 5 - Payment mix**
+
+> Payments show the mix of payment types. Card accounts for 78% of trips, cash
+> 14%, and Flex Fare - payment-type code 0, a separate category from cash or card
+> - accounts for 7%.
+
+**Chart 6 - Payment behaviour**
+
+> The table shows behaviour for that same gold row. Card has a 22.54% tip rate.
+> Cash records 0% because the New York City Taxi and Limousine Commission (TLC)
+> does not capture cash tips. Flex Fare is 5.46%.
+
+**Downloads - any chart**
+
+> For your own local copy of the data, click **Export this view as CSV** in any chart.
+> Every view exports the frame it drew, straight from the gold layer.
+
+**1:30 - The build is the gate (40 s)**
+
+> Everything you just saw was produced by this one command - no hand-made tables.
+> It runs thirteen models and sixty-nine tests in about twenty seconds over 9
+> million bronze rows. dbt counts each model and test, so the run ends at 82 of
+> 82. The build is the quality gate: a failing test stops it, so the dashboard
+> cannot be served from a broken table.
+
+**2:10 - The layers (40 s)**
+
+> Bronze preserves the raw parquet data as-is: no casts, filters, renames or
+> deduplication. It is loaded into DuckDB, but the data itself is unchanged, so it
+> diffs against the source column for column. Silver is the only place cleaning
+> happens. It converts the raw columns to proper types. It keeps trips from 1 to
+> 180 minutes and 0.1 to 100 miles, drops negative fares, and keeps 1 to 6
+> passengers - or null for Flex Fare. It limits the data to Q1 2024, removes
+> duplicate trips, joins the zone lookup for names, and creates a trip_id by
+> hashing the fields used to detect duplicates. dbt tests that ID for nulls and
+> uniqueness. About 95% of bronze rows survive.
+
+**2:50 - The same model, as documentation (15 s)**
+
+> Same model, now as generated documentation. The description says what the grain
+> is; expanding trip_id shows the column description and the generic tests it
+> carries - **not null** & **unique**. dbt builds this page from the same yml the tests
+> run from, so the documentation can **never** drift away from the code.
+
+**3:05 - Trace three numbers (40 s)**
+
+> One row per distance bucket. tip_pct is sum of tips over sum of fares, not an
+> average of per-trip percentages - otherwise a thousand 50-cent tips outweigh the
+> long rides that carry the money. Cash trips record no tip, so this is a statement
+> about card trips.
+
+> One row per zone: trips, revenue, average fare. The ranking and the top-N slice
+> are the chart's job, not the model's.
+
+> Share, average fare and tip rate on one row per payment type, so the bar and the
+> table read the same record.
+
+**3:45 - Trade-offs (40 s)**
+
+> One quarter, pinned: the brief allows one to three months, and a quarter is the
+> smallest span where the week grain is a trend rather than five points. Silver's
+> exclusions are opinionated and every view inherits them. Three grain models for
+> one chart cost three scans but keep each grain explicit and testable. DuckDB
+> instead of Snowflake is deliberate - no credentials on this machine, one profile
+> swap away, and the SQL stays portable. The hosted copy reads a 22 MB gold-only
+> snapshot, so it runs without rebuilding the warehouse. No orchestration or CI,
+> because dbt build is the pipeline at this size.
+
+**4:25 - Close (30 s)**
+
+> Every number you saw came from one command, and **sixty-nine tests** decided
+> whether that command was allowed to finish. The chart was never the
+> **deliverable** - the pipeline behind it is, with exactly one place where
+> **every decision** lives and is checked on the way out. Repo, **generated docs**
+> and a live copy are all in the README. One command, **sixty-nine tests**, one
+> home for every decision.
+>
+> Thanks for watching.
