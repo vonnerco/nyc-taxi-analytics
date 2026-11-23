@@ -1,7 +1,10 @@
 # Loom script - NYC Yellow Taxi take-home
 
 <details>
-<summary>Recording setup (not narrated)</summary>
+<summary>Screen notes, setup and checklist (not narrated)</summary>
+
+<details>
+<summary>Recording setup</summary>
 
 Target 4:55. Loom's free tier cuts at 5:00, so the last sentence lands with five
 seconds to spare.
@@ -12,8 +15,6 @@ All figures below are the verified Q1 2024 numbers.
 Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> editor.
 
 </details>
-
-## Screen notes (not narrated)
 
 <details>
 <summary>Beat timings</summary>
@@ -165,6 +166,8 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 7. Docs tab open before the take on the 2:50 screen: docs site -> Project ->
    models -> silver -> `slv_trips`, Columns visible, `trip_id` row expanded. Then
    that beat is one Alt+Tab.
+
+</details>
 
 </details>
 
