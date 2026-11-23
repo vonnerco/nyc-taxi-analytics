@@ -405,7 +405,11 @@ filters = {
 where, params = build_where(filters)
 active_labels = active_filter_labels(filters, metadata["min_date"], metadata["max_date"])
 if active_labels:
-    st.markdown("**Active filters:** " + " · ".join(active_labels))
+    labels_col, reset_col = st.columns([5, 1])
+    labels_col.markdown("**Active filters:** " + " · ".join(active_labels))
+    if reset_col.button("Reset filters", key="reset_filters_row"):
+        st.session_state[RESET_FLAG] = True
+        st.rerun()
 else:
     st.caption("Showing all trips in the pinned Q1 2024 window.")
 
