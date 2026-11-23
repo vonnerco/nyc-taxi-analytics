@@ -1,5 +1,8 @@
 # Loom script - NYC Yellow Taxi take-home
 
+<details>
+<summary>Recording setup (not narrated)</summary>
+
 Target 4:55. Loom's free tier cuts at 5:00, so the last sentence lands with five
 seconds to spare.
 1440 px browser at 100%, terminal font 18+, terminal wider than 100 columns.
@@ -7,6 +10,8 @@ Pre-warm Streamlit once before recording (load the page, then start the take).
 All figures below are the verified Q1 2024 numbers.
 
 Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> editor.
+
+</details>
 
 ## 0:00 - Thanks, and what you will see (25 s)
 
@@ -21,6 +26,18 @@ Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> edi
 
 ## 0:25 - Dashboard tour (65 s)
 
+> Every interactive view reads one shared gold cube, `gld_dashboard_facts`. Its
+> date, payment, zone, distance, weekday and hour filters update the KPI strip and
+> every chart together. The row-level models named below are the tested grain
+> definitions behind each view.
+>
+> In Q1 2024 there were 9,076,422 trips, $249.57M charged & 17.94% fare-weighted tip.
+> The main chart answers **when is demand high**. Day, week and hour of day are
+> three grains in the cube; the selector rolls the cube up to the selected one.
+
+<details>
+<summary>Chart-to-model map (not narrated)</summary>
+
 | # | View-definition model | Streamlit dashboard element |
 |---|---|---|
 | KPI | `gld_trip_summary` | KPI strip: `Trips`, `Total charged`, `Tip rate (fare-weighted)` |
@@ -33,68 +50,93 @@ Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> edi
 | 5 | `gld_payment_analysis` | `Payment mix` bars |
 | 6 | `gld_payment_analysis` | `Payment behaviour` table |
 
-> Every interactive view reads one shared gold cube, `gld_dashboard_facts`. Its
-> date, payment, zone, distance, weekday and hour filters update the KPI strip and
-> every chart together. The row-level models named below are the tested grain
-> definitions behind each view.
->
-> In Q1 2024 there were 9,076,422 trips, $249.57M charged & 17.94% fare-weighted tip.
-> The main chart answers **when is demand high**. Day, week and hour of day are
-> three grains in the cube; the selector rolls the cube up to the selected one.
+</details>
 
 ### Chart 1 - Trip volume over time
-Click Week, then Hour of day, then back to Day.
 
 > Day shows the weekly rhythm and the holiday dips, three of the busiest days annotated;
 > Week compresses it to thirteen points; hour of day peaks at 18:00, with 17:00
 > just behind.
 
+<details>
+<summary>Cue (not narrated)</summary>
+
+Click Week, then Hour of day, then back to Day.
+
 **Data source:** `gld_dashboard_facts`; view definition: `gld_trips_daily` (Day), `gld_trips_weekly` (Week), `gld_trips_hourly` (Hour of day).
 
+</details>
+
 ### Chart 2 - Busiest day of week
-View the bar on the right.
 
 > The weekday bar is its own model, one row per ISO weekday: Thursday is the
 > busiest day of the quarter, Monday is the quietest.
 
+<details>
+<summary>Cue (not narrated)</summary>
+
+View the bar on the right.
+
 **Data source:** `gld_dashboard_facts`; view definition: `gld_trips_by_dow`.
 
+</details>
+
 ### Chart 3 - Top pickup zones
+
 > Zones: the metric selector re-ranks by revenue, average fare or trip count, and
 > the slider covers five to thirty. The top-N slice lives in the app, so the model
 > keeps one row per zone.
 
+<details>
+<summary>Data source (not narrated)</summary>
+
 **Data source:** `gld_dashboard_facts`; view definition: `gld_revenue_by_zone`.
 
+</details>
+
 ### Chart 4 - Tip rate by trip distance
+
 > Tips are fare-weighted.
+
+<details>
+<summary>Data source (not narrated)</summary>
 
 **Data source:** `gld_dashboard_facts`; view definition: `gld_tip_behavior`.
 
+</details>
+
 ### Chart 5 - Payment mix
+
 > Payments show the mix of payment types. Card accounts for 78% of trips, cash
 > 14%, and Flex Fare - payment-type code 0, a separate category from cash or card
 > - accounts for 7%.
 
+<details>
+<summary>Data source (not narrated)</summary>
+
 **Data source:** `gld_dashboard_facts`; view definition: `gld_payment_analysis`.
 
+</details>
+
 ### Chart 6 - Payment behaviour
+
 > The table shows behaviour for that same gold row. Card has a 22.54% tip rate.
 > Cash records 0% because the New York City Taxi and Limousine Commission (TLC)
 > does not capture cash tips. Flex Fare is 5.46%.
 
+<details>
+<summary>Data source (not narrated)</summary>
+
 **Data source:** `gld_dashboard_facts`; view definition: `gld_payment_analysis`.
 
+</details>
+
 ### Downloads - any chart
+
 > For your own local copy of the data, click **Export this view as CSV** in any chart.
 > Every view exports the frame it drew, straight from the gold layer.
 
 ## 1:30 - The build is the gate (40 s)
-
-Terminal at repo root:
-
-    cd dbt_project
-    dbt build --profiles-dir .
 
 > Everything you just saw was produced by this one command - no hand-made tables.
 > It runs thirteen models and sixty-nine tests in about twenty seconds over 9
@@ -102,11 +144,19 @@ Terminal at repo root:
 > 82. The build is the quality gate: a failing test stops it, so the dashboard
 > cannot be served from a broken table.
 
+<details>
+<summary>Terminal cue and highlight (not narrated)</summary>
+
+Terminal at repo root:
+
+    cd dbt_project
+    dbt build --profiles-dir .
+
 Highlight dbt last line of code `PASS=82 WARN=0 ERROR=0`.
 
-## 2:10 - The layers (40 s)
+</details>
 
-In local Zed editor open `models/silver/slv_trips.sql`.
+## 2:10 - The layers (40 s)
 
 > Bronze preserves the raw parquet data as-is: no casts, filters, renames or
 > deduplication. It is loaded into DuckDB, but the data itself is unchanged, so it
@@ -118,14 +168,24 @@ In local Zed editor open `models/silver/slv_trips.sql`.
 > hashing the fields used to detect duplicates. dbt tests that ID for nulls and
 > uniqueness. About 95% of bronze rows survive.
 
-## 2:50 - The same model, as documentation (15 s)
+<details>
+<summary>Cue (not narrated)</summary>
 
-In dbt docs browser open the same documents slv_trips with trip_id row expanded to view its description and its tests.
+In local Zed editor open `models/silver/slv_trips.sql`.
+
+</details>
+
+## 2:50 - The same model, as documentation (15 s)
 
 > Same model, now as generated documentation. The description says what the grain
 > is; expanding trip_id shows the column description and the generic tests it
 > carries - **not null** & **unique**. dbt builds this page from the same yml the tests
 > run from, so the documentation can **never** drift away from the code.
+
+<details>
+<summary>Cue: dbt docs, `slv_trips`, `trip_id` row expanded (not narrated)</summary>
+
+In dbt docs browser open the same documents slv_trips with trip_id row expanded to view its description and its tests.
 
 **Important Note**: the Constraints column stays empty because this project defines no database constraints
 the tests live in the Data Tests column and in the expanded row. Do
@@ -134,24 +194,41 @@ not call them constraints on camera.
 After viewing dbt docs browser re-open Zed editor.
 --open gold model files--
 
-## 3:05 - Trace three numbers (40 s)
+</details>
 
-Open `models/gold/gld_tip_behavior.sql`. Streamlit **Chart 4: Tip rate by trip distance**.
+## 3:05 - Trace three numbers (40 s)
 
 > One row per distance bucket. tip_pct is sum of tips over sum of fares, not an
 > average of per-trip percentages - otherwise a thousand 50-cent tips outweigh the
 > long rides that carry the money. Cash trips record no tip, so this is a statement
 > about card trips.
 
-Open `models/gold/gld_revenue_by_zone.sql`. Streamlit **Chart 3: Top pickup zones**.
+<details>
+<summary>Cue: `models/gold/gld_tip_behavior.sql` + Streamlit Chart 4 (not narrated)</summary>
+
+Open `models/gold/gld_tip_behavior.sql`. Streamlit **Chart 4: Tip rate by trip distance**.
+
+</details>
 
 > One row per zone: trips, revenue, average fare. The ranking and the top-N slice
 > are the chart's job, not the model's.
 
-Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix / Payment behaviour**.
+<details>
+<summary>Cue: `models/gold/gld_revenue_by_zone.sql` + Streamlit Chart 3 (not narrated)</summary>
+
+Open `models/gold/gld_revenue_by_zone.sql`. Streamlit **Chart 3: Top pickup zones**.
+
+</details>
 
 > Share, average fare and tip rate on one row per payment type, so the bar and the
 > table read the same record.
+
+<details>
+<summary>Cue: `models/gold/gld_payment_analysis.sql` + Streamlit Charts 5-6 (not narrated)</summary>
+
+Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix / Payment behaviour**.
+
+</details>
 
 ## 3:45 - Trade-offs (40 s)
 
@@ -175,7 +252,10 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 >
 > Thanks for watching.
 
-## Do not show on camera
+## Appendix
+
+<details>
+<summary>Do not show on camera</summary>
 
 - `prompts.txt` contents (say what it is, do not scroll it)
 - The local dbt docs opened from `target/` (the published site is fine to name);
@@ -183,7 +263,10 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 - Theming or Streamlit's own toolbar - the grain selector, zone controls and
   export buttons are the only controls to touch
 
-## Recording checklist
+</details>
+
+<details>
+<summary>Recording checklist</summary>
 
 1. `.venv` active (or call `.venv\Scripts\streamlit.exe` directly).
 2. `streamlit run streamlit/app.py` running and loaded once before the take.
@@ -197,3 +280,5 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 7. Docs tab open before the take on the 2:50 screen: docs site -> Project ->
    models -> silver -> `slv_trips`, Columns visible, `trip_id` row expanded. Then
    that beat is one Alt+Tab.
+
+</details>
