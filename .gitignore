@@ -16,6 +16,8 @@ dbt_project/target/
 dbt_project/dbt_packages/
 dbt_project/logs/
 
+data/saved_views.json
+
 # streamlit
 .streamlit/secrets.toml
 

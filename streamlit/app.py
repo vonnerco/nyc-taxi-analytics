@@ -3,6 +3,7 @@
 from collections.abc import Mapping
 from datetime import date, timedelta
 from pathlib import Path
+import json
 
 import altair as alt
 import duckdb
@@ -74,7 +75,7 @@ def reset_chart_filter(targets: dict, chart_keys: tuple = ()) -> None:
 
 
 def view_from_params(params) -> dict:
-    """Decode the filter state kept in the URL, so a view can be bookmarked."""
+    """Decode a saved view back into filter session keys."""
     view = {}
     raw_dates = str(params.get("dates", ""))
     if ":" in raw_dates:
@@ -101,6 +102,29 @@ def view_from_params(params) -> dict:
                 continue
         view[key] = items
     return view
+
+
+SAVED_VIEWS_PATH = DATA_DIR / "saved_views.json"
+
+
+def load_saved_views() -> dict:
+    """Saved views live in the data folder, with a session copy as fallback."""
+    if "_saved_views" in st.session_state:
+        return dict(st.session_state["_saved_views"])
+    try:
+        return json.loads(SAVED_VIEWS_PATH.read_text(encoding="utf-8"))
+    except (OSError, ValueError):
+        return {}
+
+
+def write_saved_views(views: dict) -> None:
+    st.session_state["_saved_views"] = dict(views)
+    try:
+        SAVED_VIEWS_PATH.parent.mkdir(parents=True, exist_ok=True)
+        SAVED_VIEWS_PATH.write_text(json.dumps(views, indent=2), encoding="utf-8")
+    except OSError:
+        # A read-only host keeps the views for this session only.
+        pass
 
 
 def params_from_filters(filters: dict, min_date, max_date) -> dict:
@@ -379,11 +403,7 @@ if st.session_state.pop(RESET_FLAG, False):
             or key.startswith(CHART_KEY_PREFIX)
         ):
             del st.session_state[key]
-    st.query_params.clear()
 
-for key, value in view_from_params(st.query_params).items():
-    if key not in st.session_state:
-        st.session_state[key] = value
 
 chart_reset = st.session_state.pop(CHART_RESET, None)
 if chart_reset:
@@ -461,9 +481,8 @@ with st.expander("Filters", expanded=True):
         )
     st.caption(
         "Click any bar, point or row to cross-filter every chart. Click it again "
-        "to clear that selection, or reset all filters. The address bar always "
-        "holds the current view, so a filtered dashboard can be bookmarked or "
-        "shared as a link."
+        "to clear that selection, or reset all filters. A refresh starts from the "
+        "full view; use Save view to keep a filter set and load it again later."
     )
     if st.button("Reset all filters"):
         st.session_state[RESET_FLAG] = True
@@ -491,13 +510,7 @@ filters = {
     "hours": tuple(hour_value),
 }
 where, params = build_where(filters)
-desired_params = params_from_filters(filters, metadata["min_date"], metadata["max_date"])
-if {k: str(v) for k, v in st.query_params.items()} != {
-    k: str(v) for k, v in desired_params.items()
-}:
-    st.query_params.clear()
-    for key, value in desired_params.items():
-        st.query_params[key] = value
+
 active_labels = active_filter_labels(filters, metadata["min_date"], metadata["max_date"])
 window = f"{start_date:%Y-%m-%d} to {end_date:%Y-%m-%d}"
 scope = [label for label in active_labels if not label.startswith("Dates:")]
@@ -505,12 +518,78 @@ if scope:
     view_text = f"Viewing: **{window}** · " + " · ".join(scope)
 else:
     view_text = f"Viewing: all trips, **{window}**"
-labels_col, reset_col = st.columns([5, 1])
+notice = st.session_state.pop("_saved_view_notice", None)
+if notice:
+    st.success(notice)
+
+labels_col, save_col, reset_col = st.columns([4, 1, 1])
 labels_col.markdown(view_text)
+if save_col.button("Save view", key="save_view_button"):
+    st.session_state["_save_view_open"] = True
 if active_labels:
     if reset_col.button("Reset filters", key="reset_filters_row"):
         st.session_state[RESET_FLAG] = True
         st.rerun()
+
+if st.session_state.get("_save_view_open"):
+    default_name = f"View {len(load_saved_views()) + 1}"
+    name_col, save_col, cancel_col = st.columns([3, 1, 1])
+    view_name = name_col.text_input(
+        "Name this view", value=default_name, key="save_view_name"
+    )
+    save_clicked = save_col.button("Save this view", key="save_view_confirm")
+    cancel_clicked = cancel_col.button("Cancel", key="save_view_cancel")
+    if save_clicked:
+        views = load_saved_views()
+        name = view_name.strip() or default_name
+        views[name] = params_from_filters(
+            filters, metadata["min_date"], metadata["max_date"]
+        )
+        write_saved_views(views)
+        st.session_state.pop("_save_view_open", None)
+        st.session_state.pop("save_view_name", None)
+        st.session_state["_saved_view_notice"] = f"Saved the view as {name}."
+        st.rerun()
+    if cancel_clicked:
+        st.session_state.pop("_save_view_open", None)
+        st.session_state.pop("save_view_name", None)
+        st.rerun()
+
+saved_views = load_saved_views()
+if saved_views:
+    with st.expander("Saved views"):
+        for name, saved in saved_views.items():
+            name_col, load_col, delete_col = st.columns([4, 1, 1])
+            name_col.markdown(f"**{name}**")
+            if load_col.button("Load", key=f"load_view_{name}"):
+                targets = {
+                    "flt_dates": (metadata["min_date"], metadata["max_date"]),
+                    "flt_payments": [],
+                    "flt_zones": [],
+                    "flt_distances": [],
+                    "flt_dows": [],
+                    "flt_hours": [],
+                }
+                targets.update(view_from_params(saved))
+                st.session_state[CHART_RESET] = {
+                    "targets": targets,
+                    "charts": (
+                        "chart_trip_day",
+                        "chart_trip_week",
+                        "chart_trip_hour_of_day",
+                        "chart_dow",
+                        "chart_zones",
+                        "chart_tips",
+                        "chart_payments",
+                        "chart_payment_behaviour",
+                    ),
+                }
+                st.rerun()
+            if delete_col.button("Delete", key=f"delete_view_{name}"):
+                views = load_saved_views()
+                views.pop(name, None)
+                write_saved_views(views)
+                st.rerun()
 
 kpi = query(
     "select "
