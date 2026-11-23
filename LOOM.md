@@ -224,9 +224,9 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 **Show:** [Chart 3](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Top pickup zones")
 
-> Zones: the metric selector re-ranks by revenue, average fare or trip count, and
-> the slider covers five to thirty. The top-N slice lives in the app, so the model
-> keeps one row per zone.
+> The top pickup zones rank by default, most to least, by **Total revenue** per
+> location. The **Average fare** view shows which location charged the most per
+> trip. The **Trip count** view shows which location had the most trips taken.
 
 ---
 
