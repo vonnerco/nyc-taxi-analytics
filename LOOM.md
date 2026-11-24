@@ -226,8 +226,8 @@ cue and the spoken reason always name the same file.
 
 **Show:** [Chart 1](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Trip volume over time - Day filter")
 
-> The Day filter shows the weekly rhythm and the holiday dips; the Week filter
-> compresses it to thirteen points; the Hour of day filter breaks the view into a
+> The Day filter shows the weekly rhythm and the holiday dips. The Week filter
+> compresses it to thirteen points. The Hour of day filter breaks the view into a
 > 24 hour period, with 1800 hrs being the peak of the day and over 657 thousand
 > trips taken.
 
