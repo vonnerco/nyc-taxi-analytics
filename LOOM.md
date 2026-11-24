@@ -310,7 +310,7 @@ cue and the spoken reason always name the same file.
 > I am scrolling back to the top of the dashboard now, to show the Save View
 > feature.
 >
-> For your own local copy of the data, click **Export this view as CSV** in any chart.
+> For your own local copy of the data, click **Export this view as CSV** for any chart.
 > Every view exports the frame it drew, straight from the gold layer. Every filter
 > combination can also be saved as a named view, so this one dashboard becomes
 > any cut of the cube you want.
