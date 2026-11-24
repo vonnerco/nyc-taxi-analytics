@@ -248,7 +248,7 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Cue:** Move to Next Section | Scroll down to view Top pickup zones and Tip rate by distance charts
+**Cue:** Next Section
 
 **Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - middle of the dashboard")
 
@@ -278,7 +278,7 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Cue:** Move to Next Section | Scroll down to view Payment mix and Payment behaviour charts
+**Cue:** Next Section
 
 **Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - last section of the dashboard")
 
@@ -303,7 +303,7 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Cue:** Move to Next Section
+**Cue:** Next Section
 
 **Show:** [Any chart](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Entire Dashboard")
 
@@ -318,7 +318,7 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Cue:** Move to Next Section | Switch to the Terminal tab and run the build
+**Cue:** Next Section
 
 **Show:** [Terminal](http://127.0.0.1:7681 "Show Tab 2, run the build")
 
@@ -381,7 +381,7 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Cue:** Move to Next Section | Switch to Tab 1, the dashboard
+**Cue:** Next Section
 
 **Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1")
 
