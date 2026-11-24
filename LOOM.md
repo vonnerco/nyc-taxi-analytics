@@ -249,9 +249,9 @@ cue and the spoken reason always name the same file.
 
 **Show:** [Chart 3](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Chart 3: Top pickup zones")
 
-> The metric selector re-sorts the bars by **Total revenue**, **Average
+> Select the metric to re-sort the bars by **Total revenue**, **Average
 > fare** or **Trip count**. The slider chooses how many zones are shown - five to
-> thirty. Clicking a bar filters the entire dashboard to that zone.
+> thirty. Clicking a bar filters the entire dashboard to that single zone.
 
 ---
 
