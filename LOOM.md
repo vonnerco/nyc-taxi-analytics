@@ -231,36 +231,38 @@ cue and the spoken reason always name the same file.
 
 **Show:** [Chart 1](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Chart 1: Trip volume, Day filter")
 
-> The Day filter shows the weekly rhythm and the holiday dips. The Week filter
-> compresses it to thirteen points. The Hour of day filter breaks the view into a
-> 24 hour period, with 1800 hrs being the peak of the day and over six hundred
-> and fifty-seven thousand trips taken.
+> This is the Trip volume over time chart. The Day filter shows the weekly rhythm
+> and the holiday dips. The Week filter compresses it to thirteen points. The Hour
+> of day filter breaks the view into a 24 hour period, with 1800 hrs being the
+> peak of the day and over six hundred and fifty-seven thousand trips taken.
 
 ---
 
 **Show:** [Chart 2](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Chart 2: Busiest day of week")
 
-> The weekday bar is its own model, showing one row per ISO weekday: Thursday is
-> the busiest day of the week for Q1 2024, Monday is the quietest.
+> This is the Busiest day of week chart. The weekday bar is its own model, showing
+> one row per ISO weekday: Thursday is the busiest day of the week for Q1 2024,
+> Monday is the quietest.
 
 ---
-
 
 **Cue:** Move to Next Section | Scroll down to view Top pickup zones and Tip rate by distance charts
 
 **Show:** [Chart 3](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Chart 3: Top pickup zones")
 
-> Select the metric to re-sort the bars by **Total revenue**, **Average
-> fare** or **Trip count**. The slider chooses how many zones are shown - five to
-> thirty. Clicking a bar filters the entire dashboard to that single zone.
+> This is the Top pickup zones chart. Select the metric to re-sort the bars by
+> **Total revenue**, **Average fare** or **Trip count**. The slider chooses how
+> many zones are shown - five to thirty. Clicking a bar filters the entire
+> dashboard to that single zone.
 
 ---
 
 **Show:** [Chart 4](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Chart 4: Tip rate by trip distance")
 
-> Tip rate by trip distance: one bar per distance bucket. Cash trips record no
-> tip, so read the whole chart as a card-trip statement. The rule behind the
-> number lives in the model, not the chart - I will open that model later.
+> This is the Tip rate by trip distance chart. One bar per distance bucket. Cash
+> trips record no tip, so read the whole chart as a card-trip statement. The rule
+> behind the number lives in the model, not the chart - I will open that model
+> later.
 
 ---
 
@@ -268,16 +270,17 @@ cue and the spoken reason always name the same file.
 
 **Show:** [Chart 5](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Chart 5: Payment mix")
 
-> The payment mix chart shows the mix of payment types. Credit card accounts for
-> 78% of trips, cash for 14%, and Flex Fare for 7%.
+> This is the Payment mix chart. It shows the mix of payment types. Credit card
+> accounts for 78% of trips, cash for 14%, and Flex Fare for 7%.
 
 ---
 
 **Show:** [Chart 6](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Chart 6: Payment behaviour")
 
-> This table shows payment behaviour for each type. Credit cards have a 22.54% tip
-> rate. Flex Fare is 5.46%. Cash trips show 0% because the New York City Taxi and
-> Limousine Commission (TLC) does not capture cash tips.
+> This is the Payment behaviour chart. It shows the same record per payment type.
+> Credit cards have a 22.54% tip rate. Flex Fare is 5.46%. Cash trips show 0%
+> because the New York City Taxi and Limousine Commission (TLC) does not capture
+> cash tips.
 
 ---
 
