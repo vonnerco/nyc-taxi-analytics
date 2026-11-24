@@ -215,7 +215,7 @@ cue and the spoken reason always name the same file.
 > tested grain definitions behind each view.
 >
 > In Q1 2024 there were nine million, seventy-six thousand, four hundred and
-> twenty-two trips, $249.57M charged & 17.94% fare-weighted tip.
+> twenty-two trips, $249.57 million dollars charged & 17.94% fare-weighted tip.
 > The main chart answers **when is demand high**. The Day filter, the Week filter
 > and the Hour of day filter are three grains of the same cube; choosing one rolls
 > the cube up to that grain.
