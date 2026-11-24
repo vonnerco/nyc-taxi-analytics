@@ -252,14 +252,9 @@ cue and the spoken reason always name the same file.
 
 **Show:** [Chart 4](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tip rate by trip distance")
 
-> This is tip rate by trip distance, and it is on screen because it shows the
-> rule behind a number rather than a headline. The rate is not an average of each
-> trip's percentage. It is total tips over total fares inside each distance
-> bucket. Cash trips record no tip, so read the whole chart as a card-trip
-> statement.
->
-> In a minute I will open the model behind it, `gld_tip_behavior`, where that
-> weighting lives - the chart cannot compute it on its own.
+> Tip rate by trip distance: one bar per distance bucket. Cash trips record no
+> tip, so read the whole chart as a card-trip statement. The rule behind the
+> number lives in the model, not the chart - I will open that model later.
 
 ---
 
@@ -323,9 +318,10 @@ cue and the spoken reason always name the same file.
 
 > This tab is the model behind **Chart 4**, tip rate by distance. One row per
 > distance bucket. tip_pct is sum of tips over sum of fares, not an average of
-> per-trip percentages - otherwise a thousand 50-cent tips outweigh the long rides
-> that carry the money. Cash trips record no tip, so this is a statement about
-> card trips.
+> per-trip percentages - otherwise a thousand small tips outweigh the long rides
+> that carry the money. That weighting lives here in the SQL, so the chart
+> inherits it instead of recomputing it. Cash trips record no tip, so this is a
+> statement about card trips.
 
 ---
 
