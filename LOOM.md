@@ -308,8 +308,8 @@ cue and the spoken reason always name the same file.
 **Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - watch the dashboard")
 
 > I am scrolling back to the top of the dashboard now. I will set a custom view
-> with the filters, save it as a named view, and open that same view again at my
-> your discretion from the saved views list.
+> with the filters, save it as a named view, and open that same view again at your
+> discretion from the saved views list.
 >
 > For the rest of the tour, please keep your eyes on the dashboard: every click
 > you are about to see is the same cube re-cutting itself in real time, and every
