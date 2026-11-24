@@ -206,7 +206,8 @@ cue and the spoken reason always name the same file.
 > DuckDB & streamlit. I've run 69 tests to ensure data quality.
 >
 > I'll start with the dashboard, then i'll run the build that produces
-> it, then i'll open the **bronze**, **silver** & **gold** models that the numbers come from.
+> it, then i'll open the **bronze**, **silver** & **gold** models behind those
+> numbers.
 >
 > The numbers you see on this dashboard all come from one **gold** table.
 >
