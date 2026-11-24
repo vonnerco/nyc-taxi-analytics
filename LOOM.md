@@ -278,7 +278,9 @@ cue and the spoken reason always name the same file.
 **Show:** [Any chart](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show any chart")
 
 > For your own local copy of the data, click **Export this view as CSV** in any chart.
-> Every view exports the frame it drew, straight from the gold layer.
+> Every view exports the frame it drew, straight from the gold layer. Every filter
+> combination can also be saved as a named view, so this one dashboard becomes
+> any cut of the cube you want.
 
 ---
 
