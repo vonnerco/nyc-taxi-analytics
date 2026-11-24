@@ -218,7 +218,7 @@ cue and the spoken reason always name the same file.
 > twenty-two trips, $249.57 million dollars charged & a 17.94% fare-weighted tip.
 > That tip rate is total tips over total fares, not an average of per-trip
 > percentages, so a fifty-cent tip cannot outweigh a long ride.
-> The main chart answers **when is demand high**. The Day filter, the Week filter
+> The main chart answers **when is demand the highest**. The Day filter, the Week filter
 > and the Hour of day filter are three grains of the same cube; choosing one rolls
 > the cube up to that grain.
 
