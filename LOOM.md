@@ -12,7 +12,7 @@ seconds to spare.
 Pre-warm Streamlit once before recording (load the page, then start the take).
 All figures below are the verified Q1 2024 numbers.
 
-Window order for Alt+Tab: browser (app) -> terminal -> editor -> docs tab -> editor.
+Window order for Alt+Tab: browser (dashboard) -> terminal -> file tabs -> docs tab -> file tabs.
 
 Tooltip view on this machine: http://127.0.0.1:8000/LOOM.md - each narration block
 then shows a bold hover hint naming the screen to switch to. It needs the local
@@ -115,9 +115,18 @@ Highlight dbt last line of code `PASS=82 WARN=0 ERROR=0`.
 </details>
 
 <details>
-<summary>2:10 - open `models/silver/slv_trips.sql` in Zed</summary>
+<summary>2:10 - Silver tab, `models/silver/slv_trips.sql`</summary>
 
-In local Zed editor open `models/silver/slv_trips.sql`.
+The file tabs live in the same browser window, served by the local file server:
+`http://127.0.0.1:8000/<path>?edit=1` (edit view carries the same colours as the
+read-only view). Tab order left to right matches the recording order:
+
+1. `slv_trips.sql` - 2:10
+2. `gld_tip_behavior.sql` - 3:05, Chart 4
+3. `gld_revenue_by_zone.sql` - 3:05, Chart 3
+4. `gld_payment_analysis.sql` - 3:05, Charts 5-6
+
+At 2:10 click the Silver tab (tab 1). Do not open it in Zed on camera.
 
 </details>
 
@@ -130,19 +139,25 @@ In dbt docs browser open the same documents slv_trips with trip_id row expanded 
 the tests live in the Data Tests column and in the expanded row. Do
 not call them constraints on camera.
 
-After viewing dbt docs browser re-open Zed editor.
---open gold model files--
+After viewing dbt docs, come back to the file tabs for the 3:05 beat - do not go
+to the editor.
 
 </details>
 
 <details>
-<summary>3:05 - open the three gold models</summary>
+<summary>3:05 - the three gold models, one tab each</summary>
 
-Open `models/gold/gld_tip_behavior.sql`. Streamlit **Chart 4: Tip rate by trip distance**.
+Same file tabs as 2:10, tabs 2-4. One tab per model, one sentence per tab, and
+say the chart name as the tab opens so the link is explicit:
 
-Open `models/gold/gld_revenue_by_zone.sql`. Streamlit **Chart 3: Top pickup zones**.
+| Click | File | Chart it backs |
+|---|---|---|
+| tab 2 | `gld_tip_behavior.sql` | Chart 4, Tip rate by trip distance |
+| tab 3 | `gld_revenue_by_zone.sql` | Chart 3, Top pickup zones |
+| tab 4 | `gld_payment_analysis.sql` | Charts 5-6, Payment mix / Payment behaviour |
 
-Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix / Payment behaviour**.
+Each tab has its own `**Show:**` line in the narration below, so the on-screen
+cue and the spoken reason always name the same file.
 
 </details>
 
@@ -293,18 +308,28 @@ Open `models/gold/gld_payment_analysis.sql`. Streamlit **Charts 5-6: Payment mix
 
 ---
 
-**Show:** [Gold](http://127.0.0.1:8000/dbt_project/models/gold/gld_tip_behavior.sql "Show Charts 3-6, from the Gold models")
+**Show:** [Gold - Tip rate](http://127.0.0.1:8000/dbt_project/models/gold/gld_tip_behavior.sql "Show tab 2 of 4 - Chart 4: Tip rate by trip distance, from gld_tip_behavior.sql")
 
-> One row per distance bucket. tip_pct is sum of tips over sum of fares, not an
-> average of per-trip percentages - otherwise a thousand 50-cent tips outweigh the
-> long rides that carry the money. Cash trips record no tip, so this is a statement
-> about card trips.
->
-> One row per zone: trips, revenue, average fare. The ranking and the top-N slice
-> are the chart's job, not the model's.
->
-> Share, average fare and tip rate on one row per payment type, so the bar and the
-> table read the same record.
+> This tab is the model behind **Chart 4**, tip rate by distance. One row per
+> distance bucket. tip_pct is sum of tips over sum of fares, not an average of
+> per-trip percentages - otherwise a thousand 50-cent tips outweigh the long rides
+> that carry the money. Cash trips record no tip, so this is a statement about
+> card trips.
+
+---
+
+**Show:** [Gold - Top pickup zones](http://127.0.0.1:8000/dbt_project/models/gold/gld_revenue_by_zone.sql "Show tab 3 of 4 - Chart 3: Top pickup zones, from gld_revenue_by_zone.sql")
+
+> This tab backs **Chart 3**, the zone bars. One row per zone: trips, revenue,
+> average fare. The ranking and the top-N slice are the chart's job, not the
+> model's.
+
+---
+
+**Show:** [Gold - Payment mix](http://127.0.0.1:8000/dbt_project/models/gold/gld_payment_analysis.sql "Show tab 4 of 4 - Charts 5-6: Payment mix and Payment behaviour, from gld_payment_analysis.sql")
+
+> This last tab backs **Charts 5 and 6**. Share, average fare and tip rate on one
+> row per payment type, so the bar and the table read the same record.
 
 ---
 
