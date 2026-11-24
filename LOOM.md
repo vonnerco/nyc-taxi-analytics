@@ -303,6 +303,8 @@ cue and the spoken reason always name the same file.
 
 ---
 
+**Cue:** Move to Next Section | Scroll up to view the Entire Dashboard and the Save View feature
+
 **Show:** [Any chart](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Entire Dashboard")
 
 > I am scrolling back to the top of the dashboard now, to show the Save View
