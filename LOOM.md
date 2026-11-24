@@ -262,9 +262,9 @@ cue and the spoken reason always name the same file.
 
 **Show:** [Chart 5](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Payment mix")
 
-> Payments show the mix of payment types. Card accounts for 78% of trips, cash
-> 14%, and Flex Fare - payment-type code 0, a separate category from cash or card
-> - accounts for 7%.
+> The payment mix chart shows the mix of payment types. Card accounts for 78% of
+> trips, cash for 14%, and Flex Fare for 7% - a separate category from cash or
+> card, not a kind of either.
 
 ---
 
