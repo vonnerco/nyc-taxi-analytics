@@ -252,7 +252,15 @@ cue and the spoken reason always name the same file.
 
 **Show:** [Chart 4](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tip rate by trip distance")
 
-> Tips are fare-weighted.
+> This is tip rate by trip distance, and it is on screen because it shows the
+> rule behind a number rather than a headline. The rate is not an average of each
+> trip's percentage. It is total tips over total fares inside each distance
+> bucket, so a fifty-cent tip on a two hundred dollar airport ride cannot count
+> as much as a dollar on a ten dollar hop. Cash trips record no tip, so read the
+> whole chart as a card-trip statement.
+>
+> In a minute I will open the model behind it, `gld_tip_behavior`, where that
+> weighting lives - the chart cannot compute it on its own.
 
 ---
 
