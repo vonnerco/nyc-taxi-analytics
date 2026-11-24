@@ -284,6 +284,8 @@ cue and the spoken reason always name the same file.
 
 ---
 
+**Cue:** Move to Next Section | Switch to the Terminal tab and run the build
+
 **Show:** [Terminal](http://127.0.0.1:7681 "Show the Terminal tab, run the build")
 
 > Everything you just saw was produced by this one command - no hand-made tables.
