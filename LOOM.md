@@ -248,6 +248,13 @@ cue and the spoken reason always name the same file.
 
 ---
 
+**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - middle of the dashboard")
+
+> This is the Top pickup zones and the Tip rate section - the middle of the
+> dashboard.
+
+---
+
 **Cue:** Move to Next Section | Scroll down to view Top pickup zones and Tip rate by distance charts
 
 **Show:** [Chart 3](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Chart 3: Top pickup zones")
