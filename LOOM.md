@@ -243,6 +243,8 @@ cue and the spoken reason always name the same file.
 > This is the Busiest day of week chart. The weekday bar is its own model, showing
 > one row per ISO weekday: Thursday is the busiest day of the week for Q1 2024,
 > Monday is the quietest.
+>
+> This dashboard scrolls, so I will move down to the next section now.
 
 ---
 
@@ -263,6 +265,8 @@ cue and the spoken reason always name the same file.
 > trips record no tip, so read the whole chart as a card-trip statement. The rule
 > behind the number lives in the model, not the chart - I will open that model
 > later.
+>
+> More sections sit below; I will scroll down to the payment charts.
 
 ---
 
