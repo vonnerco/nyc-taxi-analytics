@@ -117,16 +117,21 @@ Highlight dbt last line of code `PASS=82 WARN=0 ERROR=0`.
 <details>
 <summary>2:10 - Silver tab, `models/silver/slv_trips.sql`</summary>
 
-The file tabs live in the same browser window, served by the local file server:
-`http://127.0.0.1:8000/<path>?edit=1` (edit view carries the same colours as the
-read-only view). Tab order left to right matches the recording order:
+The five local tabs live in the same browser window and are numbered on camera:
 
-1. `slv_trips.sql` - 2:10
-2. `gld_tip_behavior.sql` - 3:05, Chart 4
-3. `gld_revenue_by_zone.sql` - 3:05, Chart 3
-4. `gld_payment_analysis.sql` - 3:05, Charts 5-6
+| Tab | What it is | Used at |
+|---|---|---|
+| Tab 1 | Streamlit dashboard | 0:00-1:30, 3:45-4:55 |
+| Tab 2 | PowerShell terminal | 1:30 |
+| Tab 3 | `slv_trips.sql` | 2:10 |
+| Tab 4 | dbt docs, `slv_trips`, `trip_id` expanded | 2:50 |
+| Tab 5 | `gld_tip_behavior.sql` | 3:05, Chart 4 |
+| Tab 6 | `gld_revenue_by_zone.sql` | 3:05, Chart 3 |
+| Tab 7 | `gld_payment_analysis.sql` | 3:05, Charts 5-6 |
 
-At 2:10 click the Silver tab (tab 1). Do not open it in Zed on camera.
+The file tabs are served by the local file server from
+`http://127.0.0.1:8000/<path>?edit=1` (the edit view carries the same colours as
+the read-only view). At 2:10 click Tab 3. Do not open the file in Zed on camera.
 
 </details>
 
@@ -147,14 +152,14 @@ to the editor.
 <details>
 <summary>3:05 - the three gold models, one tab each</summary>
 
-Same file tabs as 2:10, tabs 2-4. One tab per model, one sentence per tab, and
-say the chart name as the tab opens so the link is explicit:
+Same tabs as 2:10, now Tab 5, Tab 6 and Tab 7. One tab per model, one sentence per
+tab, and say the chart name as the tab opens so the link is explicit:
 
 | Click | File | Chart it backs |
 |---|---|---|
-| tab 2 | `gld_tip_behavior.sql` | Chart 4, Tip rate by trip distance |
-| tab 3 | `gld_revenue_by_zone.sql` | Chart 3, Top pickup zones |
-| tab 4 | `gld_payment_analysis.sql` | Charts 5-6, Payment mix / Payment behaviour |
+| Tab 5 | `gld_tip_behavior.sql` | Chart 4, Tip rate by trip distance |
+| Tab 6 | `gld_revenue_by_zone.sql` | Chart 3, Top pickup zones |
+| Tab 7 | `gld_payment_analysis.sql` | Charts 5-6, Payment mix / Payment behaviour |
 
 Each tab has its own `**Show:**` line in the narration below, so the on-screen
 cue and the spoken reason always name the same file.
@@ -194,7 +199,7 @@ cue and the spoken reason always name the same file.
 
 ## Narration script
 
-**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Main Dashboard")
+**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1")
 
 > Thanks for watching my 9 million NYC yellow taxi trips dashboard,
 > from January to March 2024. I created this using dbt,
@@ -207,7 +212,7 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Main Dashboard")
+**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1")
 
 > Every view reads from one shared gold table, the `gld_dashboard_facts` table, cut
 > as a cube: the date, payment, zone, distance, weekday and hour filters update the
@@ -224,7 +229,7 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Show:** [Chart 1](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Trip volume over time - Day filter")
+**Show:** [Chart 1](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Chart 1: Trip volume, Day filter")
 
 > The Day filter shows the weekly rhythm and the holiday dips. The Week filter
 > compresses it to thirteen points. The Hour of day filter breaks the view into a
@@ -233,7 +238,7 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Show:** [Chart 2](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Busiest day of week")
+**Show:** [Chart 2](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Chart 2: Busiest day of week")
 
 > The weekday bar is its own model, one row per ISO weekday: Thursday is the
 > busiest day of the week for Q1 2024, Monday is the quietest.
@@ -242,7 +247,7 @@ cue and the spoken reason always name the same file.
 
 **Cue:** Move to Next Section | Scroll down to view Top pickup zones and Tip rate by distance charts
 
-**Show:** [Chart 3](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Top pickup zones")
+**Show:** [Chart 3](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Chart 3: Top pickup zones")
 
 > The metric selector re-sorts the bars by **Total revenue**, **Average
 > fare** or **Trip count**. The slider chooses how many zones are shown - five to
@@ -250,7 +255,7 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Show:** [Chart 4](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tip rate by trip distance")
+**Show:** [Chart 4](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Chart 4: Tip rate by trip distance")
 
 > Tip rate by trip distance: one bar per distance bucket. Cash trips record no
 > tip, so read the whole chart as a card-trip statement. The rule behind the
@@ -260,14 +265,14 @@ cue and the spoken reason always name the same file.
 
 **Cue:** Move to Next Section | Scroll down to view Payment mix and Payment behaviour charts
 
-**Show:** [Chart 5](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Payment mix")
+**Show:** [Chart 5](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Chart 5: Payment mix")
 
 > The payment mix chart shows the mix of payment types. Credit card accounts for
 > 78% of trips, cash for 14%, and Flex Fare for 7%.
 
 ---
 
-**Show:** [Chart 6](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Payment behaviour")
+**Show:** [Chart 6](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Chart 6: Payment behaviour")
 
 > This table shows payment behaviour for each type. Credit cards have a 22.54% tip
 > rate. Flex Fare is 5.46%. Cash trips show 0% because the New York City Taxi and
@@ -275,7 +280,7 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Show:** [Any chart](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show any chart")
+**Show:** [Any chart](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - any chart")
 
 > For your own local copy of the data, click **Export this view as CSV** in any chart.
 > Every view exports the frame it drew, straight from the gold layer. Every filter
@@ -286,7 +291,7 @@ cue and the spoken reason always name the same file.
 
 **Cue:** Move to Next Section | Switch to the Terminal tab and run the build
 
-**Show:** [Terminal](http://127.0.0.1:7681 "Show the Terminal tab, run the build")
+**Show:** [Terminal](http://127.0.0.1:7681 "Show Tab 2, run the build")
 
 > Everything you just saw was produced by this one command - no hand-made tables.
 > It runs thirteen models and sixty-nine tests in about twenty seconds. dbt counts each model and test, so the run ends at 82 of
@@ -295,7 +300,7 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Show:** [Silver](http://127.0.0.1:8000/dbt_project/models/silver/slv_trips.sql "Show the slv_trips.sql tab")
+**Show:** [Silver](http://127.0.0.1:8000/dbt_project/models/silver/slv_trips.sql "Show Tab 3 - slv_trips.sql")
 
 > Bronze preserves the raw parquet data as-is: no casts, filters, renames or
 > deduplication. It is loaded into DuckDB, but the data itself is unchanged, so it
@@ -309,7 +314,7 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Show:** [Docs](https://vonnerco.github.io/nyc-taxi-analytics/ "Show the dbt docs tab, slv_trips with trip_id expanded")
+**Show:** [Docs](https://vonnerco.github.io/nyc-taxi-analytics/ "Show Tab 4 - dbt docs, slv_trips, trip_id expanded")
 
 > Same model, now as generated documentation. The description says what the grain
 > is; expanding trip_id shows the column description and the generic tests it
@@ -318,7 +323,7 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Show:** [Gold - Tip rate](http://127.0.0.1:8000/dbt_project/models/gold/gld_tip_behavior.sql "Show the gld_tip_behavior.sql tab")
+**Show:** [Gold - Tip rate](http://127.0.0.1:8000/dbt_project/models/gold/gld_tip_behavior.sql "Show Tab 5 - gld_tip_behavior.sql")
 
 > This tab is the model behind **Chart 4**, tip rate by distance. One row per
 > distance bucket. tip_pct is sum of tips over sum of fares, not an average of
@@ -329,7 +334,7 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Show:** [Gold - Top pickup zones](http://127.0.0.1:8000/dbt_project/models/gold/gld_revenue_by_zone.sql "Show the gld_revenue_by_zone.sql tab")
+**Show:** [Gold - Top pickup zones](http://127.0.0.1:8000/dbt_project/models/gold/gld_revenue_by_zone.sql "Show Tab 6 - gld_revenue_by_zone.sql")
 
 > This tab backs **Chart 3**, the zone bars. One row per zone: trips, revenue,
 > average fare. The ranking and the top-N slice are the chart's job, not the
@@ -337,14 +342,14 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Show:** [Gold - Payment mix](http://127.0.0.1:8000/dbt_project/models/gold/gld_payment_analysis.sql "Show the gld_payment_analysis.sql tab")
+**Show:** [Gold - Payment mix](http://127.0.0.1:8000/dbt_project/models/gold/gld_payment_analysis.sql "Show Tab 7 - gld_payment_analysis.sql")
 
 > This last tab backs **Charts 5 and 6**. Share, average fare and tip rate on one
 > row per payment type, so the bar and the table read the same record.
 
 ---
 
-**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Main Dashboard")
+**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1")
 
 > One quarter, pinned: the brief allows one to three months, and a quarter is the
 > smallest span where the week grain is a trend rather than five points. Silver's
@@ -357,7 +362,7 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Main Dashboard")
+**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1")
 
 > Every number you saw came from one command, and **sixty-nine tests** decided
 > whether that command was allowed to finish. The chart was never the
