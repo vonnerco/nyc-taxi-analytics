@@ -287,8 +287,7 @@ cue and the spoken reason always name the same file.
 **Show:** [Terminal](http://127.0.0.1:7681 "Show the Terminal tab, run the build")
 
 > Everything you just saw was produced by this one command - no hand-made tables.
-> It runs thirteen models and sixty-nine tests in about twenty seconds over 9
-> million bronze rows. dbt counts each model and test, so the run ends at 82 of
+> It runs thirteen models and sixty-nine tests in about twenty seconds. dbt counts each model and test, so the run ends at 82 of
 > 82. The build is the quality gate: a failing test stops it, so the dashboard
 > cannot be served from a broken table.
 
