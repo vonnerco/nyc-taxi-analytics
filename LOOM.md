@@ -209,6 +209,9 @@ cue and the spoken reason always name the same file.
 > it, then i'll open the **bronze**, **silver** & **gold** models that the numbers come from.
 >
 > Every number you see comes from one **gold** table.
+>
+> The dashboard demo comes in two phases: first I will explain its features, then
+> I will interact with the dashboard so you can watch it work.
 
 ---
 
