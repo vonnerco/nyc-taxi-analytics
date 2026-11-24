@@ -370,8 +370,7 @@ cue and the spoken reason always name the same file.
 > Every number you saw came from one command, and **sixty-nine tests** decided
 > whether that command was allowed to finish. The chart was never the
 > **deliverable** - the pipeline behind it is, with exactly one place where
-> **every decision** lives and is checked on the way out. Repo, **generated docs**
-> and a live copy are all in the README. One command, **sixty-nine tests**, one
-> home for every decision.
+> **every decision** lives and is checked on the way out. One command,
+> **sixty-nine tests**, one home for every decision.
 >
 > Thanks for watching.
