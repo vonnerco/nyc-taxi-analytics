@@ -353,11 +353,6 @@ cue and the spoken reason always name the same file.
 
 **Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1")
 
-> One quarter, pinned: the brief allows one to three months, and a quarter is the
-> smallest span where the week grain is a trend rather than five points. Silver's
-> exclusions are opinionated and every view inherits them. Three grain models for
-> one chart cost three scans but keep each grain explicit and testable.
->
 > I used DuckDB rather than Snowflake because it is the less complicated setup
 > route, and I have no Snowflake credentials on this machine. I administer
 > Snowflake reporting for servers and dashboards at Cox, so this build stays one
