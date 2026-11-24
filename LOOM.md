@@ -228,8 +228,8 @@ cue and the spoken reason always name the same file.
 
 > The Day filter shows the weekly rhythm and the holiday dips. The Week filter
 > compresses it to thirteen points. The Hour of day filter breaks the view into a
-> 24 hour period, with 1800 hrs being the peak of the day and over 657 thousand
-> trips taken.
+> 24 hour period, with 1800 hrs being the peak of the day and over six hundred
+> and fifty-seven thousand trips taken.
 
 ---
 
