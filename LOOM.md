@@ -240,7 +240,7 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Cue:** Scroll down to view Top pickup zones and Tip rate by distance charts
+**Cue:** Move to Next Section | Scroll down to view Top pickup zones and Tip rate by distance charts
 
 **Show:** [Chart 3](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Top pickup zones")
 
@@ -258,7 +258,7 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Cue:** Scroll down to view Payment mix and Payment behaviour charts
+**Cue:** Move to Next Section | Scroll down to view Payment mix and Payment behaviour charts
 
 **Show:** [Chart 5](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Payment mix")
 
