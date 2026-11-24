@@ -269,9 +269,9 @@ cue and the spoken reason always name the same file.
 
 **Show:** [Chart 6](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Payment behaviour")
 
-> The table shows behaviour for that same gold row. Card has a 22.54% tip rate.
-> Cash records 0% because the New York City Taxi and Limousine Commission (TLC)
-> does not capture cash tips. Flex Fare is 5.46%.
+> This table shows payment behaviour for each type. Credit cards have a 22.54% tip
+> rate. Flex Fare is 5.46%. Cash trips show 0% because the New York City Taxi and
+> Limousine Commission (TLC) does not capture cash tips.
 
 ---
 
