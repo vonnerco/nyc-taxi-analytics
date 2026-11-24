@@ -240,8 +240,8 @@ cue and the spoken reason always name the same file.
 
 **Show:** [Chart 2](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Chart 2: Busiest day of week")
 
-> The weekday bar is its own model, one row per ISO weekday: Thursday is the
-> busiest day of the week for Q1 2024, Monday is the quietest.
+> The weekday bar is its own model, showing one row per ISO weekday: Thursday is
+> the busiest day of the week for Q1 2024, Monday is the quietest.
 
 ---
 
