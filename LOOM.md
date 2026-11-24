@@ -356,11 +356,15 @@ cue and the spoken reason always name the same file.
 > One quarter, pinned: the brief allows one to three months, and a quarter is the
 > smallest span where the week grain is a trend rather than five points. Silver's
 > exclusions are opinionated and every view inherits them. Three grain models for
-> one chart cost three scans but keep each grain explicit and testable. DuckDB
-> instead of Snowflake is deliberate - no credentials on this machine, one profile
-> swap away, and the SQL stays portable. The hosted copy reads a 22 MB gold-only
-> snapshot, so it runs without rebuilding the warehouse. No orchestration or CI,
-> because dbt build is the pipeline at this size.
+> one chart cost three scans but keep each grain explicit and testable.
+>
+> I used DuckDB rather than Snowflake because it is the less complicated setup
+> route, and I have no Snowflake credentials on this machine. I administer
+> Snowflake reporting for servers and dashboards at Cox, so this build stays one
+> profile swap away and the SQL stays portable. The hosted copy reads a 22 MB
+> gold-only snapshot, so it runs without rebuilding the entire data warehouse.
+>
+> No orchestration or CI, because dbt build is the pipeline at this size.
 
 ---
 
