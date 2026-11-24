@@ -208,7 +208,7 @@ cue and the spoken reason always name the same file.
 > I'll start with the dashboard, then i'll run the build that produces
 > it, then i'll open the **bronze**, **silver** & **gold** models that the numbers come from.
 >
-> Every number you see comes from one **gold** table.
+> The numbers you see on this dashboard all come from one **gold** table.
 >
 > The dashboard demo comes in two phases: first I will explain its features, then
 > I will interact with the dashboard so you can watch it work.
