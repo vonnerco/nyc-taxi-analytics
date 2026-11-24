@@ -215,7 +215,7 @@ cue and the spoken reason always name the same file.
 > tested grain definitions behind each view.
 >
 > In Q1 2024 there were nine million, seventy-six thousand, four hundred and
-> twenty-two trips, $249.57 million dollars charged & 17.94% fare-weighted tip.
+> twenty-two trips, $249.57 million dollars charged & a 17.94% fare-weighted tip.
 > That tip rate is total tips over total fares, not an average of per-trip
 > percentages, so a fifty-cent tip cannot outweigh a long ride.
 > The main chart answers **when is demand high**. The Day filter, the Week filter
