@@ -307,6 +307,10 @@ cue and the spoken reason always name the same file.
 
 **Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - watch the dashboard")
 
+> I am scrolling back to the top of the dashboard now. I will set a custom view
+> with the filters, save it as a named view, and open that same view again at my
+> discretion from the saved views list.
+>
 > For the rest of the tour, please keep your eyes on the dashboard: every click
 > you are about to see is the same cube re-cutting itself in real time, and every
 > chart moves with it.
@@ -315,10 +319,6 @@ cue and the spoken reason always name the same file.
 
 **Show:** [Any chart](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Entire Dashboard")
 
-> I am scrolling back to the top of the dashboard now. I will set a custom view
-> with the filters, save it as a named view, and open that same view again at my
-> discretion from the saved views list.
->
 > For your own local copy of the data, click **Export this view as CSV** for any chart.
 > Every view exports the frame it drew, straight from the gold layer. Every filter
 > combination can also be saved as a named view, so this one dashboard becomes
