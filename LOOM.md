@@ -301,6 +301,9 @@ cue and the spoken reason always name the same file.
 
 **Show:** [Terminal](http://127.0.0.1:7681 "Show Tab 2, run the build")
 
+> Keep your eyes on this tab for the next twenty seconds: this is the whole build
+> running, and it is the only thing that produces everything you just watched.
+>
 > Everything you just saw was produced by this one command - no hand-made tables.
 > It runs thirteen models and sixty-nine tests in about twenty seconds. dbt counts each model and test, so the run ends at 82 of
 > 82. The build is the quality gate: a failing test stops it, so the dashboard
