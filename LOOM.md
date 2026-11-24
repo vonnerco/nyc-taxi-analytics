@@ -240,6 +240,8 @@ cue and the spoken reason always name the same file.
 
 ---
 
+**Cue:** Scroll down to view Top pickup zones and Tip rate by distance charts
+
 **Show:** [Chart 3](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Top pickup zones")
 
 > Zones: the metric selector re-sorts the bars by **Total revenue**, **Average
