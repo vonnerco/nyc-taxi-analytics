@@ -196,7 +196,7 @@ cue and the spoken reason always name the same file.
 
 **Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Main Dashboard")
 
-> You are viewing a 9 million NYC yellow taxi trips dashboard,
+> Thanks for watching my 9 million NYC yellow taxi trips dashboard,
 > from January to March 2024. I created this using dbt,
 > DuckDB & streamlit. I've run 69 tests to ensure data quality.
 >
@@ -209,12 +209,13 @@ cue and the spoken reason always name the same file.
 
 **Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show the Main Dashboard")
 
-> Every interactive view reads one shared gold table, `gld_dashboard_facts`, cut
-> as a cube: its date, payment, zone, distance, weekday and hour filters update the
+> Every view reads from one shared gold table, the `gld_dashboard_facts` table, cut
+> as a cube: the date, payment, zone, distance, weekday and hour filters update the
 > KPI strip and every chart together. The row-level models named below are the
 > tested grain definitions behind each view.
 >
-> In Q1 2024 there were 9,076,422 trips, $249.57M charged & 17.94% fare-weighted tip.
+> In Q1 2024 there were nine million, seventy-six thousand, four hundred and
+> twenty-two trips, $249.57M charged & 17.94% fare-weighted tip.
 > The main chart answers **when is demand high**. The Day filter, the Week filter
 > and the Hour of day filter are three grains of the same cube; choosing one rolls
 > the cube up to that grain.
