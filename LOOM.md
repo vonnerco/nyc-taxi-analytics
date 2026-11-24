@@ -349,6 +349,8 @@ cue and the spoken reason always name the same file.
 
 ---
 
+**Cue:** Move to Next Section | Switch to Tab 1, the dashboard
+
 **Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1")
 
 > One quarter, pinned: the brief allows one to three months, and a quarter is the
