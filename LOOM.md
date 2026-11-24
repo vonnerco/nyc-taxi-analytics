@@ -295,7 +295,7 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Show:** [Silver](http://127.0.0.1:8000/dbt_project/models/silver/slv_trips.sql "Show the Silver tab: slv_trips.sql")
+**Show:** [Silver](http://127.0.0.1:8000/dbt_project/models/silver/slv_trips.sql "Show the slv_trips.sql tab")
 
 > Bronze preserves the raw parquet data as-is: no casts, filters, renames or
 > deduplication. It is loaded into DuckDB, but the data itself is unchanged, so it
@@ -318,7 +318,7 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Show:** [Gold - Tip rate](http://127.0.0.1:8000/dbt_project/models/gold/gld_tip_behavior.sql "Show tab 2 of 4 - Chart 4: Tip rate by trip distance, from gld_tip_behavior.sql")
+**Show:** [Gold - Tip rate](http://127.0.0.1:8000/dbt_project/models/gold/gld_tip_behavior.sql "Show the gld_tip_behavior.sql tab")
 
 > This tab is the model behind **Chart 4**, tip rate by distance. One row per
 > distance bucket. tip_pct is sum of tips over sum of fares, not an average of
@@ -329,7 +329,7 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Show:** [Gold - Top pickup zones](http://127.0.0.1:8000/dbt_project/models/gold/gld_revenue_by_zone.sql "Show tab 3 of 4 - Chart 3: Top pickup zones, from gld_revenue_by_zone.sql")
+**Show:** [Gold - Top pickup zones](http://127.0.0.1:8000/dbt_project/models/gold/gld_revenue_by_zone.sql "Show the gld_revenue_by_zone.sql tab")
 
 > This tab backs **Chart 3**, the zone bars. One row per zone: trips, revenue,
 > average fare. The ranking and the top-N slice are the chart's job, not the
@@ -337,7 +337,7 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Show:** [Gold - Payment mix](http://127.0.0.1:8000/dbt_project/models/gold/gld_payment_analysis.sql "Show tab 4 of 4 - Charts 5-6: Payment mix and Payment behaviour, from gld_payment_analysis.sql")
+**Show:** [Gold - Payment mix](http://127.0.0.1:8000/dbt_project/models/gold/gld_payment_analysis.sql "Show the gld_payment_analysis.sql tab")
 
 > This last tab backs **Charts 5 and 6**. Share, average fare and tip rate on one
 > row per payment type, so the bar and the table read the same record.
