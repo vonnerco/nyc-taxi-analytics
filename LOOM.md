@@ -273,11 +273,19 @@ cue and the spoken reason always name the same file.
 > behind the number lives in the model, not the chart - I will open that model
 > later.
 >
-> More sections sit below; I will scroll down to the payment charts.
+> This is the last section, so I am scrolling down to the Payment mix and Payment
+> behaviour charts now.
 
 ---
 
 **Cue:** Move to Next Section | Scroll down to view Payment mix and Payment behaviour charts
+
+**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - last section of the dashboard")
+
+> This is the Payment mix and Payment behaviour section - the last section of the
+> dashboard.
+
+---
 
 **Show:** [Chart 5](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Chart 5: Payment mix")
 
