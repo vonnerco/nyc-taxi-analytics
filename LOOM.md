@@ -242,6 +242,10 @@ cue and the spoken reason always name the same file.
 
 > The weekday bar is its own model, showing one row per ISO weekday: Thursday is
 > the busiest day of the week for Q1 2024, Monday is the quietest.
+>
+> For the rest of the tour, keep your eyes on the dashboard rather than the words:
+> every click you are about to see is the same cube re-cutting itself in real
+> time, and every chart moves with it.
 
 ---
 
