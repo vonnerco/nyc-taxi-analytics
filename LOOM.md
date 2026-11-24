@@ -359,7 +359,9 @@ cue and the spoken reason always name the same file.
 > profile swap away and the SQL stays portable. The hosted copy reads a 22 MB
 > gold-only snapshot, so it runs without rebuilding the entire data warehouse.
 >
-> No orchestration or CI, because dbt build is the pipeline at this size.
+> No orchestration or CI, because dbt build is the pipeline at this size. Thirteen
+> models in one command - an orchestrator would only add a second copy of the
+> graph, and no CI run could say more than the build already does.
 
 ---
 
