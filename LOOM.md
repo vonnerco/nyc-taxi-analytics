@@ -246,7 +246,7 @@ cue and the spoken reason always name the same file.
 
 > The metric selector re-sorts the bars by **Total revenue**, **Average
 > fare** or **Trip count**. The slider chooses how many zones are shown - five to
-> thirty. Clicking a bar filters the whole dashboard to that
+> thirty. Clicking a bar filters the entire dashboard to that
 > zone; the tooltip carries all three measures for the zone.
 
 ---
