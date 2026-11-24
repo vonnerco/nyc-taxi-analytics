@@ -245,13 +245,6 @@ cue and the spoken reason always name the same file.
 
 ---
 
-**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - watch the dashboard")
-
-> For the rest of the tour, please keep your eyes on the dashboard: every click
-> you are about to see is the same cube re-cutting itself in real time, and every
-> chart moves with it.
-
----
 
 **Cue:** Move to Next Section | Scroll down to view Top pickup zones and Tip rate by distance charts
 
@@ -297,6 +290,13 @@ cue and the spoken reason always name the same file.
 
 ---
 
+**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - watch the dashboard")
+
+> For the rest of the tour, please keep your eyes on the dashboard: every click
+> you are about to see is the same cube re-cutting itself in real time, and every
+> chart moves with it.
+
+---
 **Cue:** Move to Next Section | Switch to the Terminal tab and run the build
 
 **Show:** [Terminal](http://127.0.0.1:7681 "Show Tab 2, run the build")
