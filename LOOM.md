@@ -201,7 +201,7 @@ cue and the spoken reason always name the same file.
 
 **Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1")
 
-> Thanks for watching my 9 million NYC yellow taxi trips dashboard,
+> Thanks for watching my NYC yellow taxi trips dashboard,
 > from January to March 2024. I created this using dbt,
 > DuckDB & streamlit. I've run 69 tests to ensure data quality.
 >
