@@ -237,13 +237,22 @@ Now I will set a custom view with the filters, save it as a named view, and open
 For the next 20 seconds watch the dashboard function is the exact manner I briefly explained.
 
 ## Phase 2 - Terminal Demo
+
+This phase has five steps: the build in the terminal, bronze, silver, the dbt docs page, and the four file tabs behind the charts.
+
+### Step 1 - Terminal: run the build
+
 Everything you just saw was produced by this one command - no hand-made tables. It runs thirteen models and sixty-nine tests in about twenty seconds. dbt counts each model and test, so the run ends at 82 of 82. The build is the quality gate: a failing test stops it, so the dashboard cannot be served from a broken table.
+
+### Step 2 - Bronze: raw parquet, unchanged
 
 **DISCLAIMER**
 "I used web terminal to show the actual files dbt runs for this demo"
 "If this was a PRODUCTION environment I would never show these files"
 
 Bronze preserves the raw parquet data as-is: no casts, filters, renames or deduplication. It is loaded into DuckDB, but the data itself is unchanged, so it diffs against the source column for column.
+
+### Step 3 - Silver: the only cleaning layer
 
 Silver is the only place cleaning happens. It converts the raw columns to proper types. It keeps trips from 1 to 180 minutes and .1 to 100 miles, it drops negative fares, and keeps 1 to 6 passengers - or null values for Flex Fare.
 
@@ -253,9 +262,13 @@ Then it removes duplicate trips, joins the zone lookup for names, and creates a 
 
 dbt tests that ID for nulls and uniqueness. About 95% of bronze rows survive
 
+### Step 4 - dbt docs: slv_trips, trip_id
+
 The description says what the grain is; expanding trip_id shows the column description and the generic tests it carries - **not null** & **unique**
 
 dbt builds this dbt Docs page from the same yml the tests run from, so the documentation can **never** drift away from the code. I use this similar structure when deploying SaaS & PaaS Software solutions to PRODUCTION***
+
+### Step 5 - File tabs: Tab 4, then 5, 6, 7
 
 Tab 4 slv_trips.sql is the model behind every chart in the dashboard. Every gold model reads it: facts, summary, daily, weekly, hourly, day of week, zone, behavior & analysis.
 
