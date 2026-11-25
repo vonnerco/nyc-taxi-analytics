@@ -212,6 +212,8 @@ I will present this demo in phases: first I will explain the dashboard informati
 
 ## Phase 1 - The Dashboard
 
+Let's start with the dashboard.
+
 Every view reads from the gld_dashboard_facts table, cut as a cube: the date, payment, zone, distance, weekday and hour filters update the main KPI strip and every chart is synced accordingly.
 
 In Q1 2024 there were nine million, seventy-six thousand, four hundred and twenty-two trips taken. Two hundred and forty-nine million, five hundred and seventy thousand dollars was charged at an average fare-weighted tip of  17.94% . This tip rate is total tips over total fares, not an average of per-trip percentages, so a fifty-cent tip cannot outweigh a long ride.
@@ -239,6 +241,8 @@ Now I will set a custom view with the filters, save it as a named view, and open
 For the next 20 seconds watch the dashboard function is the exact manner I briefly explained.
 
 ## Phase 2 - Terminal Demo
+
+Now the build that produces everything you just saw.
 
 This phase has five steps: the build in the terminal, bronze, silver, the dbt docs page, and the four file tabs behind the charts.
 
@@ -277,6 +281,8 @@ Tab 6 gld_tip_behavior is the model behind Chart 4, Tip rate by distance. One ro
 Tab 7 gld_payment_analysis is the model behind Charts 5 & 6, These charts share, Average fare and Tip rate on one row per Payment type, so the bar and the table read the same record.
 
 ## Phase 3 - Trade-offs and close
+
+A couple of trade-offs before I wrap up.
 
 I used DuckDB rather than Snowflake because it is the less complicated setup route, and I have no Snowflake credentials on this machine. I administer Snowflake reporting for servers and dashboards at Cox, so this build stays one profile swap away and the SQL stays portable. The hosted copy reads a 22 MB gold-only snapshot, so it runs without rebuilding the entire data warehouse.
 
