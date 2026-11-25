@@ -200,27 +200,29 @@ The narration covers Chart 3 (Tab 5) first, then Chart 4 (Tab 6), then Charts 5-
 
 ## Narration script
 
-Hi i'm Corderio Vonner. I will be showing an NYC yellow taxi trips dashboard I created using dbt, DuckDB & streamlit. I have run 69 tests to ensure data quality.
+Hi i'm Corderio Vonner. 
+I will be presenting an NYC yellow taxi trips dashboard.
+I created it using dbt, DuckDB & streamlit. 
+I have run 69 tests to ensure data quality.
 
-I'll start by explaining the dashboard, then i'll run the build that produces the dashboard, then i'll open the **bronze**, **silver** & **gold** models behind the dashboard numbers.
+I'll start by explaining the dashboard, then i'll run the build that produces the dashboard, then i'll open the bronze, silver & gold models behind the dashboard numbers.
+The numbers you see come from one gold table.
 
-The numbers you see on this dashboard all come from one **gold** table.
+I will present this demo in phases: first I will explain the dashboard information and features, then I will interact with it in real-time so you can watch it work.
 
-I will present this demo in phases: first I will explain the dashboard information and features, then I will interact with the dashboard so you can watch it work.
+## Phase 1 - The Dashboard
 
-## Phase 1 - Dashboard
+Every view reads from the gld_dashboard_facts table, cut as a cube: the date, payment, zone, distance, weekday and hour filters update the main KPI strip and every chart is synced accordingly.
 
-Every view reads from one shared gold table, the `gld_dashboard_facts` table, cut as a cube: the date, payment, zone, distance, weekday and hour filters update the main KPI strip and every chart is synced accordingly.
+In Q1 2024 there were nine million, seventy-six thousand, four hundred and twenty-two trips taken. Two hundred and forty-nine million, five hundred and seventy thousand dollars was charged at an average fare-weighted tip of  17.94% . This tip rate is total tips over total fares, not an average of per-trip percentages, so a fifty-cent tip cannot outweigh a long ride.
 
-In Q1 2024 there were nine million, seventy-six thousand, four hundred and twenty-two trips, two hundred and forty-nine million, five hundred and seventy thousand dollars charged & an average 17.94% fare-weighted tip for these trips. That tip rate is total tips over total fares, not an average of per-trip percentages, so a fifty-cent tip cannot outweigh a long ride.
+The main chart answers when is demand highest. The Day filter, the Week filter and the Hour of day filter are three grains of the same cube; choosing one rolls the cube up to that grain.
 
-The main chart answers **when is demand highest**. The Day filter, the Week filter and the Hour of day filter are three grains of the same cube; choosing one rolls the cube up to that grain.
-
-In Trip volume over time chart. The Day filter shows the weekly rhythm and the holiday dips. The Week filter compresses it to thirteen points. The Hour of day filter breaks the view into a 24 hour period, with 1800 hrs being the peak of the day.
+In Trip volume over time chart. The Day filter shows the weekly rhythm and the holiday dips. The Week filter compresses it to thirteen points. The Hour of day filter breaks the view into a 24 hour periods, with 1800 hrs being the peak of the day.
 
 The Busiest day of week chart is its own model, showing one row per ISO weekday: Thursday is the busiest day of the week for Q1 2024 and Monday is the quietest.
 
-The Top pickup zones chart allows you to select the metric to re-sort the bars by **Total revenue**, **Average fare** &or **Trip count**. The slider chooses how many zones are shown. Clicking a bar filters the entire dashboard to that single zone.
+The Top pickup zones chart allows you to select the metric to re-sort the bars by Total revenue, Average fare &or Trip count. The slider chooses how many zones are shown. Clicking a bar filters the entire dashboard to that single zone.
 
 The Tip rate by trip distance chart shows one bar per distance bucket. Cash trips record no tip, so read this whole chart as a card-trip statement. The rule behind the number lives in the model, not the chart - I will open that model later.
 
@@ -228,9 +230,9 @@ The Payment mix chart shows the mix of payment types. Credit cards account for 7
 
 The Payment behaviour chart shows the same record tip amounts. Credit cards have a 22.54% tip rate. Flex Fare is 5.46%. Cash trips show 0% because the New York City Taxi and Limousine Commission (TLC) does not capture cash tips.
 
-For your own local copy of the data, click **Export this view as CSV** for any chart. Every view exports structured data directly from the gold layer.
+For your own local copy of the data, click Export this view as CSV for any chart. Every view exports structured data directly from the gold layer.
 
-Also every filter combination you configure can be saved as a named view.
+Every filter combination you configure can be saved as a named view.
 
 Now I will set a custom view with the filters, save it as a named view, and open that same view from the saved views list to show the easy of use for this feature.
 
@@ -246,9 +248,7 @@ Everything you just saw was produced by this one command - no hand-made tables. 
 
 ### Step 2 - Bronze: raw parquet, unchanged
 
-**DISCLAIMER**
-"I used web terminal to show the actual files dbt runs for this demo"
-"If this was a PRODUCTION environment I would never show these files"
+DISCLAIMER "I used web terminal to show the actual files dbt runs for this demo" "If this was a PRODUCTION environment I would never show these files"
 
 Bronze preserves the raw parquet data as-is: no casts, filters, renames or deduplication. It is loaded into DuckDB, but the data itself is unchanged, so it diffs against the source column for column.
 
@@ -256,29 +256,25 @@ Bronze preserves the raw parquet data as-is: no casts, filters, renames or dedup
 
 Silver is the only place cleaning happens. It converts the raw columns to proper types. It keeps trips from 1 to 180 minutes and .1 to 100 miles, it drops negative fares, and keeps 1 to 6 passengers - or null values for Flex Fare.
 
-Silver layer processing:
-First it limits the data to Q1 2024
-Then it removes duplicate trips, joins the zone lookup for names, and creates a trip_id by hashing the fields used to detect duplicates
+Silver layer processing: First it limits the data to Q1 2024 Then it removes duplicate trips, joins the zone lookup for names, and creates a trip_id by hashing the fields used to detect duplicates
 
 dbt tests that ID for nulls and uniqueness. About 95% of bronze rows survive
 
 ### Step 4 - dbt docs: slv_trips, trip_id
 
-The description says what the grain is; expanding trip_id shows the column description and the generic tests it carries - **not null** & **unique**
+The description says what the grain is; expanding trip_id shows the column description and the generic tests it carries - not null & unique
 
-dbt builds this dbt Docs page from the same yml the tests run from, so the documentation can **never** drift away from the code. I use this similar structure when deploying SaaS & PaaS Software solutions to PRODUCTION***
+dbt builds this dbt Docs page from the same yml the tests run from, so the documentation can never drift away from the code. I use this similar structure when deploying SaaS & PaaS Software solutions to PRODUCTION***
 
 ### Step 5 - File tabs: Tab 4, then 5, 6, 7
 
 Tab 4 slv_trips.sql is the model behind every chart in the dashboard. Every gold model reads it: facts, summary, daily, weekly, hourly, day of week, zone, behavior & analysis.
 
-Tab 5 gld_revenue_by_zone is the model behind **Chart 3**, Top pickup zones. One row per zone: trips, revenue, average fare. The ranking and the top-N slice are the chart's job, not the model's.
+Tab 5 gld_revenue_by_zone is the model behind Chart 3, Top pickup zones. One row per zone: trips, revenue, average fare. The ranking and the top-N slice are the chart's job, not the model's.
 
-Tab 6 gld_tip_behavior is the model behind **Chart 4**, Tip rate by distance. One row per distance bucket. tip_pct is sum of tips over sum of fares, not an average of per-trip percentages - otherwise a thousand small tips outweigh the long rides that carry the money. That weighting lives here in the SQL, so the chart inherits it instead of recomputing it. Cash trips record no tip, so this is a statement about card trips.
+Tab 6 gld_tip_behavior is the model behind Chart 4, Tip rate by distance. One row per distance bucket. tip_pct is sum of tips over sum of fares, not an average of per-trip percentages - otherwise a thousand small tips outweigh the long rides that carry the money. That weighting lives here in the SQL, so the chart inherits it instead of recomputing it. Cash trips record no tip, so this is a statement about card trips.
 
-Tab 7 gld_payment_analysis is the model behind **Charts 5 & 6**, These charts share, Average fare and Tip rate on one row per Payment type, so the bar and the table read the same record.
-
----
+Tab 7 gld_payment_analysis is the model behind Charts 5 & 6, These charts share, Average fare and Tip rate on one row per Payment type, so the bar and the table read the same record.
 
 ## Phase 3 - Trade-offs and close
 
@@ -286,6 +282,6 @@ I used DuckDB rather than Snowflake because it is the less complicated setup rou
 
 No orchestration or CI, because dbt build is the pipeline at this size. Thirteen models in one command - an orchestrator would only add a second copy of the graph, and no CI run could say more than the build already does.
 
-Every number you saw came from one command, and **sixty-nine tests** decided whether that command was allowed to finish. The chart was never the **deliverable** - the pipeline behind it is, with exactly one place where **every decision** lives and is checked on the way out. One command, **sixty-nine tests**, one home for every decision.
+Every number you saw came from one command, and sixty-nine tests decided whether that command was allowed to finish. The chart was never the deliverable - the pipeline behind it is, with exactly one place where every decision lives and is checked on the way out. One command, sixty-nine tests, one home for every decision.
 
 Thanks for watching.
