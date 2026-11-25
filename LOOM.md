@@ -199,215 +199,80 @@ cue and the spoken reason always name the same file.
 
 ## Narration script
 
-**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1")
+Hi i'm Corderio Vonner. I will be showing an NYC yellow taxi trips dashboard I created using dbt, DuckDB & streamlit. I have run 69 tests to ensure data quality.
 
-> Thanks for watching my NYC yellow taxi trips dashboard,
-> from January to March 2024. I created this using dbt,
-> DuckDB & streamlit. I've run 69 tests to ensure data quality.
->
-> I'll start with the dashboard, then i'll run the build that produces
-> it, then i'll open the **bronze**, **silver** & **gold** models behind those
-> numbers.
->
-> The numbers you see on this dashboard all come from one **gold** table.
->
-> The dashboard demo comes in two phases: first I will explain its features, then
-> I will interact with the dashboard so you can watch it work.
+I'll start by explaining the dashboard, then i'll run the build that produces the dashboard, then i'll open the **bronze**, **silver** & **gold** models behind the dashboard numbers.
 
----
+The numbers you see on this dashboard all come from one **gold** table.
 
-**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1")
+I will present this demo in two phases: first I will explain the dashboard information and features, then I will interact with the dashboard so you can watch it work.
 
-> Every view reads from one shared gold table, the `gld_dashboard_facts` table, cut
-> as a cube: the date, payment, zone, distance, weekday and hour filters update the
-> KPI strip and every chart together. The row-level models named below are the
-> tested grain definitions behind each view.
->
-> In Q1 2024 there were nine million, seventy-six thousand, four hundred and
-> twenty-two trips, two hundred and forty-nine million, five hundred and
-> seventy thousand dollars charged & a 17.94% fare-weighted tip.
-> That tip rate is total tips over total fares, not an average of per-trip
-> percentages, so a fifty-cent tip cannot outweigh a long ride.
-> The main chart answers **when is demand the highest**. The Day filter, the Week filter
-> and the Hour of day filter are three grains of the same cube; choosing one rolls
-> the cube up to that grain.
+Phase 1
+Every view reads from one shared gold table, the `gld_dashboard_facts` table, cut as a cube: the date, payment, zone, distance, weekday and hour filters update the main KPI strip and every chart is synced accordingly.
 
----
+In Q1 2024 there were nine million, seventy-six thousand, four hundred and twenty-two trips, two hundred and forty-nine million, five hundred and seventy thousand dollars charged & an average 17.94% fare-weighted tip for these trips. That tip rate is total tips over total fares, not an average of per-trip percentages, so a fifty-cent tip cannot outweigh a long ride.
 
-**Show:** [Chart 1](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Chart 1: Trip volume, Day filter")
+The main chart answers **when is demand highest**. The Day filter, the Week filter and the Hour of day filter are three grains of the same cube; choosing one rolls the cube up to that grain.
 
-> This is the Trip volume over time chart. The Day filter shows the weekly rhythm
-> and the holiday dips. The Week filter compresses it to thirteen points. The Hour
-> of day filter breaks the view into a 24 hour period, with 1800 hrs being the
-> peak of the day and over six hundred and fifty-seven thousand trips taken.
+In Trip volume over time chart. The Day filter shows the weekly rhythm and the holiday dips. The Week filter compresses it to thirteen points. The Hour of day filter breaks the view into a 24 hour period, with 1800 hrs being the peak of the day.
 
----
+The Busiest day of week chart is its own model, showing one row per ISO weekday: Thursday is the busiest day of the week for Q1 2024 and Monday is the quietest.
 
-**Show:** [Chart 2](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Chart 2: Busiest day of week")
+The Top pickup zones chart allows you to select the metric to re-sort the bars by **Total revenue**, **Average fare** &or **Trip count**. The slider chooses how many zones are shown. Clicking a bar filters the entire dashboard to that single zone.
 
-> This is the Busiest day of week chart. The weekday bar is its own model, showing
-> one row per ISO weekday: Thursday is the busiest day of the week for Q1 2024,
-> Monday is the quietest.
->
-> This dashboard scrolls, so I will move down to the next section now.
+The Tip rate by trip distance chart shows one bar per distance bucket. Cash trips record no tip, so read this whole chart as a card-trip statement. The rule behind the number lives in the model, not the chart - I will open that model later.
 
----
+The Payment mix chart shows the mix of payment types. Credit cards account for 78% of trips, cash accounts for 14%, and Flex Fares account for 7%.
 
-**Cue:** Next Section
+The Payment behaviour chart shows the same record tip amounts. Credit cards have a 22.54% tip rate. Flex Fare is 5.46%. Cash trips show 0% because the New York City Taxi and Limousine Commission (TLC) does not capture cash tips.
 
-**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - middle of the dashboard")
+For your own local copy of the data, click **Export this view as CSV** for any chart. Every view exports structured data directly from the gold layer.
 
-> This is the Top pickup zones and the Tip rate section - the middle of the
-> dashboard.
+Also every filter combination you configure can be saved as a named view.
 
----
+Now I will set a custom view with the filters, save it as a named view, and open that same view from the saved views list to show the easy of use for this feature.
 
-**Show:** [Chart 3](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Chart 3: Top pickup zones")
+For the next 20 seconds watch the dashboard function is the exact manner I briefly explained.
 
-> This is the Top pickup zones chart. Select the metric to re-sort the bars by
-> **Total revenue**, **Average fare** or **Trip count**. The slider chooses how
-> many zones are shown - five to thirty. Clicking a bar filters the entire
-> dashboard to that single zone.
+Next Phase: Terminal Demo
+Everything you just saw was produced by this one command - no hand-made tables. It runs thirteen models and sixty-nine tests in about twenty seconds. dbt counts each model and test, so the run ends at 82 of 82. The build is the quality gate: a failing test stops it, so the dashboard cannot be served from a broken table.
+
+**DISCLAIMER**
+"I used web terminal to show the actual files dbt runs for this demo"
+"If this was a PRODUCTION environment I would never show these files"
+
+Bronze preserves the raw parquet data as-is: no casts, filters, renames or deduplication. It is loaded into DuckDB, but the data itself is unchanged, so it diffs against the source column for column.
+
+Silver is the only place cleaning happens. It converts the raw columns to proper types. It keeps trips from 1 to 180 minutes and .1 to 100 miles, it drops negative fares, and keeps 1 to 6 passengers - or null values for Flex Fare.
+
+Silver layer processing:
+First it limits the data to Q1 2024
+Then it removes duplicate trips, joins the zone lookup for names, and creates a trip_id by hashing the fields used to detect duplicates
+
+dbt tests that ID for nulls and uniqueness. About 95% of bronze rows survive
+
+The description says what the grain is; expanding trip_id shows the column description and the generic tests it carries - **not null** & **unique**
+
+dbt builds this dbt Docs page from the same yml the tests run from, so the documentation can **never** drift away from the code. I use this similar structure when deploying SaaS & PaaS Software solutions to PRODUCTION***
+
+Tab 4 silver_trips.sql is behind every chart in the dashboard*
+
+Every gold model reads it: facts, summary, daily, weekly, hourly, day of week, zone, behavior & analysis.
+
+Tab 5 is the model behind **Chart 3**, Top pickup zones. One row per zone: trips, revenue, average fare. The ranking and the top-N slice are the chart's job, not the model's.
+
+Tab 6 is the model behind **Chart 4**, Tip rate by distance. One row per distance bucket. tip_pct is sum of tips over sum of fares, not an average of per-trip percentages - otherwise a thousand small tips outweigh the long rides that carry the money.
+That weighting lives here in the SQL, so the chart inherits it instead of recomputing it.
+Cash trips record no tip, so this is a statement about card trips.
+
+Tab 7 is the model behind **Charts 5 & 6**, These charts share, Average fare and Tip rate on one row per Payment type, so the bar and the table read the same record.
 
 ---
 
-**Show:** [Chart 4](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Chart 4: Tip rate by trip distance")
+I used DuckDB rather than Snowflake because it is the less complicated setup route, and I have no Snowflake credentials on this machine. I administer Snowflake reporting for servers and dashboards at Cox, so this build stays one profile swap away and the SQL stays portable. The hosted copy reads a 22 MB gold-only snapshot, so it runs without rebuilding the entire data warehouse.
 
-> This is the Tip rate by trip distance chart. One bar per distance bucket. Cash
-> trips record no tip, so read the whole chart as a card-trip statement. The rule
-> behind the number lives in the model, not the chart - I will open that model
-> later.
->
-> This is the last section, so I am scrolling down to the Payment mix and Payment
-> behaviour charts now.
+No orchestration or CI, because dbt build is the pipeline at this size. Thirteen models in one command - an orchestrator would only add a second copy of the graph, and no CI run could say more than the build already does.
 
----
+Every number you saw came from one command, and **sixty-nine tests** decided whether that command was allowed to finish. The chart was never the **deliverable** - the pipeline behind it is, with exactly one place where **every decision** lives and is checked on the way out. One command, **sixty-nine tests**, one home for every decision.
 
-**Cue:** Next Section
-
-**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - last section of the dashboard")
-
-> This is the Payment mix and Payment behaviour section - the last section of the
-> dashboard.
-
----
-
-**Show:** [Chart 5](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Chart 5: Payment mix")
-
-> This is the Payment mix chart. It shows the mix of payment types. Credit card
-> accounts for 78% of trips, cash for 14%, and Flex Fare for 7%.
-
----
-
-**Show:** [Chart 6](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Chart 6: Payment behaviour")
-
-> This is the Payment behaviour chart. It shows the same record per payment type.
-> Credit cards have a 22.54% tip rate. Flex Fare is 5.46%. Cash trips show 0%
-> because the New York City Taxi and Limousine Commission (TLC) does not capture
-> cash tips.
-
----
-
-**Cue:** Next Section
-
-**Show:** [Any chart](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1 - Entire Dashboard")
-
-> I am scrolling back to the top of the dashboard now. I will set a custom view
-> with the filters, save it as a named view, and open that same view from the
-> saved views list whenever I want.
->
-> For your own local copy of the data, click **Export this view as CSV** for any chart.
-> Every view exports the frame it drew, straight from the gold layer. Every filter
-> combination can also be saved as a named view, so this one dashboard becomes
-> any cut of the cube you want.
-
----
-
-**Cue:** Next Section
-
-**Show:** [Terminal](http://127.0.0.1:7681 "Show Tab 2, run the build")
-
-> Keep your eyes on this tab for the next twenty seconds: this is the whole build
-> running, and it is the only thing that produces everything you just watched.
->
-> Everything you just saw was produced by this one command - no hand-made tables.
-> It runs thirteen models and sixty-nine tests in about twenty seconds. dbt counts each model and test, so the run ends at 82 of
-> 82. The build is the quality gate: a failing test stops it, so the dashboard
-> cannot be served from a broken table.
-
----
-
-**Show:** [Silver](http://127.0.0.1:8000/dbt_project/models/silver/slv_trips.sql "Show Tab 3 - slv_trips.sql")
-
-> Bronze preserves the raw parquet data as-is: no casts, filters, renames or
-> deduplication. It is loaded into DuckDB, but the data itself is unchanged, so it
-> diffs against the source column for column. Silver is the only place cleaning
-> happens. It converts the raw columns to proper types. It keeps trips from 1 to
-> 180 minutes and 0.1 to 100 miles, drops negative fares, and keeps 1 to 6
-> passengers - or null for Flex Fare. It limits the data to Q1 2024, removes
-> duplicate trips, joins the zone lookup for names, and creates a trip_id by
-> hashing the fields used to detect duplicates. dbt tests that ID for nulls and
-> uniqueness. About 95% of bronze rows survive.
-
----
-
-**Show:** [Docs](https://vonnerco.github.io/nyc-taxi-analytics/ "Show Tab 4 - dbt docs, slv_trips, trip_id expanded")
-
-> Same model, now as generated documentation. The description says what the grain
-> is; expanding trip_id shows the column description and the generic tests it
-> carries - **not null** & **unique**. dbt builds this page from the same yml the tests
-> run from, so the documentation can **never** drift away from the code.
-
----
-
-**Show:** [Gold - Tip rate](http://127.0.0.1:8000/dbt_project/models/gold/gld_tip_behavior.sql "Show Tab 5 - gld_tip_behavior.sql")
-
-> This tab is the model behind **Chart 4**, tip rate by distance. One row per
-> distance bucket. tip_pct is sum of tips over sum of fares, not an average of
-> per-trip percentages - otherwise a thousand small tips outweigh the long rides
-> that carry the money. That weighting lives here in the SQL, so the chart
-> inherits it instead of recomputing it. Cash trips record no tip, so this is a
-> statement about card trips.
-
----
-
-**Show:** [Gold - Top pickup zones](http://127.0.0.1:8000/dbt_project/models/gold/gld_revenue_by_zone.sql "Show Tab 6 - gld_revenue_by_zone.sql")
-
-> This tab backs **Chart 3**, the zone bars. One row per zone: trips, revenue,
-> average fare. The ranking and the top-N slice are the chart's job, not the
-> model's.
-
----
-
-**Show:** [Gold - Payment mix](http://127.0.0.1:8000/dbt_project/models/gold/gld_payment_analysis.sql "Show Tab 7 - gld_payment_analysis.sql")
-
-> This last tab backs **Charts 5 and 6**. Share, average fare and tip rate on one
-> row per payment type, so the bar and the table read the same record.
-
----
-
-**Cue:** Next Section
-
-**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1")
-
-> I used DuckDB rather than Snowflake because it is the less complicated setup
-> route, and I have no Snowflake credentials on this machine. I administer
-> Snowflake reporting for servers and dashboards at Cox, so this build stays one
-> profile swap away and the SQL stays portable. The hosted copy reads a 22 MB
-> gold-only snapshot, so it runs without rebuilding the entire data warehouse.
->
-> No orchestration or CI, because dbt build is the pipeline at this size. Thirteen
-> models in one command - an orchestrator would only add a second copy of the
-> graph, and no CI run could say more than the build already does.
-
----
-
-**Show:** [Dashboard](https://vonnerco-nyc-taxi-analytics-streamlitapp-idkoou.streamlit.app "Show Tab 1")
-
-> Every number you saw came from one command, and **sixty-nine tests** decided
-> whether that command was allowed to finish. The chart was never the
-> **deliverable** - the pipeline behind it is, with exactly one place where
-> **every decision** lives and is checked on the way out. One command,
-> **sixty-nine tests**, one home for every decision.
->
-> Thanks for watching.
+Thanks for watching.
