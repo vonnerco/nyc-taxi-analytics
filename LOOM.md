@@ -212,7 +212,9 @@ I will present this demo in phases: first I will explain the dashboard informati
 
 ## Phase 1 - The Dashboard
 
+```
 ------------------
+```
 
 Let's start with the dashboard.
 
@@ -244,7 +246,9 @@ For the next 20 seconds watch the dashboard function is the exact manner I brief
 
 ## Phase 2 - Terminal Demo
 
+```
 ------------------
+```
 
 Now the build that produces everything you just saw.
 
@@ -286,7 +290,9 @@ Tab 7 gld_payment_analysis is the model behind Charts 5 & 6, These charts share,
 
 ## Phase 3 - Trade-offs and close
 
+```
 ------------------
+```
 
 A couple of trade-offs before I wrap up.
 
