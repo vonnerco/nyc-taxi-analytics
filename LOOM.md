@@ -125,8 +125,8 @@ The seven local tabs live in the same browser window and are numbered on camera:
 | Tab 2 | PowerShell terminal | Terminal demo |
 | Tab 3 | dbt docs, `slv_trips`, `trip_id` expanded | docs beat |
 | Tab 4 | `slv_trips.sql` | every chart |
-| Tab 5 | `gld_tip_behavior.sql` | Chart 4, Tip rate by trip distance |
-| Tab 6 | `gld_revenue_by_zone.sql` | Chart 3, Top pickup zones |
+| Tab 5 | `gld_revenue_by_zone.sql` | Chart 3, Top pickup zones |
+| Tab 6 | `gld_tip_behavior.sql` | Chart 4, Tip rate by trip distance |
 | Tab 7 | `gld_payment_analysis.sql` | Charts 5-6, Payment mix / Payment behaviour |
 
 The file tabs are served by the local file server from
@@ -158,11 +158,11 @@ tab, and say the chart name as the tab opens so the link is explicit:
 
 | Click | File | Chart it backs |
 |---|---|---|
-| Tab 5 | `gld_tip_behavior.sql` | Chart 4, Tip rate by trip distance |
-| Tab 6 | `gld_revenue_by_zone.sql` | Chart 3, Top pickup zones |
+| Tab 5 | `gld_revenue_by_zone.sql` | Chart 3, Top pickup zones |
+| Tab 6 | `gld_tip_behavior.sql` | Chart 4, Tip rate by trip distance |
 | Tab 7 | `gld_payment_analysis.sql` | Charts 5-6, Payment mix / Payment behaviour |
 
-The narration covers Chart 3 (Tab 6) first, then Chart 4 (Tab 5), then Charts 5-6
+The narration covers Chart 3 (Tab 5) first, then Chart 4 (Tab 6), then Charts 5-6
 (Tab 7) - click in that order.
 
 </details>
@@ -258,11 +258,9 @@ dbt builds this dbt Docs page from the same yml the tests run from, so the docum
 
 Tab 4 slv_trips.sql is the model behind every chart in the dashboard. Every gold model reads it: facts, summary, daily, weekly, hourly, day of week, zone, behavior & analysis.
 
-Tab 6 gld_revenue_by_zone is the model behind **Chart 3**, Top pickup zones. One row per zone: trips, revenue, average fare. The ranking and the top-N slice are the chart's job, not the model's.
+Tab 5 gld_revenue_by_zone is the model behind **Chart 3**, Top pickup zones. One row per zone: trips, revenue, average fare. The ranking and the top-N slice are the chart's job, not the model's.
 
-Tab 5 gld_tip_behavior is the model behind **Chart 4**, Tip rate by distance. One row per distance bucket. tip_pct is sum of tips over sum of fares, not an average of per-trip percentages - otherwise a thousand small tips outweigh the long rides that carry the money.
-That weighting lives here in the SQL, so the chart inherits it instead of recomputing it.
-Cash trips record no tip, so this is a statement about card trips.
+Tab 6 gld_tip_behavior is the model behind **Chart 4**, Tip rate by distance. One row per distance bucket. tip_pct is sum of tips over sum of fares, not an average of per-trip percentages - otherwise a thousand small tips outweigh the long rides that carry the money. That weighting lives here in the SQL, so the chart inherits it instead of recomputing it. Cash trips record no tip, so this is a statement about card trips.
 
 Tab 7 gld_payment_analysis is the model behind **Charts 5 & 6**, These charts share, Average fare and Tip rate on one row per Payment type, so the bar and the table read the same record.
 
