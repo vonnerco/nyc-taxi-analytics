@@ -256,17 +256,15 @@ The description says what the grain is; expanding trip_id shows the column descr
 
 dbt builds this dbt Docs page from the same yml the tests run from, so the documentation can **never** drift away from the code. I use this similar structure when deploying SaaS & PaaS Software solutions to PRODUCTION***
 
-Tab 4 silver_trips.sql is behind every chart in the dashboard*
+Tab 4 slv_trips.sql is the model behind every chart in the dashboard. Every gold model reads it: facts, summary, daily, weekly, hourly, day of week, zone, behavior & analysis.
 
-Every gold model reads it: facts, summary, daily, weekly, hourly, day of week, zone, behavior & analysis.
+Tab 6 gld_revenue_by_zone is the model behind **Chart 3**, Top pickup zones. One row per zone: trips, revenue, average fare. The ranking and the top-N slice are the chart's job, not the model's.
 
-Tab 6 is the model behind **Chart 3**, Top pickup zones. One row per zone: trips, revenue, average fare. The ranking and the top-N slice are the chart's job, not the model's.
-
-Tab 5 is the model behind **Chart 4**, Tip rate by distance. One row per distance bucket. tip_pct is sum of tips over sum of fares, not an average of per-trip percentages - otherwise a thousand small tips outweigh the long rides that carry the money.
+Tab 5 gld_tip_behavior is the model behind **Chart 4**, Tip rate by distance. One row per distance bucket. tip_pct is sum of tips over sum of fares, not an average of per-trip percentages - otherwise a thousand small tips outweigh the long rides that carry the money.
 That weighting lives here in the SQL, so the chart inherits it instead of recomputing it.
 Cash trips record no tip, so this is a statement about card trips.
 
-Tab 7 is the model behind **Charts 5 & 6**, These charts share, Average fare and Tip rate on one row per Payment type, so the bar and the table read the same record.
+Tab 7 gld_payment_analysis is the model behind **Charts 5 & 6**, These charts share, Average fare and Tip rate on one row per Payment type, so the bar and the table read the same record.
 
 ---
 
