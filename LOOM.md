@@ -117,21 +117,22 @@ Highlight dbt last line of code `PASS=82 WARN=0 ERROR=0`.
 <details>
 <summary>2:10 - Silver tab, `models/silver/slv_trips.sql`</summary>
 
-The five local tabs live in the same browser window and are numbered on camera:
+The seven local tabs live in the same browser window and are numbered on camera:
 
-| Tab | What it is | Used at |
+| Tab | What it is | Backs |
 |---|---|---|
-| Tab 1 | Streamlit dashboard | 0:00-1:30, 3:45-4:55 |
-| Tab 2 | PowerShell terminal | 1:30 |
-| Tab 3 | `slv_trips.sql` | 2:10 |
-| Tab 4 | dbt docs, `slv_trips`, `trip_id` expanded | 2:50 |
-| Tab 5 | `gld_tip_behavior.sql` | 3:05, Chart 4 |
-| Tab 6 | `gld_revenue_by_zone.sql` | 3:05, Chart 3 |
-| Tab 7 | `gld_payment_analysis.sql` | 3:05, Charts 5-6 |
+| Tab 1 | Streamlit dashboard | Phase 1 |
+| Tab 2 | PowerShell terminal | Terminal demo |
+| Tab 3 | dbt docs, `slv_trips`, `trip_id` expanded | docs beat |
+| Tab 4 | `slv_trips.sql` | every chart |
+| Tab 5 | `gld_tip_behavior.sql` | Chart 4, Tip rate by trip distance |
+| Tab 6 | `gld_revenue_by_zone.sql` | Chart 3, Top pickup zones |
+| Tab 7 | `gld_payment_analysis.sql` | Charts 5-6, Payment mix / Payment behaviour |
 
 The file tabs are served by the local file server from
 `http://127.0.0.1:8000/<path>?edit=1` (the edit view carries the same colours as
-the read-only view). At 2:10 click Tab 3. Do not open the file in Zed on camera.
+the read-only view). For the silver beat click Tab 4. Do not open the file in
+Zed on camera.
 
 </details>
 
@@ -144,7 +145,7 @@ In dbt docs browser open the same documents slv_trips with trip_id row expanded 
 the tests live in the Data Tests column and in the expanded row. Do
 not call them constraints on camera.
 
-After viewing dbt docs, come back to the file tabs for the 3:05 beat - do not go
+After viewing dbt docs, come back to the file tabs for the gold-model beat - do not go
 to the editor.
 
 </details>
@@ -152,7 +153,7 @@ to the editor.
 <details>
 <summary>3:05 - the three gold models, one tab each</summary>
 
-Same tabs as 2:10, now Tab 5, Tab 6 and Tab 7. One tab per model, one sentence per
+Same window, now Tab 5, Tab 6 and Tab 7. One tab per model, one sentence per
 tab, and say the chart name as the tab opens so the link is explicit:
 
 | Click | File | Chart it backs |
@@ -161,8 +162,8 @@ tab, and say the chart name as the tab opens so the link is explicit:
 | Tab 6 | `gld_revenue_by_zone.sql` | Chart 3, Top pickup zones |
 | Tab 7 | `gld_payment_analysis.sql` | Charts 5-6, Payment mix / Payment behaviour |
 
-Each tab has its own `**Show:**` line in the narration below, so the on-screen
-cue and the spoken reason always name the same file.
+The narration covers Chart 3 (Tab 6) first, then Chart 4 (Tab 5), then Charts 5-6
+(Tab 7) - click in that order.
 
 </details>
 
@@ -259,9 +260,9 @@ Tab 4 silver_trips.sql is behind every chart in the dashboard*
 
 Every gold model reads it: facts, summary, daily, weekly, hourly, day of week, zone, behavior & analysis.
 
-Tab 5 is the model behind **Chart 3**, Top pickup zones. One row per zone: trips, revenue, average fare. The ranking and the top-N slice are the chart's job, not the model's.
+Tab 6 is the model behind **Chart 3**, Top pickup zones. One row per zone: trips, revenue, average fare. The ranking and the top-N slice are the chart's job, not the model's.
 
-Tab 6 is the model behind **Chart 4**, Tip rate by distance. One row per distance bucket. tip_pct is sum of tips over sum of fares, not an average of per-trip percentages - otherwise a thousand small tips outweigh the long rides that carry the money.
+Tab 5 is the model behind **Chart 4**, Tip rate by distance. One row per distance bucket. tip_pct is sum of tips over sum of fares, not an average of per-trip percentages - otherwise a thousand small tips outweigh the long rides that carry the money.
 That weighting lives here in the SQL, so the chart inherits it instead of recomputing it.
 Cash trips record no tip, so this is a statement about card trips.
 
