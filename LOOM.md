@@ -212,6 +212,8 @@ I will present this demo in phases: first I will explain the dashboard informati
 
 ## Phase 1 - The Dashboard
 
+------------------
+
 Let's start with the dashboard.
 
 Every view reads from the gld_dashboard_facts table, cut as a cube: the date, payment, zone, distance, weekday and hour filters update the main KPI strip and every chart is synced accordingly.
@@ -241,6 +243,8 @@ Now I will set a custom view with the filters, save it as a named view, and open
 For the next 20 seconds watch the dashboard function is the exact manner I briefly explained.
 
 ## Phase 2 - Terminal Demo
+
+------------------
 
 Now the build that produces everything you just saw.
 
@@ -281,6 +285,8 @@ Tab 6 gld_tip_behavior is the model behind Chart 4, Tip rate by distance. One ro
 Tab 7 gld_payment_analysis is the model behind Charts 5 & 6, These charts share, Average fare and Tip rate on one row per Payment type, so the bar and the table read the same record.
 
 ## Phase 3 - Trade-offs and close
+
+------------------
 
 A couple of trade-offs before I wrap up.
 
