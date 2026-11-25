@@ -208,7 +208,8 @@ The numbers you see on this dashboard all come from one **gold** table.
 
 I will present this demo in two phases: first I will explain the dashboard information and features, then I will interact with the dashboard so you can watch it work.
 
-Phase 1
+## Phase 1 - Dashboard
+
 Every view reads from one shared gold table, the `gld_dashboard_facts` table, cut as a cube: the date, payment, zone, distance, weekday and hour filters update the main KPI strip and every chart is synced accordingly.
 
 In Q1 2024 there were nine million, seventy-six thousand, four hundred and twenty-two trips, two hundred and forty-nine million, five hundred and seventy thousand dollars charged & an average 17.94% fare-weighted tip for these trips. That tip rate is total tips over total fares, not an average of per-trip percentages, so a fifty-cent tip cannot outweigh a long ride.
@@ -235,7 +236,7 @@ Now I will set a custom view with the filters, save it as a named view, and open
 
 For the next 20 seconds watch the dashboard function is the exact manner I briefly explained.
 
-Next Phase: Terminal Demo
+## Phase 2 - Terminal Demo
 Everything you just saw was produced by this one command - no hand-made tables. It runs thirteen models and sixty-nine tests in about twenty seconds. dbt counts each model and test, so the run ends at 82 of 82. The build is the quality gate: a failing test stops it, so the dashboard cannot be served from a broken table.
 
 **DISCLAIMER**
