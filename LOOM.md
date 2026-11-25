@@ -206,7 +206,7 @@ I'll start by explaining the dashboard, then i'll run the build that produces th
 
 The numbers you see on this dashboard all come from one **gold** table.
 
-I will present this demo in two phases: first I will explain the dashboard information and features, then I will interact with the dashboard so you can watch it work.
+I will present this demo in phases: first I will explain the dashboard information and features, then I will interact with the dashboard so you can watch it work.
 
 ## Phase 1 - Dashboard
 
@@ -266,6 +266,8 @@ Tab 6 gld_tip_behavior is the model behind **Chart 4**, Tip rate by distance. On
 Tab 7 gld_payment_analysis is the model behind **Charts 5 & 6**, These charts share, Average fare and Tip rate on one row per Payment type, so the bar and the table read the same record.
 
 ---
+
+## Phase 3 - Trade-offs and close
 
 I used DuckDB rather than Snowflake because it is the less complicated setup route, and I have no Snowflake credentials on this machine. I administer Snowflake reporting for servers and dashboards at Cox, so this build stays one profile swap away and the SQL stays portable. The hosted copy reads a 22 MB gold-only snapshot, so it runs without rebuilding the entire data warehouse.
 
